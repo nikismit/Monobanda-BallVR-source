@@ -6,6 +6,7 @@ public class AudioPitch : MonoBehaviour {
 //	public GUIText noteText;
     public static int _currentPitch;
     public int _currentpublicpitch;
+	public float _currentPublicAmplitude;
     private AudioSource _audioSource;
 
 	private Detector pitchDetector;						//Pitch detector object
@@ -101,6 +102,7 @@ public class AudioPitch : MonoBehaviour {
 				sum += data[i]*data[i];
 			float rmsValue = Mathf.Sqrt(sum/data.Length);
 			float dbValue = 20f*Mathf.Log10(rmsValue/refValue);
+			_currentPublicAmplitude = dbValue;
 			if(dbValue<minVolumeDB) {
 			//	noteText.text="Note: <<";
 			//	hideNotes();
