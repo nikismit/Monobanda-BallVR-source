@@ -103,11 +103,11 @@ public class AudioPitch : MonoBehaviour {
 			float rmsValue = Mathf.Sqrt(sum/data.Length);
 			float dbValue = 20f*Mathf.Log10(rmsValue/refValue);
 			_currentPublicAmplitude = dbValue;
-			if(dbValue<minVolumeDB) {
+			/*if(dbValue<minVolumeDB) {
 			//	noteText.text="Note: <<";
 			//	hideNotes();
 				return;
-			}
+			}*/
 			
 			pitchDetector.DetectPitch (data);
 			int midiant = pitchDetector.lastMidiNote ();
