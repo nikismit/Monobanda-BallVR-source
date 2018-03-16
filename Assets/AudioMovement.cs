@@ -61,7 +61,7 @@ public class AudioMovement : MonoBehaviour {
 			} else {
 				maximumForwardSpeed = startMaxSpeed;
 				forwardAccelaration = startAccel;
-				forwardDeceleration = startAccel;
+				//forwardDeceleration = startAccel;
 			}
 			if(soundTriggersParticles == true){
 
