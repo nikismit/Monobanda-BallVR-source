@@ -82,7 +82,9 @@
     <Compile Include="Assets\_Scripts\MicrophoneInput.cs" />
     <Compile Include="Assets\_Scripts\SpawnBalls.cs" />
     <Compile Include="Assets\_Scripts\VoiceProfile.cs" />
+    <Compile Include="Assets\AssignSplatMap.cs" />
     <Compile Include="Assets\AudioMovement.cs" />
+    <Compile Include="Assets\follower.cs" />
     <Compile Include="Assets\Oculus\OculusPlatform\Scripts\AchievementType.cs" />
     <Compile Include="Assets\Oculus\OculusPlatform\Scripts\AndroidPlatform.cs" />
     <Compile Include="Assets\Oculus\OculusPlatform\Scripts\BufferedAudioStream.cs" />
@@ -323,11 +325,13 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
     <Compile Include="Assets\SmoothFollow.cs" />
+    <Compile Include="Assets\spawnPoort.cs" />
     <Compile Include="Assets\VisualMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Almgp_automapping_shader\shaders\props shaders\grunt_world_space_automap_lightmap.shader" />
     <None Include="Assets\BOXOPHOBIC\Skybox - Cubemap Extended\Shaders\Skybox - Cubemap Extended.shader" />
+    <None Include="Assets\CustomShader\TerrainShader.shader" />
     <None Include="Assets\Oculus\LICENSE.txt" />
     <None Include="Assets\Oculus\OSPNative\LICENSE.txt" />
     <None Include="Assets\Oculus\OSPNative\THIRD_PARTY_NOTICES.txt" />
