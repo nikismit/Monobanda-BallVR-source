@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class lampActivate : MonoBehaviour {
 
-	public bool checkObjectToTrigger = false;
-	public GameObject ObjectToTrigger;
+	
 	public float triggerTime = 2.0f;
 
-	float timer = 0.0f;
-	bool addingTime = false;
+	public Color wantedColor;
+	public float colorErrorMargin = 0.1f;
 
+	float timer = 0.0f;
+	public bool addingTime = false;
+	bool redGood = false;
+	bool greenGood = false;
+	bool blueGood = false;
 
 	// Use this for initialization
 	void Start () {
 		this.GetComponent<Light>().enabled = false;
+		wantedColor = this.GetComponent<Light>().color;
 	}
 	
 	// Update is called once per frame
@@ -27,17 +32,32 @@ public class lampActivate : MonoBehaviour {
 			this.GetComponent<Light>().enabled = true;
 			timer = 0.0f;
 		}
-
+		
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(checkObjectToTrigger == true){
-			if(other.gameObject == ObjectToTrigger){
-				addingTime = true;
-				timer = 0.0f;
-			}
+		Color otherColor = other.GetComponent<Renderer>().material.color;
+		if(otherColor.r <= wantedColor.r + colorErrorMargin && otherColor.r >= wantedColor.r - colorErrorMargin){
+			redGood = true;
 		} else {
+			redGood = false;
+		}
+
+		if(otherColor.b <= wantedColor.b + colorErrorMargin && otherColor.b >= wantedColor.b - colorErrorMargin){
+			blueGood = true;
+		} else {
+			blueGood = false;
+		}
+
+		if(otherColor.g <= wantedColor.g + colorErrorMargin && otherColor.g >= wantedColor.g - colorErrorMargin){
+			greenGood = true;
+		} else {
+			greenGood = false;
+		}
+
+		if(redGood && greenGood && blueGood){
+			//print("color is good!");
 			addingTime = true;
 			timer = 0.0f;
 		}

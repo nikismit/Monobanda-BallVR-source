@@ -25,6 +25,11 @@ public class SpawnBalls : MonoBehaviour {
 	public bool _bounceBasedOnPitch;
 	public bool _massMultiplyBySize;
 
+	[Header("Colors")]
+	public Color lowPitchColor;
+	public Color midPitchColor;
+	public Color highPitchColor;
+
 
     private GameObject _currentBall;
     private Material _currentMaterial;
@@ -52,7 +57,7 @@ public class SpawnBalls : MonoBehaviour {
     
     private float _highestAmplitude;
 
-    
+    private int _currentBallNum = 1;
     
 
 
@@ -101,6 +106,8 @@ public class SpawnBalls : MonoBehaviour {
             _currentSphereCollider = _currentBall.GetComponent<SphereCollider>();
             _currentMaterial.SetColor("_Color", _currentColor);
             _currentBall.transform.position = _spawnLocation.position;
+			_currentBall.name = "Ball" + _currentBallNum;
+			_currentBallNum +=1;
             _currentRigidbody.isKinematic = true;
         }
 
@@ -126,23 +133,23 @@ public class SpawnBalls : MonoBehaviour {
             _ballSizeCurrent = Mathf.Lerp(_ballsizeMinMax.x, _ballsizeMinMax.y, Mathf.Clamp01(_timeRecording / _growTimeMax));
             _currentBall.transform.localScale = new Vector3(_ballSizeCurrent, _ballSizeCurrent, _ballSizeCurrent);
 
-			bool greenDown = false;
-			float redGreen = 1.0f;
-			float greenBlue = 0.0f;
+			bool belowMid = true;
+			float lowMid = 1.0f;
+			float midHigh = 0.0f;
 
 			if(_micPitch >= 0 && _micPitch <=0.5f){
-				greenDown = true;
-				redGreen = _micPitch*2;
-				greenBlue = 0;
+				belowMid = true;
+				lowMid = _micPitch*2;
+				midHigh = 0;
 			} else if (_micPitch > 0.5f && _micPitch <= 1.0f){
-				greenDown = false;
-				greenBlue = (_micPitch - 0.5f)*2;
-				redGreen = 0;
+				belowMid = false;
+				midHigh = (_micPitch - 0.5f)*2;
+				lowMid = 0;
 			}
-			if(greenDown){
-				_currentColor = new Color(1 - redGreen, redGreen, 0, 1);
+			if(belowMid){
+				_currentColor = Color.Lerp(lowPitchColor, midPitchColor, lowMid);
 			} else {
-				_currentColor = new Color(0, 1-greenBlue, greenBlue, 1);
+				_currentColor = Color.Lerp(midPitchColor, highPitchColor, midHigh);
 			}
             _currentMaterial.SetColor("_Color", _currentColor);
 			_currentMaterial.SetColor("_EmissionColor", _currentColor);

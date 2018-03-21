@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1964767208211654}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 9}
+  m_LocalPosition: {x: 0, y: 10, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,7 +51,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 20
   m_Range: 15
   m_SpotAngle: 45
@@ -103,8 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36ad1862881823419de0161f262c4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkObjectToTrigger: 0
-  ObjectToTrigger: {fileID: 0}
+  triggerTime: 2
+  wantedColor: {r: 1, g: 0, b: 0, a: 0}
+  colorErrorMargin: 0.3
+  addingTime: 0
 --- !u!135 &135256778401473504
 SphereCollider:
   m_ObjectHideFlags: 1
