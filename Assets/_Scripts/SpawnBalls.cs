@@ -171,7 +171,7 @@ public class SpawnBalls : MonoBehaviour {
             {
                 _currentSphereCollider.material.bounciness = 1;
             }
-            _currentSphereCollider.material.bounceCombine = PhysicMaterialCombine.Multiply;
+            _currentSphereCollider.material.bounceCombine = PhysicMaterialCombine.Average;
         }
     }
 

@@ -58,7 +58,7 @@ public class VoiceProfile : MonoBehaviour {
             { 
                 _amplitudeCurrent += AudioPeer._freqBand[i];
             }
-
+			print(_amplitudeCurrent);
             //Buffer
             if (_amplitudeCurrent > _amplitudeCurrentBuffer)
             {
