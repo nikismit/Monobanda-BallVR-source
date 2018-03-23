@@ -10,7 +10,7 @@ public class VoiceProfile : MonoBehaviour {
    // public float _voiceLength;
     public static float _silenceProfile, _talkProfile;
     public static float _amplitudeHighest, _amplitudeCurrent, _amplitudeCurrentBuffer;
-
+	public float _publicAmp;
    // public float _SilenceProfileBasedOnTalkValue = 0.05f;
   //  public float _ShoutingProfileBasedOnTalkValue = 1.2f;
     public static bool _profileSet;
@@ -58,7 +58,8 @@ public class VoiceProfile : MonoBehaviour {
             { 
                 _amplitudeCurrent += AudioPeer._freqBand[i];
             }
-			print(_amplitudeCurrent);
+			//print(_amplitudeCurrent);
+			_publicAmp = _amplitudeCurrent;
             //Buffer
             if (_amplitudeCurrent > _amplitudeCurrentBuffer)
             {

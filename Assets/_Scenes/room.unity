@@ -249,7 +249,57 @@ Prefab:
     - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
         type: 2}
       propertyPath: _growTimeMax
-      value: 10
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: lowPitchColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: lowPitchColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: lowPitchColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: midPitchColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: midPitchColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: midPitchColor.b
+      value: 0.8758622
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: highPitchColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: highPitchColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: highPitchColor.b
+      value: 0.006896496
+      objectReference: {fileID: 0}
+    - target: {fileID: 114339783218974616, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: _minPitch
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
@@ -1269,7 +1319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5152a3eccb99643876f48bb33efb05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _silenceAmplitude: 2.5
+  _publicAmp: 0
+  _silenceAmplitude: 0.1
 --- !u!114 &604968776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1285,8 +1336,7 @@ MonoBehaviour:
   _currentPublicAmplitude: 0
   selectedMic: 
   cumulativeDetections: 5
-  pitchTimeInterval: 200
-  minVolumeDB: -17
+  pitchTimeInterval: 100
   recordingTime: 0
 --- !u!82 &604968777
 AudioSource:

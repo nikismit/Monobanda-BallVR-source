@@ -23,7 +23,7 @@ public class AudioPitch : MonoBehaviour {
 	private int detectionPointer=0;						//Current buffer pointer
 	public int pitchTimeInterval=100; 					//Millisecons needed to detect tone
 	private float refValue = 0.1f; 						// RMS value for 0 dB
-	public float minVolumeDB=-17f;						//Min volume in bd needed to start detection
+	//public float minVolumeDB=-17f;						//Min volume in bd needed to start detection
 	public float recordingTime = 0.0f;
 
 	private int currentDetectedNote =0;					//Las note detected (midi number)

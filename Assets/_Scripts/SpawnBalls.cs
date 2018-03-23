@@ -137,7 +137,7 @@ public class SpawnBalls : MonoBehaviour {
 			float lowMid = 1.0f;
 			float midHigh = 0.0f;
 
-			if(_micPitch >= 0 && _micPitch <=0.5f){
+			if(_micPitch >= 0.01f && _micPitch <=0.5f){
 				belowMid = true;
 				lowMid = _micPitch*2;
 				midHigh = 0;
@@ -145,7 +145,10 @@ public class SpawnBalls : MonoBehaviour {
 				belowMid = false;
 				midHigh = (_micPitch - 0.5f)*2;
 				lowMid = 0;
+			} else {
+				
 			}
+
 			if(belowMid){
 				_currentColor = Color.Lerp(lowPitchColor, midPitchColor, lowMid);
 			} else {
