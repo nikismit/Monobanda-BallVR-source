@@ -3,14 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnBalls : MonoBehaviour {
-    public int _ballPoolAmount;
-    public bool _growPool;
+
+	[Header("Ball Options")]
+    
     public GameObject _ballPrefab;
     public Material _ballMaterial;
     public PhysicMaterial _ballPhysicMaterial;
+	public int _ballPoolAmount;
+    public bool _growPool;
     List<GameObject> _balls;
     List<Material> _lMaterial;
     List<PhysicMaterial> _lPhysicMaterial;
+
+	public Transform _spawnLocation;
+
+    // ball size
+    public float _growTimeMax;
+    public Vector2 _ballsizeMinMax;
+    public Vector2 _ballBounceMinMax;
+	public float _forceAdd;
+	public bool _bounceBasedOnPitch;
+	public bool _massMultiplyBySize;
+
+	[Header("Colors")]
+	public Color lowPitchColor;
+	public Color midPitchColor;
+	public Color highPitchColor;
 
 
     private GameObject _currentBall;
@@ -21,6 +39,10 @@ public class SpawnBalls : MonoBehaviour {
     private SphereCollider _currentSphereCollider;
 
     //microphone variables
+	[Header("Mic Options")]
+	public float _minPitch;
+	public float _maxPitch;
+	public float _maxRegisteredAmplitude;
     private float _micPitch;
     private float _micAmplitude;
 
@@ -28,20 +50,15 @@ public class SpawnBalls : MonoBehaviour {
     private float _timeRecording;
     private bool _isSpeaking;
 
-    public Transform _spawnLocation;
-
-    // ball size
-    public float _growTimeMax;
-    public Vector2 _ballsizeMinMax;
-    public Vector2 _ballBounceMinMax;
+    
     private float _ballSizeCurrent;
 
-    public float _forceAdd;
-    public float _maxRegisteredAmplitude;
+    
+    
     private float _highestAmplitude;
 
-    public bool _bounceBasedOnPitch;
-    public bool _massMultiplyBySize;
+    private int _currentBallNum = 1;
+    
 
 
     // Use this for initialization
@@ -72,7 +89,7 @@ public class SpawnBalls : MonoBehaviour {
     {
         //pitch
 
-        _micPitch =  Mathf.Clamp01((Mathf.Clamp((float)VoiceProfile._voicePitch, 0, 40)) / 40);
+        _micPitch =  Mathf.Clamp01(((Mathf.Clamp((float)VoiceProfile._voicePitch, _minPitch, _maxPitch))-_minPitch) / (_maxPitch - _minPitch));
 
 
 
@@ -81,7 +98,7 @@ public class SpawnBalls : MonoBehaviour {
    
         if ((_micAmplitude >= VoiceProfile._amplitudeSilence) && (!_isSpeaking)) //start speaking SPAWN
         {
-            _currentColor = new Color(Random.Range(0f,1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
+            _currentColor = new Color(0, 0, 0, 1);
             _isSpeaking = true;
             _currentBall = GetPooledBall();
             _currentMaterial = _currentBall.GetComponent<Renderer>().material;
@@ -89,6 +106,8 @@ public class SpawnBalls : MonoBehaviour {
             _currentSphereCollider = _currentBall.GetComponent<SphereCollider>();
             _currentMaterial.SetColor("_Color", _currentColor);
             _currentBall.transform.position = _spawnLocation.position;
+			_currentBall.name = "Ball" + _currentBallNum;
+			_currentBallNum +=1;
             _currentRigidbody.isKinematic = true;
         }
 
@@ -114,8 +133,26 @@ public class SpawnBalls : MonoBehaviour {
             _ballSizeCurrent = Mathf.Lerp(_ballsizeMinMax.x, _ballsizeMinMax.y, Mathf.Clamp01(_timeRecording / _growTimeMax));
             _currentBall.transform.localScale = new Vector3(_ballSizeCurrent, _ballSizeCurrent, _ballSizeCurrent);
 
-            _currentColor = new Color(_currentColor.r, _currentColor.g, _currentColor.b, 1 - _micPitch);
+			bool belowMid = true;
+			float lowMid = 1.0f;
+			float midHigh = 0.0f;
+
+			if(_micPitch >= 0 && _micPitch <=0.5f){
+				belowMid = true;
+				lowMid = _micPitch*2;
+				midHigh = 0;
+			} else if (_micPitch > 0.5f && _micPitch <= 1.0f){
+				belowMid = false;
+				midHigh = (_micPitch - 0.5f)*2;
+				lowMid = 0;
+			}
+			if(belowMid){
+				_currentColor = Color.Lerp(lowPitchColor, midPitchColor, lowMid);
+			} else {
+				_currentColor = Color.Lerp(midPitchColor, highPitchColor, midHigh);
+			}
             _currentMaterial.SetColor("_Color", _currentColor);
+			_currentMaterial.SetColor("_EmissionColor", _currentColor);
 
             if (_massMultiplyBySize)
             {
@@ -134,7 +171,7 @@ public class SpawnBalls : MonoBehaviour {
             {
                 _currentSphereCollider.material.bounciness = 1;
             }
-            _currentSphereCollider.material.bounceCombine = PhysicMaterialCombine.Multiply;
+            _currentSphereCollider.material.bounceCombine = PhysicMaterialCombine.Average;
         }
     }
 

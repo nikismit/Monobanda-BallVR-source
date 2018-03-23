@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioMovement : MonoBehaviour {
 
 	public AudioPitch pitch;
+	public Collider someCollider;
 	//public Transform child;
 	int currentPitch;
 	float currentAmp;
@@ -20,6 +21,7 @@ public class AudioMovement : MonoBehaviour {
 	public float currentSpeed;
 	private float startMaxSpeed;
 	private float startAccel;
+	private float startDecel;
 	
 	[Header("Options")]
 	public float minimumPitch;
@@ -28,7 +30,9 @@ public class AudioMovement : MonoBehaviour {
 	public bool amplitudeControlsSpeed;
 	public bool soundTriggersParticles;
 	
-
+	private float currentHeight;
+	private float previousHeight;
+	public bool goingUp = false;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
     Rigidbody m_Rigidbody;
@@ -37,10 +41,13 @@ public class AudioMovement : MonoBehaviour {
     void Start()
     {
         //Fetch the Rigidbody from the GameObject with this script attached
+		currentHeight = this.transform.position.y;
+		previousHeight = currentHeight;
         m_Rigidbody = GetComponent<Rigidbody>();
 		_partSys = GetComponent<ParticleSystem>();
 		startMaxSpeed = maximumForwardSpeed;
 		startAccel = forwardAccelaration;
+		startDecel = forwardDeceleration;
     }
 
     void FixedUpdate()
@@ -48,6 +55,34 @@ public class AudioMovement : MonoBehaviour {
 		currentPitch = pitch._currentpublicpitch;
 		currentAmp = pitch._currentPublicAmplitude;
 		var emission = _partSys.emission;
+		currentHeight = this.transform.position.y;
+		if(currentHeight>previousHeight){
+			goingUp = true;
+			previousHeight = currentHeight;
+		} else {
+			goingUp = false;
+			previousHeight = currentHeight;
+		}
+		RaycastHit hit;
+		Ray ray = new Ray(transform.position, Vector3.down);
+		if (someCollider.Raycast(ray, out hit, 10)) {
+			var slope = hit.normal;
+			//print(slope);
+			if(goingUp == false){
+				if(Mathf.Abs(hit.normal.x) > Mathf.Abs(hit.normal.z)){
+					forwardDeceleration = startDecel * (1.0f - Mathf.Abs(hit.normal.x)*1.5f);
+				} else {
+					forwardDeceleration = startDecel * (1.0f - Mathf.Abs(hit.normal.z)*1.5f);
+				}
+			} else {
+				if(Mathf.Abs(hit.normal.x) > Mathf.Abs(hit.normal.z)){
+					forwardDeceleration = startDecel * (1.0f + Mathf.Abs(hit.normal.x));
+				} else {
+					forwardDeceleration = startDecel * (1.0f + Mathf.Abs(hit.normal.z));
+				}
+			}
+			//Adjust character based on normal
+		}
 
 		if(currentPitch > minimumPitch){
 			currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
@@ -61,7 +96,7 @@ public class AudioMovement : MonoBehaviour {
 			} else {
 				maximumForwardSpeed = startMaxSpeed;
 				forwardAccelaration = startAccel;
-				forwardDeceleration = startAccel;
+				//forwardDeceleration = startAccel;
 			}
 			if(soundTriggersParticles == true){
 
