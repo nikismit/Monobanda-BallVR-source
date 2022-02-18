@@ -5,6 +5,7 @@ using PitchDetector;
 public class AudioPitch : MonoBehaviour {
 //	public GUIText noteText;
     public static int _currentPitch;
+
     public int _currentpublicpitch;
 	public float _currentPublicAmplitude;
     private AudioSource _audioSource;
