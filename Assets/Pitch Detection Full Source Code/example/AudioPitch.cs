@@ -102,7 +102,7 @@ public class AudioPitch : MonoBehaviour {
 			for(int i=0; i<data.Length; i++)
 				sum += data[i]*data[i];
 			float rmsValue = Mathf.Sqrt(sum/data.Length);
-			float dbValue = 20f*Mathf.Log10(rmsValue/refValue);
+			float dbValue = 30f*Mathf.Log10(rmsValue/refValue);
 			_currentPublicAmplitude = dbValue;
 			if(dbValue<minVolumeDB) {
 			//	noteText.text="Note: <<";
