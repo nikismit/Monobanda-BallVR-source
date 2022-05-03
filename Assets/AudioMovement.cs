@@ -7,7 +7,7 @@ public class AudioMovement : MonoBehaviour {
 	public AudioPitch pitch;
 
 	int currentPitch;
-	float currentAmp;
+	public float currentAmp;
 	[Header("Movement Speeds")]
 	[Range(0f, 50f)]
 	public float maximumForwardSpeed; // Default 10
@@ -35,7 +35,7 @@ public class AudioMovement : MonoBehaviour {
 	public Camera camera;
 	public float FOV;
 	private float SavedFOV;
-	
+
 	[Header("Options")]
 	public float minimumPitch;
 	public float maximumPitch;
@@ -43,7 +43,7 @@ public class AudioMovement : MonoBehaviour {
 	public bool highPitchIsTurnRight;
 	public bool soundTriggersParticles;
 	public bool isSinglePlayer;
-	
+
 
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
@@ -60,6 +60,18 @@ public class AudioMovement : MonoBehaviour {
 		FOV = 60.0f;
 		SavedFOV = FOV;
     }
+
+		void OnCollisionEnter(Collision collision)
+{
+		//currentSpeed = -0.5f * currentSpeed;
+		//currentSpeed = 0f;
+		if (collision.gameObject.tag == "Box"){
+			currentSpeed = currentSpeed;
+		}
+		else{
+			currentSpeed = 0.6f * currentSpeed;
+		}
+}
 
     void FixedUpdate()
     {
