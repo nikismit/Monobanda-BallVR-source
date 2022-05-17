@@ -20,17 +20,17 @@ public class VoiceProfile : MonoBehaviour {
     public float _silenceAmplitude;
 
 
-    void Awake()
-    {
-        DontDestroyOnLoad(transform.gameObject);
-    }
+    // void Awake()
+    // {
+    //     DontDestroyOnLoad(transform.gameObject);
+    // }
     // Use this for initialization
     void Start () {
         _amplitudeSilence = _silenceAmplitude;
         _profileSet = true;
 
     }
-	
+
 	// Update is called once per frame
     public void GetAudioProfile()
     {
@@ -55,7 +55,7 @@ public class VoiceProfile : MonoBehaviour {
             //Amplitude
             _amplitudeCurrent = 0;
             for (int i = 0; i < 8; i++)
-            { 
+            {
                 _amplitudeCurrent += AudioPeer._freqBand[i];
             }
 

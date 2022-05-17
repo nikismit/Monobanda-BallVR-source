@@ -25,7 +25,7 @@ public class AudioMovement3 : MonoBehaviour {
 	private float startAccel;
 	private float startDecel;
 	public bool hasStopped;
-	
+
 	[Header("Options")]
 	public float minimumPitch;
 	public float maximumPitch;
@@ -55,10 +55,11 @@ public class AudioMovement3 : MonoBehaviour {
 	private float SavedFOV;
 	private bool On = false;
 	public float xRot = 0f;
+	public bool turning;
 
     void Start()
     {
-        
+
         m_Rigidbody = GetComponent<Rigidbody>();
 
 		startMaxSpeed = maximumForwardSpeed;
@@ -70,6 +71,7 @@ public class AudioMovement3 : MonoBehaviour {
 		SavedFallingRate = 0f;
 		FOV = 60.0f;
 		SavedFOV = FOV;
+		turning = false;
     }
 
 
@@ -92,7 +94,7 @@ public class AudioMovement3 : MonoBehaviour {
 	private void Buffer(){
 		if ( properRotation >= 270 && properRotation <= 360 - angleOfFlight){
 			turningSpeed = 0;
-			hasStopped = true;			
+			hasStopped = true;
 		}
 		else if (properRotation >= angleOfFlight && properRotation <= 90){
 			turningSpeed = 0;
@@ -126,24 +128,38 @@ public class AudioMovement3 : MonoBehaviour {
 			SteeringSpeed = SteeringSpeedSave;
 		}
 	}
-			
 
 
     void FixedUpdate()
     {
 		currentPitch = pitch._currentpublicpitch;
 		currentAmp = pitch._currentPublicAmplitude;
-		
+
 
 		if(mouseIsSteering == true){
-			Steering ();
+			if(Input.GetMouseButton(0)){
+				Steering();
+				turning = true;
+			}
+			else{
+				// yAngle = 0f;
+				if (yAngle > 0.1f){
+					yAngle -= 0.1f;
+				}
+				else if (yAngle < -0.1f){
+					yAngle += 0.1f;
+				}
+				turning = false;
+			}
+
 		}
 
 		properRotation = car.transform.eulerAngles.x;
-		
 
-		if(currentPitch > minimumPitch){ 
-			currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1; 
+
+		if(currentPitch > minimumPitch){
+		//if(currentAmp > pitch.minVolumeDB){
+			currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
 
 			// Bool Checks:
 			if(highPitchIsTurnRight == false){
@@ -158,7 +174,7 @@ public class AudioMovement3 : MonoBehaviour {
 				forwardAccelaration = startAccel;
 				forwardDeceleration = startDecel;
 			}
-			
+
 			// Movement:
 			if(currentSpeed < maximumForwardSpeed){
 				currentSpeed += forwardAccelaration *Time.fixedDeltaTime;

@@ -24,7 +24,7 @@ public class AudioPitch : MonoBehaviour {
 	private int detectionPointer=0;						//Current buffer pointer
 	public int pitchTimeInterval=100; 					//Millisecons needed to detect tone
 	private float refValue = 0.1f; 						// RMS value for 0 dB
-	public float minVolumeDB=-17f;						//Min volume in bd needed to start detection
+	public float minVolumeDB=-30f;						//Min volume in bd needed to start detection ----> was originally -17f
 
 	private int currentDetectedNote =0;					//Las note detected (midi number)
 	private string currentDetectedNoteName;				//Note name in modern notation (C=Do, D=Re, etc..)
@@ -33,7 +33,7 @@ public class AudioPitch : MonoBehaviour {
 
 
 	private int top_down_margin=20;						//Top and down margin
-	private float ratio=0f;					
+	private float ratio=0f;
 	//score positions
 	private int startMidiNote=35; 						//Lowst midi printable in score
 	private int endMidiNote=86; 						//Lowst midi printable in score
@@ -57,19 +57,19 @@ public class AudioPitch : MonoBehaviour {
 /*
 	//Start function for web player (also works on other platforms)
 	IEnumerator Start() {
-        
+
 
 		yield return Application.RequestUserAuthorization(UserAuthorization.Microphone);
 		if (Application.HasUserAuthorization(UserAuthorization.Microphone)) {
 			selectedDevice = Microphone.devices[0].ToString();
 			micSelected = true;
 			GetMicCaps();
-			
+
 			//Estimates bufer len, based on pitchTimeInterval value
 			int bufferLen = (int)Mathf.Round (AudioSettings.outputSampleRate * pitchTimeInterval / 1000f);
 			Debug.Log ("Buffer len: " + bufferLen);
 			data = new float[bufferLen];
-			
+
 			detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
 		} else {
 		}
@@ -85,17 +85,17 @@ public class AudioPitch : MonoBehaviour {
 		//Estimates bufer len, based on pitchTimeInterval value
 		int bufferLen = (int)Mathf.Round (AudioSettings.outputSampleRate * pitchTimeInterval / 1000f);
 	//	Debug.Log ("Buffer len: " + bufferLen);
-		data = new float[bufferLen]; 
-        
+		data = new float[bufferLen];
+
 
 		detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
         setUptMic();
 
 
     }
-	
 
-	void Update () {
+
+	void FixedUpdate () {
 		if (listening) {
             _audioSource.GetOutputData(data,0);
 			float sum = 0f;
@@ -109,7 +109,7 @@ public class AudioPitch : MonoBehaviour {
 			//	hideNotes();
 				return;
 			}
-			
+
 			pitchDetector.DetectPitch (data);
 			int midiant = pitchDetector.lastMidiNote ();
 			int midi = findMode ();
@@ -153,16 +153,16 @@ public class AudioPitch : MonoBehaviour {
 		if ((minFreq + maxFreq) == 0)
 			maxFreq = 44100;
 	}
-	
+
 	public void StartMicrophone () {
 		GetComponent<AudioSource>().clip = Microphone.Start(selectedDevice, true, 10, maxFreq);//Starts recording
 		while (!(Microphone.GetPosition(selectedDevice) > 0)){} // Wait until the recording has started
 		GetComponent<AudioSource>().Play(); // Play the audio source!
 	}
-	
+
 	public void StopMicrophone () {
 		GetComponent<AudioSource>().Stop();//Stops the audio
-		Microphone.End(selectedDevice);//Stops the recording of the device	
+		Microphone.End(selectedDevice);//Stops the recording of the device
 	}
 
 	int repetitions(int element) {
@@ -174,7 +174,7 @@ public class AudioPitch : MonoBehaviour {
 		}
 		return rep;
 	}
-	
+
 	public int findMode() {
 		cumulativeDetections = (cumulativeDetections >= maxDetectionsAllowed) ? maxDetectionsAllowed : cumulativeDetections;
 		int moda = 0;

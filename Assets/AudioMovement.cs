@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioMovement : MonoBehaviour {
 
-	public AudioPitch pitch;
+	public collisionAdjustmentScriptPlayer1 crashForce;
+	public AudioPitch_Player1 pitch;
+	public AngleLimiter turnMultiplier;
+	public int currentPitch;
 
-	int currentPitch;
 	public float currentAmp;
 	[Header("Movement Speeds")]
 	[Range(0f, 50f)]
@@ -23,6 +26,9 @@ public class AudioMovement : MonoBehaviour {
 	public float turningSpeed;
 	[Range(0f, 50f)]
 	public float turningDeceleration; // Default 1
+	[Range(0f, 5f)]
+	public float speedBoost;
+	private float speedBoostDecelerator = 1f;
 
 	[Header("Diagnostics")]
 	public float currentTurn;
@@ -35,6 +41,11 @@ public class AudioMovement : MonoBehaviour {
 	public Camera camera;
 	public float FOV;
 	private float SavedFOV;
+	public bool FovWanted;
+
+
+
+	// public FinishScript Done;
 
 	[Header("Options")]
 	public float minimumPitch;
@@ -43,6 +54,7 @@ public class AudioMovement : MonoBehaviour {
 	public bool highPitchIsTurnRight;
 	public bool soundTriggersParticles;
 	public bool isSinglePlayer;
+	public bool comingFromMainMenu;
 
 
 
@@ -59,22 +71,83 @@ public class AudioMovement : MonoBehaviour {
 		startAccel = forwardAccelaration;
 		FOV = 60.0f;
 		SavedFOV = FOV;
+
+		//SetMinAndMaxPitch
+		if(comingFromMainMenu == true){
+			minimumPitch = PlayerPrefs.GetFloat("Player1Lowest");
+			maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
+		}
+
     }
 
 		void OnCollisionEnter(Collision collision)
 {
-		//currentSpeed = -0.5f * currentSpeed;
-		//currentSpeed = 0f;
 		if (collision.gameObject.tag == "Box"){
 			currentSpeed = currentSpeed;
 		}
+		// else if (collision.gameObject.tag == "Track"){
+		// 	var PosHoverer = this.transform.position;
+		// 	var PosTrackPiece = collision.transform.position;
+		// 	var PosDiff = PosHoverer-PosTrackPiece;
+		// 	// var ForceMultiplier = (currentSpeed/((maximumForwardSpeed)-maximumForwardSpeed));
+		// 	// ForceMultiplier = ForceMultiplier + 0.01f;
+		// 	// PosDiff = -PosDiff*100f*ForceMultiplier;
+		// 	if (currentSpeed>(currentSpeed/2)){
+		// 		PosDiff = -PosDiff*25f;
+		// 		currentSpeed = 0.5f * currentSpeed;
+		// 	}
+		// 	else{
+		// 		currentSpeed = 0.2f * currentSpeed;
+		// 	}
+		// 	//Debug.Log(PosDiff);
+		// 	m_Rigidbody.AddForce(new Vector3(PosDiff.x,0f,PosDiff.z), ForceMode.Force);
+		// }
+		else if(collision.gameObject.tag == "Track"){
+			crashForce.onCollisionCorrection();
+			if(currentSpeed> maximumForwardSpeed){
+					currentSpeed = 0.50f * currentSpeed;
+			}
+			else if (currentSpeed< 0.75f*maximumForwardSpeed){
+				currentSpeed = 0.80f * currentSpeed;
+			}
+			else{
+				currentSpeed = 0.70f * currentSpeed;
+			}
+		}
 		else{
-			currentSpeed = 0.6f * currentSpeed;
+			// currentSpeed = 0.6f * currentSpeed;
+			currentSpeed = 0.75f * currentSpeed;
 		}
 }
+private void OnTriggerEnter(Collider other)
+    {
+			if (other.gameObject.tag == "Ring"){
+				currentSpeed = speedBoost * currentSpeed;
+			}
+    }
 
     void FixedUpdate()
     {
+			var mult = speedBoost * maximumForwardSpeed;
+			var diffCoef = (currentSpeed/((maximumForwardSpeed*speedBoost)-maximumForwardSpeed))*mult;
+			if (currentSpeed > maximumForwardSpeed+1f){
+				speedBoostDecelerator = diffCoef;
+			}
+			else{
+				speedBoostDecelerator = 1f;
+			}
+		// if (Done.theEnd == true){
+		// 	turningSpeed = 0f;
+		// 	currentAmp = -50f;
+		// 	currentSpeed -= forwardDeceleration *Time.fixedDeltaTime;
+		// 	this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+		// 	if (Done.timer >= 3.5f){
+		// 		Scene scene = SceneManager.GetActiveScene();
+		// 		SceneManager.LoadScene(scene.name);
+		// 		Debug.Log("Reloading Scene");
+		// 	}
+		// }
+		//else{
 		currentPitch = pitch._currentpublicpitch;
 		currentAmp = pitch._currentPublicAmplitude;
 		Volume = pitch._currentPublicAmplitude;
@@ -85,8 +158,13 @@ public class AudioMovement : MonoBehaviour {
 		}
 		var emission = _partSys.emission;
 
-		if(currentPitch > minimumPitch){
-			currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
+
+		// if(currentPitch > minimumPitch && currentAmp > -15f){
+		// 		currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
+		if(currentAmp > pitch.minVolumeDB){
+			if(currentPitch > minimumPitch){
+				currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
+			}
 			if(highPitchIsTurnRight == false){
 				currentTurn *= -1;
 			}
@@ -99,7 +177,7 @@ public class AudioMovement : MonoBehaviour {
 			if(currentSpeed < maximumForwardSpeed){
 				currentSpeed += forwardAccelaration *Time.fixedDeltaTime;
 			} else {
-				currentSpeed -= forwardDeceleration *Time.fixedDeltaTime;
+				currentSpeed -= forwardDeceleration* speedBoostDecelerator *Time.fixedDeltaTime;
 			}
 			if (isSinglePlayer == true) {
 				forwardDeceleration = forwardDecelerationSinglePlayer;
@@ -107,7 +185,8 @@ public class AudioMovement : MonoBehaviour {
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
 			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			this.transform.Rotate(Vector3.up * turningSpeed * turnMultiplier.output * currentTurn * Time.fixedDeltaTime, Space.World);
+			if (FovWanted == true){
 			if (FOV >= 60f && FOV < 80f) {
 				SavedFOV = FOV;
 				SavedFOV += 1f;
@@ -117,8 +196,9 @@ public class AudioMovement : MonoBehaviour {
 				}
 
 			}
-		} else if(currentSpeed >= 0) {
-			currentSpeed -= forwardDeceleration *Time.fixedDeltaTime;
+		}
+		} else if(currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB) {
+			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
 			if(currentTurn > 0){
 				currentTurn -= Time.fixedDeltaTime *turningDeceleration;
 			}else if(currentTurn < 0){
@@ -126,7 +206,8 @@ public class AudioMovement : MonoBehaviour {
 			}
 			emission.rateOverTime = 0;
 			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			this.transform.Rotate(Vector3.up * turningSpeed * turnMultiplier.output * currentTurn * Time.fixedDeltaTime, Space.World);
+			if (FovWanted == true){
 			if (FOV > 60f && FOV <= 80f) {
 				SavedFOV = FOV;
 				SavedFOV -= 0.1f;
@@ -136,9 +217,10 @@ public class AudioMovement : MonoBehaviour {
 				}
 			}
 		}
+		}
 
-		//this.transform.position = new Vector3(child.position.x, 0, child.position.z);
 
+	//}
     }
 
 
