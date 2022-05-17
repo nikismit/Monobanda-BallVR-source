@@ -23,7 +23,7 @@ public class loadScene : MonoBehaviour
       SceneManager.LoadScene("FlyingFreeRoamDemo");
     }
     public void load2ndCoopScene(){
-      SceneManager.LoadScene("CityDriver - 2nd Prototype - 2 Player - StraghtMap Turning Limit");
+      SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervyCoopMap");
     }
     public void moveToCalibration(){
       MainMenu.SetActive(false);

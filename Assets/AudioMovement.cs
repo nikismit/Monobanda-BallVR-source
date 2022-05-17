@@ -7,7 +7,6 @@ public class AudioMovement : MonoBehaviour {
 
 	public collisionAdjustmentScriptPlayer1 crashForce;
 	public AudioPitch_Player1 pitch;
-	public AngleLimiter turnMultiplier;
 	public int currentPitch;
 
 	public float currentAmp;
@@ -163,7 +162,7 @@ private void OnTriggerEnter(Collider other)
 		// 		currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
 		if(currentAmp > pitch.minVolumeDB){
 			if(currentPitch > minimumPitch){
-				currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
+				currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1-0.3f;
 			}
 			if(highPitchIsTurnRight == false){
 				currentTurn *= -1;
@@ -185,7 +184,7 @@ private void OnTriggerEnter(Collider other)
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
 			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-			this.transform.Rotate(Vector3.up * turningSpeed * turnMultiplier.output * currentTurn * Time.fixedDeltaTime, Space.World);
+			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
 			if (FovWanted == true){
 			if (FOV >= 60f && FOV < 80f) {
 				SavedFOV = FOV;
@@ -206,7 +205,7 @@ private void OnTriggerEnter(Collider other)
 			}
 			emission.rateOverTime = 0;
 			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-			this.transform.Rotate(Vector3.up * turningSpeed * turnMultiplier.output * currentTurn * Time.fixedDeltaTime, Space.World);
+			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
 			if (FovWanted == true){
 			if (FOV > 60f && FOV <= 80f) {
 				SavedFOV = FOV;

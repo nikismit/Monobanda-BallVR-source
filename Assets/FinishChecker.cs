@@ -29,7 +29,7 @@ public class FinishChecker : MonoBehaviour
           player2.currentAmp=0f;
 
           if (counter>=5f){
-            SceneManager.LoadScene("CityDriver - 2nd Prototype - 2 Player - StraghtMap Turning Limit");
+            SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervyCoopMap");
           }
 
         }

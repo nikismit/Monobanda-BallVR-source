@@ -5640,8 +5640,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196beb196387c0e4eb1e871766f34359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMove: {fileID: 0}
+  pitch: {fileID: 0}
   orbTarget: 0
+  minimumPitch: 0
+  maximumPitch: 0
+  width: 0
 --- !u!65 &647437095
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20674,7 +20677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a5ea905a419aa4b9ae80534271afa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MicInput: 0
+  Mic_Input: 0
   dropdown: {fileID: 1634462733}
   _currentpublicpitch: 0
   _currentPublicAmplitude: 0

@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class AudioMovementPlayer2 : MonoBehaviour {
 
+	public collisionAdjustmentScriptPlayer2 crashForce;
 	public AudioPitch_Player2 pitch;
-
 	public int currentPitch;
 
 	public float currentAmp;
@@ -76,31 +76,42 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 		void OnCollisionEnter(Collision collision)
 {
-		//currentSpeed = -0.5f * currentSpeed;
-		//currentSpeed = 0f;
-		if (collision.gameObject.tag == "Box"){
-			currentSpeed = currentSpeed;
+	if (collision.gameObject.tag == "Box"){
+		currentSpeed = currentSpeed;
+	}
+	// else if (collision.gameObject.tag == "Track"){
+	// 	var PosHoverer = this.transform.position;
+	// 	var PosTrackPiece = collision.transform.position;
+	// 	var PosDiff = PosHoverer-PosTrackPiece;
+	// 	// var ForceMultiplier = (currentSpeed/((maximumForwardSpeed)-maximumForwardSpeed));
+	// 	// ForceMultiplier = ForceMultiplier + 0.01f;
+	// 	// PosDiff = -PosDiff*100f*ForceMultiplier;
+	// 	if (currentSpeed>(currentSpeed/2)){
+	// 		PosDiff = -PosDiff*25f;
+	// 		currentSpeed = 0.5f * currentSpeed;
+	// 	}
+	// 	else{
+	// 		currentSpeed = 0.2f * currentSpeed;
+	// 	}
+	// 	//Debug.Log(PosDiff);
+	// 	m_Rigidbody.AddForce(new Vector3(PosDiff.x,0f,PosDiff.z), ForceMode.Force);
+	// }
+	else if(collision.gameObject.tag == "Track"){
+		crashForce.onCollisionCorrection();
+		if(currentSpeed> maximumForwardSpeed){
+				currentSpeed = 0.50f * currentSpeed;
 		}
-		else if (collision.gameObject.tag == "Track"){
-			var PosHoverer = this.transform.position;
-			var PosTrackPiece = collision.transform.position;
-			var PosDiff = PosHoverer-PosTrackPiece;
-			// var ForceMultiplier = (currentSpeed/((maximumForwardSpeed)-maximumForwardSpeed));
-			// ForceMultiplier = ForceMultiplier + 0.01f;
-			// PosDiff = -PosDiff*100f*ForceMultiplier;
-			if (currentSpeed>(currentSpeed/2)){
-				PosDiff = -PosDiff*25f;
-				currentSpeed = 0.5f * currentSpeed;
-			}
-			else{
-				currentSpeed = 0.2f * currentSpeed;
-			}
-			//Debug.Log(PosDiff);
-			m_Rigidbody.AddForce(new Vector3(PosDiff.x,0f,PosDiff.z), ForceMode.Force);
+		else if (currentSpeed< 0.75f*maximumForwardSpeed){
+			currentSpeed = 0.80f * currentSpeed;
 		}
 		else{
-			currentSpeed = 0.6f * currentSpeed;
+			currentSpeed = 0.70f * currentSpeed;
 		}
+	}
+	else{
+		// currentSpeed = 0.6f * currentSpeed;
+		currentSpeed = 0.75f * currentSpeed;
+	}
 }
 private void OnTriggerEnter(Collider other)
     {
@@ -136,7 +147,7 @@ private void OnTriggerEnter(Collider other)
 		// 		currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
 		if(currentAmp > pitch.minVolumeDB){
 			if(currentPitch > minimumPitch){
-				currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
+				currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1-0.3f;
 			}
 			if(highPitchIsTurnRight == false){
 				currentTurn *= -1;

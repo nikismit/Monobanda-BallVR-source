@@ -5,16 +5,45 @@ using UnityEngine;
 public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
 {
   public pathScript path;
+  public GameObject car;
   public Transform vehicle;
   public List<Vector3> posDiff;
   public Vector3 minVector;
   public Rigidbody m_Rigidbody;
+  public GameObject closest = null;
+  private Transform closestTransform;
+
+
 
 // ForTesting!
     // void Update()
     // {
     //   onCollisionCorrection();
     // }
+    public GameObject FindClosestEnemy()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("Point");
+        // GameObject closest = null;
+        closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = vehicle.transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
+        Debug.Log(closest);
+    }
+    void FixedUpdate(){
+      FindClosestEnemy();
+    }
 
     public void onCollisionCorrection(){
       posDiff.Clear();
@@ -30,8 +59,7 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
         minVector = (posDiff[i].magnitude < minVector.magnitude) ?  posDiff[i] : minVector;
         maxVector = (posDiff[i].magnitude > maxVector.magnitude) ?  posDiff[i] : maxVector;
       }
-      Debug.Log(minVector);
-      m_Rigidbody.AddForce(new Vector3(minVector.x*30f,0f,minVector.z*30f), ForceMode.Force);
-
+      m_Rigidbody.AddForce(new Vector3(minVector.x*20f,0f,minVector.z*20f), ForceMode.Force);
+      car.transform.eulerAngles = closest.transform.eulerAngles;
     }
 }
