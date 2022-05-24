@@ -7,6 +7,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	public collisionAdjustmentScriptPlayer2 crashForce;
 	public AudioPitch_Player2 pitch;
+	public SFXManager sfx;
 	public int currentPitch;
 
 	public float currentAmp;
@@ -79,25 +80,9 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	if (collision.gameObject.tag == "Box"){
 		currentSpeed = currentSpeed;
 	}
-	// else if (collision.gameObject.tag == "Track"){
-	// 	var PosHoverer = this.transform.position;
-	// 	var PosTrackPiece = collision.transform.position;
-	// 	var PosDiff = PosHoverer-PosTrackPiece;
-	// 	// var ForceMultiplier = (currentSpeed/((maximumForwardSpeed)-maximumForwardSpeed));
-	// 	// ForceMultiplier = ForceMultiplier + 0.01f;
-	// 	// PosDiff = -PosDiff*100f*ForceMultiplier;
-	// 	if (currentSpeed>(currentSpeed/2)){
-	// 		PosDiff = -PosDiff*25f;
-	// 		currentSpeed = 0.5f * currentSpeed;
-	// 	}
-	// 	else{
-	// 		currentSpeed = 0.2f * currentSpeed;
-	// 	}
-	// 	//Debug.Log(PosDiff);
-	// 	m_Rigidbody.AddForce(new Vector3(PosDiff.x,0f,PosDiff.z), ForceMode.Force);
-	// }
 	else if(collision.gameObject.tag == "Track"){
 		crashForce.onCollisionCorrection();
+		sfx.crashIntoTrack();
 		if(currentSpeed> maximumForwardSpeed){
 				currentSpeed = 0.50f * currentSpeed;
 		}
@@ -109,7 +94,6 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 	}
 	else{
-		// currentSpeed = 0.6f * currentSpeed;
 		currentSpeed = 0.75f * currentSpeed;
 	}
 }

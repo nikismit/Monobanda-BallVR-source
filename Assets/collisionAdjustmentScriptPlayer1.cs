@@ -13,13 +13,20 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
   public GameObject closest = null;
   private Transform closestTransform;
 
+  public int index = 0;
+  public float P1Pos = 0f;
 
 
-// ForTesting!
-    // void Update()
-    // {
-    //   onCollisionCorrection();
-    // }
+
+    public void playerPosition(){
+      var leng = path.points.Count;
+      index = path.points.FindIndex(gameObject => string.Equals(closest.name, gameObject.name));
+
+      P1Pos = leng-index;
+      P1Pos = 1f-(P1Pos/leng);
+    }
+
+
     public GameObject FindClosestEnemy()
     {
         GameObject[] gos;
@@ -43,6 +50,7 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
     }
     void FixedUpdate(){
       FindClosestEnemy();
+      playerPosition();
     }
 
     public void onCollisionCorrection(){

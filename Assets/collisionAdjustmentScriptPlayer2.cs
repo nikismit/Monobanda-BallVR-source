@@ -16,11 +16,19 @@ public class collisionAdjustmentScriptPlayer2 : MonoBehaviour
   private float timer = 0f;
 
 
-// ForTesting!
-    // void Update()
-    // {
-    //   onCollisionCorrection();
-    // }
+  public int index = 0;
+  public float P2Pos = 0f;
+
+
+
+    public void playerPosition(){
+      var leng = path.points.Count;
+      index = path.points.FindIndex(gameObject => string.Equals(closest.name, gameObject.name));
+
+      P2Pos = leng-index;
+      P2Pos = 1f-(P2Pos/leng);
+    }
+
     public GameObject FindClosestEnemy()
     {
         GameObject[] gos;
@@ -44,6 +52,7 @@ public class collisionAdjustmentScriptPlayer2 : MonoBehaviour
     }
     void FixedUpdate(){
       FindClosestEnemy();
+      playerPosition();
     }
 
     public void onCollisionCorrection(){

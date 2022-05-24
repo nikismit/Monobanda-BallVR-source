@@ -8,6 +8,9 @@ public class FinishChecker : MonoBehaviour
   private float counter;
   public AudioMovement player1;
   public AudioMovementPlayer2 player2;
+  public float beforeReload = 20f;
+  // public Camera cam1,cam2;
+  public SmoothFollow cam1,cam2;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +30,11 @@ public class FinishChecker : MonoBehaviour
           counter += 0.01f;
           player1.currentAmp=0f;
           player2.currentAmp=0f;
+          // var cam1Component = cam1.GetComponent<>();
+          cam1.enabled = false;
+          cam2.enabled = false;
 
-          if (counter>=5f){
+          if (counter>=beforeReload){
             SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervyCoopMap");
           }
 

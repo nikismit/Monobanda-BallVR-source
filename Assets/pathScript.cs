@@ -8,13 +8,12 @@ public class pathScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      // for (int i = 0; i < 6; i++){
-      //
-      // }
-      foreach(GameObject fooObj in GameObject.FindGameObjectsWithTag("Point")) {
+          //This has been removed because it caused a weird bug when building ----> the points were loaded in in the wrong order.
 
-             points.Add(fooObj);
-         }
+      // foreach(GameObject fooObj in GameObject.FindGameObjectsWithTag("Point")) {
+      //
+      //        points.Add(fooObj);
+      //    }
     }
 
     // Update is called once per frame
