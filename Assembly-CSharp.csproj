@@ -92,6 +92,7 @@
      <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\MinMaxAttribute.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\SystemVoipState.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Models\ScreenSpaceReflectionModel.cs" />
+     <Compile Include="Assets\SFXManager.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Encoder.cs" />
      <Compile Include="Assets\AudioMovement.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\UserOrdering.cs" />
@@ -291,6 +292,7 @@
      <Compile Include="Assets\AudioMovement2.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\UserProof.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\StandalonePlatform.cs" />
+     <Compile Include="Assets\racePositionCode.cs" />
      <Compile Include="Assets\FinishScriptChecker.cs" />
      <Compile Include="Assets\Oculus\OVR\Scripts\Util\OVRGrabber.cs" />
      <Compile Include="Assets\OrbTargetPlayer2.cs" />
@@ -311,9 +313,11 @@
      <Compile Include="Assets\Oculus\OvrAvatar\Scripts\OvrAvatarAssetMesh.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\VoipMuteState.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\CloudStorageMetadata.cs" />
+     <Compile Include="Assets\collisionAdjustmentScriptPlayer2.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Models\AntialiasingModel.cs" />
      <Compile Include="Assets\MenuCarMovement.cs" />
      <Compile Include="Assets\loadScene.cs" />
+     <Compile Include="Assets\RaceCountdown.cs" />
      <Compile Include="Assets\_Scripts\AudioPeer.cs" />
      <Compile Include="Assets\Oculus\OVR\Scripts\OVRDisplay.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\LivestreamingVideoStats.cs" />
@@ -334,7 +338,9 @@
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\AchievementDefinition.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Models\AmbientOcclusionModel.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\LaunchType.cs" />
-     <Compile Include="Assets\collisionAdjustmentScriptPlayer2.cs" />
+     <Compile Include="Assets\SimpleAnimation.cs" />
+     <Compile Include="Assets\RingScaler.cs" />
+     <Compile Include="Assets\WinnerScreenCode.cs" />
      <None Include="Assets\Oculus\OvrAvatar\Content\Materials\AvatarSurfaceShaderSelfOccluding.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
      <None Include="Assets\Oculus\OVR\THIRD_PARTY_NOTICES.txt" />
