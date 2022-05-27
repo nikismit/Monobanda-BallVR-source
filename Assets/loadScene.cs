@@ -9,6 +9,7 @@ public class loadScene : MonoBehaviour
 
     public GameObject MainMenu;
     public GameObject CalibrationMenu;
+    public GameObject CalibrationMenuSinglePlayer;
     public GameObject LevelsMenu;
     public void loadNewScene(){
       SceneManager.LoadScene("CityDriver - 2nd Prototype");
@@ -25,9 +26,16 @@ public class loadScene : MonoBehaviour
     public void load2ndCoopScene(){
       SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervyCoopMap");
     }
+    public void loadSinglePlayerScene(){
+      SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervySinglePlayerMap");
+    }
     public void moveToCalibration(){
       MainMenu.SetActive(false);
       CalibrationMenu.SetActive(true);
+    }
+    public void moveToCalibrationSinglePlayer(){
+      MainMenu.SetActive(false);
+      CalibrationMenuSinglePlayer.SetActive(true);
     }
     public void moveToLevelsMenu(){
       MainMenu.SetActive(false);

@@ -19,6 +19,8 @@ public class SFXManager : MonoBehaviour
   public AudioClip crashWall;
   public AudioClip Music;
 
+  public bool isSingleplayer = false;
+
 
 
   void Start(){
@@ -80,6 +82,8 @@ public class SFXManager : MonoBehaviour
     void Update()
     {
     Player1EngineSFX();
-    Player2EngineSFX();
+    if(isSingleplayer = true){
+        Player2EngineSFX();
+    }
     }
 }
