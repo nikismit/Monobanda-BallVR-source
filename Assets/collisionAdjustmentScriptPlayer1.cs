@@ -16,8 +16,6 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
   public int index = 0;
   public float P1Pos = 0f;
 
-
-
     public void playerPosition(){
       var leng = path.points.Count;
       index = path.points.FindIndex(gameObject => string.Equals(closest.name, gameObject.name));
@@ -51,6 +49,9 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
     void FixedUpdate(){
       FindClosestEnemy();
       playerPosition();
+
+        //if (knockingBack)
+            //CrashKnockBack();
     }
 
     public void onCollisionCorrection(){
@@ -66,8 +67,25 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
       for(int i = 0; i < posDiff.Count; i++){
         minVector = (posDiff[i].magnitude < minVector.magnitude) ?  posDiff[i] : minVector;
         maxVector = (posDiff[i].magnitude > maxVector.magnitude) ?  posDiff[i] : maxVector;
-      }
-      m_Rigidbody.AddForce(new Vector3(minVector.x*20f,0f,minVector.z*20f), ForceMode.Force);
-      car.transform.eulerAngles = closest.transform.eulerAngles;
+        }
+        m_Rigidbody.AddForce(new Vector3(minVector.x * 20f, 0f, minVector.z * 20f), ForceMode.Force);
+
+        //CrashKnockBack();
+
+        StartCoroutine(CrashKnockBack());
+
+
+        car.transform.eulerAngles = closest.transform.eulerAngles;
+    }
+
+    IEnumerator CrashKnockBack()
+    {
+        m_Rigidbody.drag = 2;
+
+        yield return new WaitForSeconds(1);
+
+        m_Rigidbody.drag = 0;
+
+        yield return null;
     }
 }

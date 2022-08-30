@@ -56,6 +56,9 @@ public class AudioMovement : MonoBehaviour {
 	public bool isSinglePlayer;
 	public bool comingFromMainMenu;
 
+	[Header("Debug")]
+	public bool debugKeyControl;
+
 
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
@@ -102,10 +105,11 @@ public class AudioMovement : MonoBehaviour {
 			currentSpeed = 0.75f * currentSpeed;
 		}
 }
-private void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter(Collider other)
     {
 			if (other.gameObject.tag == "Ring"){
-				currentSpeed = speedBoost * currentSpeed;
+			transform.rotation = other.transform.rotation;
+			currentSpeed = speedBoost * currentSpeed;
 			}
     }
 
@@ -139,72 +143,188 @@ private void OnTriggerEnter(Collider other)
 		if (objectHeight > 0.6f){
 			this.transform.Translate(0,-0.1f,0);
 		}
-		var emission = _partSys.emission;
 
 
+		if (!debugKeyControl)
+			CarSoundMovement();
+		else
+			CarKeyMovement();
 		// if(currentPitch > minimumPitch && currentAmp > -15f){
 		// 		currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
-		if(currentAmp > pitch.minVolumeDB){
-			if(currentPitch > minimumPitch){
-				currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1-0.3f;
-			}
-			if(highPitchIsTurnRight == false){
-				currentTurn *= -1;
-			}
-			if(soundTriggersParticles == true){
+
+
+	}
+
+	void CarKeyMovement()
+    {
+		float hor = Input.GetAxisRaw("Horizontal");
+		float ver = Input.GetAxisRaw("Vertical");
+
+		var emission = _partSys.emission;
+
+		if (hor != 0 || ver > 0)
+		{
+			//currentTurn = (((currentPitch - minimumPitch) / (maximumPitch - minimumPitch)) * 2) - 1 - 0.3f;
+			currentTurn = hor;
+
+
+			if (soundTriggersParticles == true)
+			{
 
 				emission.rateOverTime = 10;
-			} else {
+			}
+			else
+			{
 				emission.rateOverTime = 0;
 			}
-			if(currentSpeed < maximumForwardSpeed){
-				currentSpeed += forwardAccelaration *Time.fixedDeltaTime;
-			} else {
-				currentSpeed -= forwardDeceleration* speedBoostDecelerator *Time.fixedDeltaTime;
+			if (currentSpeed < maximumForwardSpeed)
+			{
+				currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
 			}
-			if (isSinglePlayer == true) {
+			else
+			{
+				currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+			}
+			if (isSinglePlayer == true)
+			{
 				forwardDeceleration = forwardDecelerationSinglePlayer;
-			} else {
+			}
+			else
+			{
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
 			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
 			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
-			if (FovWanted == true){
-			if (FOV >= 60f && FOV < 80f) {
-				SavedFOV = FOV;
-				SavedFOV += 1f;
-				if (SavedFOV >= 61f && SavedFOV <= 79f){
-					FOV += 1f;
-					Camera.main.fieldOfView = FOV ;
-				}
+			if (FovWanted == true)
+			{
+				if (FOV >= 60f && FOV < 80f)
+				{
+					SavedFOV = FOV;
+					SavedFOV += 1f;
+					if (SavedFOV >= 61f && SavedFOV <= 79f)
+					{
+						FOV += 1f;
+						Camera.main.fieldOfView = FOV;
+					}
 
+				}
 			}
 		}
-		} else if(currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB) {
+		else if (currentSpeed >= 0 && hor == 0 && ver < 1)
+		{
 			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
-			if(currentTurn > 0){
-				currentTurn -= Time.fixedDeltaTime *turningDeceleration;
-			}else if(currentTurn < 0){
-				currentTurn += Time.fixedDeltaTime *turningDeceleration;
+			if (currentTurn > 0)
+			{
+				currentTurn -= Time.fixedDeltaTime * turningDeceleration;
+			}
+			else if (currentTurn < 0)
+			{
+				currentTurn += Time.fixedDeltaTime * turningDeceleration;
 			}
 			emission.rateOverTime = 0;
 			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
 			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
-			if (FovWanted == true){
-			if (FOV > 60f && FOV <= 80f) {
-				SavedFOV = FOV;
-				SavedFOV -= 0.1f;
-				if (SavedFOV >= 61f && SavedFOV <= 79f){
-					FOV -= 0.1f;
-					Camera.main.fieldOfView = FOV ;
+			if (FovWanted == true)
+			{
+				if (FOV > 60f && FOV <= 80f)
+				{
+					SavedFOV = FOV;
+					SavedFOV -= 0.1f;
+					if (SavedFOV >= 61f && SavedFOV <= 79f)
+					{
+						FOV -= 0.1f;
+						Camera.main.fieldOfView = FOV;
+					}
 				}
 			}
 		}
+	}
+
+	void CarSoundMovement()
+    {
+		var emission = _partSys.emission;
+
+		if (currentAmp > pitch.minVolumeDB)
+		{
+			if (currentPitch > minimumPitch)
+			{
+				currentTurn = (((currentPitch - minimumPitch) / (maximumPitch - minimumPitch)) * 2) - 1 - 0.3f;
+			}
+			if (highPitchIsTurnRight == false)
+			{
+				currentTurn *= -1;
+			}
+			if (soundTriggersParticles == true)
+			{
+
+				emission.rateOverTime = 10;
+			}
+			else
+			{
+				emission.rateOverTime = 0;
+			}
+			if (currentSpeed < maximumForwardSpeed)
+			{
+				currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
+			}
+			else
+			{
+				currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+			}
+			if (isSinglePlayer == true)
+			{
+				forwardDeceleration = forwardDecelerationSinglePlayer;
+			}
+			else
+			{
+				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
+			}
+			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			if (FovWanted == true)
+			{
+				if (FOV >= 60f && FOV < 80f)
+				{
+					SavedFOV = FOV;
+					SavedFOV += 1f;
+					if (SavedFOV >= 61f && SavedFOV <= 79f)
+					{
+						FOV += 1f;
+						Camera.main.fieldOfView = FOV;
+					}
+
+				}
+			}
 		}
-
-
-	//}
-    }
+		else if (currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB)
+		{
+			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+			if (currentTurn > 0)
+			{
+				currentTurn -= Time.fixedDeltaTime * turningDeceleration;
+			}
+			else if (currentTurn < 0)
+			{
+				currentTurn += Time.fixedDeltaTime * turningDeceleration;
+			}
+			emission.rateOverTime = 0;
+			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			if (FovWanted == true)
+			{
+				if (FOV > 60f && FOV <= 80f)
+				{
+					SavedFOV = FOV;
+					SavedFOV -= 0.1f;
+					if (SavedFOV >= 61f && SavedFOV <= 79f)
+					{
+						FOV -= 0.1f;
+						Camera.main.fieldOfView = FOV;
+					}
+				}
+			}
+		}
+	}
 
 
 }

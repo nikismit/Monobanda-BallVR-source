@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!135 &4767737314134725635
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5686654358022578584}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.81
-  m_Center: {x: 0, y: 1.95, z: 3.85}
 --- !u!1 &4767737314501644168
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +109,7 @@ MonoBehaviour:
   soundTriggersParticles: 0
   isSinglePlayer: 1
   comingFromMainMenu: 1
+  debugKeyControl: 1
 --- !u!33 &4767737315599181010
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4975,6 +4963,19 @@ MonoBehaviour:
   P1: {fileID: 4767737315599181015}
   P2: {fileID: 0}
   Player: {fileID: 4767737314501644168}
+--- !u!135 &4767737314134725635
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5686654358022578584}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.81
+  m_Center: {x: 0, y: 1.95, z: 3.85}
 --- !u!1001 &4767737313848581321
 PrefabInstance:
   m_ObjectHideFlags: 0
