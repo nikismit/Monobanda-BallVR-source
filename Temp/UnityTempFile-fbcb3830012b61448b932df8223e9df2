@@ -1,0 +1,610 @@
+/target:library
+/out:Temp/Assembly-CSharp.dll
+/nowarn:0169
+/nowarn:0649
+/deterministic
+/debug:portable
+/optimize+
+/nostdlib+
+/preferreduilang:en-US
+/langversion:latest
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEditor.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AndroidJNIModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.DSPGraphModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputLegacyModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.ProfilerModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsNativeModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.VirtualTexturingModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/Microsoft.Win32.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.AppContext.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Collections.Concurrent.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Collections.NonGeneric.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Collections.Specialized.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Collections.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.Annotations.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.EventBasedAsync.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.TypeConverter.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ComponentModel.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Console.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Data.Common.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.Contracts.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.Debug.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.FileVersionInfo.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.Process.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.StackTrace.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.TextWriterTraceListener.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.Tools.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Diagnostics.TraceSource.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Drawing.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Dynamic.Runtime.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Globalization.Calendars.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Globalization.Extensions.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Globalization.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.Compression.ZipFile.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.FileSystem.DriveInfo.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.FileSystem.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.FileSystem.Watcher.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.FileSystem.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.IsolatedStorage.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.MemoryMappedFiles.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.Pipes.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.UnmanagedMemoryStream.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.IO.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Linq.Expressions.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Linq.Parallel.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Linq.Queryable.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Linq.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Http.Rtc.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.NameResolution.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.NetworkInformation.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Ping.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Requests.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Security.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.Sockets.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.WebHeaderCollection.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.WebSockets.Client.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Net.WebSockets.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ObjectModel.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Emit.ILGeneration.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Emit.Lightweight.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Emit.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Extensions.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Reflection.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Resources.Reader.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Resources.ResourceManager.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Resources.Writer.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.CompilerServices.VisualC.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Extensions.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Handles.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.InteropServices.RuntimeInformation.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.InteropServices.WindowsRuntime.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.InteropServices.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Numerics.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Serialization.Formatters.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Serialization.Json.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Serialization.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.Serialization.Xml.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Runtime.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Claims.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.Algorithms.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.Csp.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.Encoding.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Cryptography.X509Certificates.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.Principal.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Security.SecureString.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.Duplex.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.Http.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.NetTcp.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.Primitives.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ServiceModel.Security.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Text.Encoding.Extensions.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Text.Encoding.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Text.RegularExpressions.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Overlapped.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Tasks.Parallel.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Tasks.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Thread.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.ThreadPool.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.Timer.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Threading.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.ValueTuple.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.ReaderWriter.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XDocument.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XmlDocument.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XmlSerializer.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/netstandard.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Microsoft.CSharp.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Core.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Data.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Net.Http.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Numerics.Vectors.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Numerics.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Runtime.Serialization.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Xml.Linq.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.Xml.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/System.dll"
+/reference:"C:/Program Files/Unity/Hub/Editor/2020.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll"
+/reference:D:/UnityProjects/Stage/Monobanda-BallVR-source/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll
+/reference:D:/UnityProjects/Stage/Monobanda-BallVR-source/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll
+/reference:D:/UnityProjects/Stage/Monobanda-BallVR-source/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll
+/reference:Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll
+/reference:Library/ScriptAssemblies/Unity.Rider.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.TextMeshPro.dll
+/reference:Library/ScriptAssemblies/Unity.Timeline.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.Timeline.dll
+/reference:Library/ScriptAssemblies/Unity.VSCode.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll
+/reference:Library/ScriptAssemblies/UnityEditor.Purchasing.dll
+/reference:Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll
+/reference:Library/ScriptAssemblies/UnityEditor.UI.dll
+/reference:Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll
+/reference:Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll
+/reference:Library/ScriptAssemblies/UnityEngine.Advertisements.dll
+/reference:Library/ScriptAssemblies/UnityEngine.Monetization.dll
+/reference:Library/ScriptAssemblies/UnityEngine.Purchasing.dll
+/reference:Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll
+/reference:Library/ScriptAssemblies/UnityEngine.UI.dll
+/reference:Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll
+/define:CSHARP_7_3_OR_NEWER
+/define:CSHARP_7_OR_LATER
+/define:DEBUG
+/define:ENABLE_AR
+/define:ENABLE_AUDIO
+/define:ENABLE_BURST_AOT
+/define:ENABLE_CACHING
+/define:ENABLE_CLOTH
+/define:ENABLE_CLOUD_LICENSE
+/define:ENABLE_CLOUD_SERVICES
+/define:ENABLE_CLOUD_SERVICES_ADS
+/define:ENABLE_CLOUD_SERVICES_ANALYTICS
+/define:ENABLE_CLOUD_SERVICES_BUILD
+/define:ENABLE_CLOUD_SERVICES_COLLAB
+/define:ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS
+/define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+/define:ENABLE_CLOUD_SERVICES_PURCHASING
+/define:ENABLE_CLOUD_SERVICES_UNET
+/define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+/define:ENABLE_CLUSTERINPUT
+/define:ENABLE_CLUSTER_SYNC
+/define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+/define:ENABLE_CUSTOM_RENDER_TEXTURE
+/define:ENABLE_DIRECTOR
+/define:ENABLE_DIRECTOR_AUDIO
+/define:ENABLE_DIRECTOR_TEXTURE
+/define:ENABLE_EDITOR_HUB_LICENSE
+/define:ENABLE_EVENT_QUEUE
+/define:ENABLE_LEGACY_INPUT_MANAGER
+/define:ENABLE_LOCALIZATION
+/define:ENABLE_LZMA
+/define:ENABLE_MANAGED_ANIMATION_JOBS
+/define:ENABLE_MANAGED_AUDIO_JOBS
+/define:ENABLE_MANAGED_JOBS
+/define:ENABLE_MANAGED_TRANSFORM_JOBS
+/define:ENABLE_MICROPHONE
+/define:ENABLE_MONO
+/define:ENABLE_MONO_BDWGC
+/define:ENABLE_MOVIES
+/define:ENABLE_MULTIPLE_DISPLAYS
+/define:ENABLE_NETWORK
+/define:ENABLE_OUT_OF_PROCESS_CRASH_HANDLER
+/define:ENABLE_PHYSICS
+/define:ENABLE_PROFILER
+/define:ENABLE_RUNTIME_GI
+/define:ENABLE_SCRIPTING_GC_WBARRIERS
+/define:ENABLE_SPRITES
+/define:ENABLE_TERRAIN
+/define:ENABLE_TEXTURE_STREAMING
+/define:ENABLE_TILEMAP
+/define:ENABLE_TIMELINE
+/define:ENABLE_UNET
+/define:ENABLE_UNITYEVENTS
+/define:ENABLE_UNITYWEBREQUEST
+/define:ENABLE_UNITY_COLLECTIONS_CHECKS
+/define:ENABLE_VIDEO
+/define:ENABLE_VIRTUALTEXTURING
+/define:ENABLE_VR
+/define:ENABLE_WEBCAM
+/define:ENABLE_WEBSOCKET_CLIENT
+/define:ENABLE_WEBSOCKET_HOST
+/define:ENABLE_WWW
+/define:GFXDEVICE_WAITFOREVENT_MESSAGEPUMP
+/define:INCLUDE_DYNAMIC_GI
+/define:NET_STANDARD_2_0
+/define:PLATFORM_STANDALONE
+/define:PLATFORM_STANDALONE_WIN
+/define:PLATFORM_SUPPORTS_MONO
+/define:RENDER_SOFTWARE_CURSOR
+/define:TRACE
+/define:UNITY_2017_1_OR_NEWER
+/define:UNITY_2017_2_OR_NEWER
+/define:UNITY_2017_3_OR_NEWER
+/define:UNITY_2017_4_OR_NEWER
+/define:UNITY_2018_1_OR_NEWER
+/define:UNITY_2018_2_OR_NEWER
+/define:UNITY_2018_3_OR_NEWER
+/define:UNITY_2018_4_OR_NEWER
+/define:UNITY_2019_1_OR_NEWER
+/define:UNITY_2019_2_OR_NEWER
+/define:UNITY_2019_3_OR_NEWER
+/define:UNITY_2019_4_OR_NEWER
+/define:UNITY_2020
+/define:UNITY_2020_1
+/define:UNITY_2020_1_11
+/define:UNITY_2020_1_OR_NEWER
+/define:UNITY_5_3_OR_NEWER
+/define:UNITY_5_4_OR_NEWER
+/define:UNITY_5_5_OR_NEWER
+/define:UNITY_5_6_OR_NEWER
+/define:UNITY_ASSERTIONS
+/define:UNITY_EDITOR
+/define:UNITY_EDITOR_64
+/define:UNITY_EDITOR_WIN
+/define:UNITY_INCLUDE_TESTS
+/define:UNITY_STANDALONE
+/define:UNITY_STANDALONE_WIN
+/define:UNITY_TEAM_LICENSE
+Assets\AiDriver.cs
+Assets\AiPathFollowDriver.cs
+Assets\AngleLimiter.cs
+Assets\AudioFlyingPlayer1.cs
+Assets\AudioFlyingPlayer2.cs
+Assets\AudioMovement.cs
+Assets\AudioMovement1.cs
+Assets\AudioMovement2.cs
+Assets\AudioMovement3.cs
+Assets\AudioMovementPlayer2.cs
+Assets\AudioMovement_ForPhoneInput.cs
+Assets\ButtonPress.cs
+Assets\FinishChecker.cs
+Assets\FinishCheckerSinglePlayer.cs
+Assets\FinishScript.cs
+Assets\FinishScriptChecker.cs
+Assets\MenuCarMovement.cs
+Assets\MicSelectOptionControl.cs
+"Assets\Oculus\OSPNative\scenes\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs"
+Assets\Oculus\OSPNative\scripts\ONSPAmbisonicsNative.cs
+Assets\Oculus\OSPNative\scripts\ONSPAudioSource.cs
+Assets\Oculus\OSPNative\scripts\ONSPVersion.cs
+Assets\Oculus\OSPNative\scripts\helpers\ONSPReflectionZone.cs
+Assets\Oculus\OVR\Scripts\Composition\OVRCameraComposition.cs
+Assets\Oculus\OVR\Scripts\Composition\OVRComposition.cs
+Assets\Oculus\OVR\Scripts\Composition\OVRCompositionUtil.cs
+Assets\Oculus\OVR\Scripts\Composition\OVRDirectComposition.cs
+Assets\Oculus\OVR\Scripts\Composition\OVRExternalComposition.cs
+Assets\Oculus\OVR\Scripts\Composition\OVRSandwichComposition.cs
+Assets\Oculus\OVR\Scripts\OVRBoundary.cs
+Assets\Oculus\OVR\Scripts\OVRCameraRig.cs
+Assets\Oculus\OVR\Scripts\OVRCommon.cs
+Assets\Oculus\OVR\Scripts\OVRDebugHeadController.cs
+Assets\Oculus\OVR\Scripts\OVRDisplay.cs
+Assets\Oculus\OVR\Scripts\OVRHaptics.cs
+Assets\Oculus\OVR\Scripts\OVRHapticsClip.cs
+Assets\Oculus\OVR\Scripts\OVRInput.cs
+Assets\Oculus\OVR\Scripts\OVRLayerAttribute.cs
+Assets\Oculus\OVR\Scripts\OVRLint.cs
+Assets\Oculus\OVR\Scripts\OVRManager.cs
+Assets\Oculus\OVR\Scripts\OVRMixedReality.cs
+Assets\Oculus\OVR\Scripts\OVROnCompleteListener.cs
+Assets\Oculus\OVR\Scripts\OVROverlay.cs
+Assets\Oculus\OVR\Scripts\OVRPlatformMenu.cs
+Assets\Oculus\OVR\Scripts\OVRPlugin.cs
+Assets\Oculus\OVR\Scripts\OVRProfile.cs
+Assets\Oculus\OVR\Scripts\OVRTouchpad.cs
+Assets\Oculus\OVR\Scripts\OVRTracker.cs
+Assets\Oculus\OVR\Scripts\Util\OVRChromaticAberration.cs
+Assets\Oculus\OVR\Scripts\Util\OVRCubemapCapture.cs
+Assets\Oculus\OVR\Scripts\Util\OVRDebugInfo.cs
+Assets\Oculus\OVR\Scripts\Util\OVRGearVrController.cs
+Assets\Oculus\OVR\Scripts\Util\OVRGearVrControllerTest.cs
+Assets\Oculus\OVR\Scripts\Util\OVRGrabbable.cs
+Assets\Oculus\OVR\Scripts\Util\OVRGrabber.cs
+Assets\Oculus\OVR\Scripts\Util\OVRGridCube.cs
+Assets\Oculus\OVR\Scripts\Util\OVRMixedRealityCaptureSettings.cs
+Assets\Oculus\OVR\Scripts\Util\OVRModeParms.cs
+Assets\Oculus\OVR\Scripts\Util\OVRMonoscopic.cs
+Assets\Oculus\OVR\Scripts\Util\OVRPlayerController.cs
+Assets\Oculus\OVR\Scripts\Util\OVRRTOverlayConnector.cs
+Assets\Oculus\OVR\Scripts\Util\OVRResetOrientation.cs
+Assets\Oculus\OVR\Scripts\Util\OVRSceneSampleController.cs
+Assets\Oculus\OVR\Scripts\Util\OVRScreenFade.cs
+Assets\Oculus\OVR\Scripts\Util\OVRWaitCursor.cs
+Assets\Oculus\OVRAudioManager\Scenes\Scripts\TestScript.cs
+Assets\Oculus\OVRAudioManager\Scripts\Audio\AmbienceEmitter.cs
+Assets\Oculus\OVRAudioManager\Scripts\Audio\AudioManager.cs
+Assets\Oculus\OVRAudioManager\Scripts\Audio\AudioManager_Sound.cs
+Assets\Oculus\OVRAudioManager\Scripts\Audio\MinMaxAttribute.cs
+Assets\Oculus\OVRAudioManager\Scripts\Audio\SoundEmitter.cs
+Assets\Oculus\OVRAudioManager\Scripts\Audio\SoundFX.cs
+Assets\Oculus\OVRAudioManager\Scripts\Audio\SoundFXRef.cs
+Assets\Oculus\OVRAudioManager\Scripts\Utils\FastList.cs
+Assets\Oculus\OVRAudioManager\Scripts\Utils\InspectorNoteAttribute.cs
+Assets\Oculus\OculusPlatform\Scripts\AchievementType.cs
+Assets\Oculus\OculusPlatform\Scripts\AndroidPlatform.cs
+Assets\Oculus\OculusPlatform\Scripts\BufferedAudioStream.cs
+Assets\Oculus\OculusPlatform\Scripts\CAPI.cs
+Assets\Oculus\OculusPlatform\Scripts\Callback.cs
+Assets\Oculus\OculusPlatform\Scripts\CallbackRunner.cs
+Assets\Oculus\OculusPlatform\Scripts\CloudStorageDataStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\CloudStorageUpdateStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\Decoder.cs
+Assets\Oculus\OculusPlatform\Scripts\Encoder.cs
+Assets\Oculus\OculusPlatform\Scripts\IMicrophone.cs
+Assets\Oculus\OculusPlatform\Scripts\IVoipPCMSource.cs
+Assets\Oculus\OculusPlatform\Scripts\KeyValuePairType.cs
+Assets\Oculus\OculusPlatform\Scripts\LaunchType.cs
+Assets\Oculus\OculusPlatform\Scripts\LeaderboardFilterType.cs
+Assets\Oculus\OculusPlatform\Scripts\LeaderboardStartAt.cs
+Assets\Oculus\OculusPlatform\Scripts\LivestreamingAudience.cs
+Assets\Oculus\OculusPlatform\Scripts\LivestreamingMicrophoneStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\LivestreamingStartStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\MatchmakingCriterionImportance.cs
+Assets\Oculus\OculusPlatform\Scripts\MatchmakingOptions.cs
+Assets\Oculus\OculusPlatform\Scripts\MatchmakingStatApproach.cs
+Assets\Oculus\OculusPlatform\Scripts\Message.cs
+Assets\Oculus\OculusPlatform\Scripts\MicrophoneInput.cs
+Assets\Oculus\OculusPlatform\Scripts\MicrophoneInputNative.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\AchievementDefinition.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\AchievementProgress.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\AchievementUpdate.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\ApplicationVersion.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\CloudStorageConflictMetadata.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\CloudStorageData.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\CloudStorageMetadata.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\CloudStorageUpdateResponse.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\DeserializeableList.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\Error.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\HttpTransferUpdate.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\InstalledApplication.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\LaunchDetails.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\LeaderboardEntry.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\LivestreamingApplicationStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\LivestreamingStartResult.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\LivestreamingStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\LivestreamingVideoStats.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\MatchmakingAdminSnapshot.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\MatchmakingAdminSnapshotCandidate.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\MatchmakingBrowseResult.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\MatchmakingEnqueueResult.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\MatchmakingEnqueueResultAndRoom.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\MatchmakingEnqueuedUser.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\MatchmakingStats.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\NetworkingPeer.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\OrgScopedID.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\Party.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\PartyID.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\Pid.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\PingResult.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\PlatformInitialize.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\Product.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\Purchase.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\Room.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\RoomInviteNotification.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\SdkAccount.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\SystemPermission.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\SystemVoipState.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\User.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\UserAndRoom.cs
+Assets\Oculus\OculusPlatform\Scripts\Models\UserProof.cs
+Assets\Oculus\OculusPlatform\Scripts\Packet.cs
+Assets\Oculus\OculusPlatform\Scripts\PeerConnectionState.cs
+Assets\Oculus\OculusPlatform\Scripts\PermissionGrantStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\PermissionType.cs
+Assets\Oculus\OculusPlatform\Scripts\Platform.cs
+Assets\Oculus\OculusPlatform\Scripts\PlatformInitializeResult.cs
+Assets\Oculus\OculusPlatform\Scripts\PlatformInternal.cs
+Assets\Oculus\OculusPlatform\Scripts\PlatformSettings.cs
+Assets\Oculus\OculusPlatform\Scripts\Request.cs
+Assets\Oculus\OculusPlatform\Scripts\RoomJoinPolicy.cs
+Assets\Oculus\OculusPlatform\Scripts\RoomJoinability.cs
+Assets\Oculus\OculusPlatform\Scripts\RoomMembershipLockStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\RoomOptions.cs
+Assets\Oculus\OculusPlatform\Scripts\RoomType.cs
+Assets\Oculus\OculusPlatform\Scripts\SdkAccountType.cs
+Assets\Oculus\OculusPlatform\Scripts\SendPolicy.cs
+Assets\Oculus\OculusPlatform\Scripts\StandalonePlatform.cs
+Assets\Oculus\OculusPlatform\Scripts\StandalonePlatformSettings.cs
+Assets\Oculus\OculusPlatform\Scripts\SystemVoipStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\TimeWindow.cs
+Assets\Oculus\OculusPlatform\Scripts\UserOptions.cs
+Assets\Oculus\OculusPlatform\Scripts\UserOrdering.cs
+Assets\Oculus\OculusPlatform\Scripts\UserPresenceStatus.cs
+Assets\Oculus\OculusPlatform\Scripts\VoipAudioSource.cs
+Assets\Oculus\OculusPlatform\Scripts\VoipAudioSourceHiLevel.cs
+Assets\Oculus\OculusPlatform\Scripts\VoipInput.cs
+Assets\Oculus\OculusPlatform\Scripts\VoipMuteState.cs
+Assets\Oculus\OculusPlatform\Scripts\VoipPCMSourceNative.cs
+Assets\Oculus\OculusPlatform\Scripts\VoipSampleRate.cs
+Assets\Oculus\OculusPlatform\Scripts\WindowsPlatform.cs
+Assets\Oculus\OvrAvatar\Samples\GripPoses\Scripts\PoseEditHelper.cs
+Assets\Oculus\OvrAvatar\Samples\RemoteLoopback\Scripts\RemoteLoopbackManager.cs
+Assets\Oculus\OvrAvatar\Samples\SocialStarter\Assets\Scripts\P2PManager.cs
+Assets\Oculus\OvrAvatar\Samples\SocialStarter\Assets\Scripts\PlatformManager.cs
+Assets\Oculus\OvrAvatar\Samples\SocialStarter\Assets\Scripts\PlayerController.cs
+Assets\Oculus\OvrAvatar\Samples\SocialStarter\Assets\Scripts\RemotePlayer.cs
+Assets\Oculus\OvrAvatar\Samples\SocialStarter\Assets\Scripts\RoomManager.cs
+Assets\Oculus\OvrAvatar\Samples\SocialStarter\Assets\Scripts\VoipManager.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatar.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarAsset.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarAssetMesh.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarAssetTexture.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarBase.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarBody.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarComponent.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarDriver.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarHand.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarLocalDriver.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarMeshInstance.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarPacket.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarProjectorRenderComponent.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarRemoteDriver.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarRenderComponent.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarSDKCAPI.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarSDKManager.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarSettings.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarSettingsEditor.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarSkinnedMeshRenderComponent.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarSkinnedMeshRenderPBSComponent.cs
+Assets\Oculus\OvrAvatar\Scripts\OvrAvatarTouchController.cs
+Assets\OrbTarget.cs
+Assets\OrbTargetPlayer2.cs
+Assets\ParticleTrigger.cs
+"Assets\Pitch Detection Full Source Code\CircularBuffer.cs"
+"Assets\Pitch Detection Full Source Code\Detector.cs"
+"Assets\Pitch Detection Full Source Code\Extensions.cs"
+"Assets\Pitch Detection Full Source Code\IIRFilter.cs"
+"Assets\Pitch Detection Full Source Code\PitchDsp.cs"
+"Assets\Pitch Detection Full Source Code\PitchTracker.cs"
+"Assets\Pitch Detection Full Source Code\example\AudioPitch.cs"
+"Assets\Pitch Detection Full Source Code\example\AudioPitch1.cs"
+"Assets\Pitch Detection Full Source Code\example\AudioPitch_MenuPlayer1.cs"
+"Assets\Pitch Detection Full Source Code\example\AudioPitch_MenuPlayer2.cs"
+"Assets\Pitch Detection Full Source Code\example\AudioPitch_Player1.cs"
+"Assets\Pitch Detection Full Source Code\example\AudioPitch_Player2.cs"
+"Assets\Pitch Detection Full Source Code\simple template scene\template.cs"
+Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs
+Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs
+Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs
+Assets\PostProcessing\Runtime\Attributes\TrackballGroupAttribute.cs
+Assets\PostProcessing\Runtime\Components\AmbientOcclusionComponent.cs
+Assets\PostProcessing\Runtime\Components\BloomComponent.cs
+Assets\PostProcessing\Runtime\Components\BuiltinDebugViewsComponent.cs
+Assets\PostProcessing\Runtime\Components\ChromaticAberrationComponent.cs
+Assets\PostProcessing\Runtime\Components\ColorGradingComponent.cs
+Assets\PostProcessing\Runtime\Components\DepthOfFieldComponent.cs
+Assets\PostProcessing\Runtime\Components\DitheringComponent.cs
+Assets\PostProcessing\Runtime\Components\EyeAdaptationComponent.cs
+Assets\PostProcessing\Runtime\Components\FogComponent.cs
+Assets\PostProcessing\Runtime\Components\FxaaComponent.cs
+Assets\PostProcessing\Runtime\Components\GrainComponent.cs
+Assets\PostProcessing\Runtime\Components\MotionBlurComponent.cs
+Assets\PostProcessing\Runtime\Components\ScreenSpaceReflectionComponent.cs
+Assets\PostProcessing\Runtime\Components\TaaComponent.cs
+Assets\PostProcessing\Runtime\Components\UserLutComponent.cs
+Assets\PostProcessing\Runtime\Components\VignetteComponent.cs
+Assets\PostProcessing\Runtime\Models\AmbientOcclusionModel.cs
+Assets\PostProcessing\Runtime\Models\AntialiasingModel.cs
+Assets\PostProcessing\Runtime\Models\BloomModel.cs
+Assets\PostProcessing\Runtime\Models\BuiltinDebugViewsModel.cs
+Assets\PostProcessing\Runtime\Models\ChromaticAberrationModel.cs
+Assets\PostProcessing\Runtime\Models\ColorGradingModel.cs
+Assets\PostProcessing\Runtime\Models\DepthOfFieldModel.cs
+Assets\PostProcessing\Runtime\Models\DitheringModel.cs
+Assets\PostProcessing\Runtime\Models\EyeAdaptationModel.cs
+Assets\PostProcessing\Runtime\Models\FogModel.cs
+Assets\PostProcessing\Runtime\Models\GrainModel.cs
+Assets\PostProcessing\Runtime\Models\MotionBlurModel.cs
+Assets\PostProcessing\Runtime\Models\ScreenSpaceReflectionModel.cs
+Assets\PostProcessing\Runtime\Models\UserLutModel.cs
+Assets\PostProcessing\Runtime\Models\VignetteModel.cs
+Assets\PostProcessing\Runtime\PostProcessingBehaviour.cs
+Assets\PostProcessing\Runtime\PostProcessingComponent.cs
+Assets\PostProcessing\Runtime\PostProcessingContext.cs
+Assets\PostProcessing\Runtime\PostProcessingModel.cs
+Assets\PostProcessing\Runtime\PostProcessingProfile.cs
+Assets\PostProcessing\Runtime\Utils\ColorGradingCurve.cs
+Assets\PostProcessing\Runtime\Utils\GraphicsUtils.cs
+Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs
+Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs
+Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs
+Assets\RaceCountdown.cs
+Assets\RaceCountdownSinglePlayer.cs
+Assets\Restart.cs
+Assets\RingScaler.cs
+Assets\RingScalerSinglePlayer.cs
+Assets\SFXManager.cs
+Assets\SFXManagerSinglePlayer.cs
+Assets\ScoreScript.cs
+Assets\SimpleAnimation.cs
+Assets\SimpleAnimationSinglePlayer.cs
+Assets\SliderNumberDisplay.cs
+Assets\SmoothFollow.cs
+Assets\SpawnManager.cs
+Assets\SpawnRoads.cs
+Assets\Targeting.cs
+Assets\Trigger.cs
+Assets\VisualMovement.cs
+Assets\WinnerScreenCode.cs
+Assets\_Prefabs\Prefab_RoadSpline\Scripts\Bezier.cs
+Assets\_Prefabs\Prefab_RoadSpline\Scripts\BezierCurve.cs
+Assets\_Prefabs\Prefab_RoadSpline\Scripts\BezierEnum.cs
+Assets\_Prefabs\Prefab_RoadSpline\Scripts\BezierSpline.cs
+Assets\_Prefabs\Prefab_RoadSpline\Scripts\Line.cs
+Assets\_Scripts\AudioPeer.cs
+Assets\_Scripts\MicrophoneInput.cs
+Assets\_Scripts\SpawnBalls.cs
+Assets\_Scripts\VoiceProfile.cs
+Assets\collisionAdjustmentScriptPlayer1.cs
+Assets\collisionAdjustmentScriptPlayer2.cs
+Assets\loadScene.cs
+Assets\pathScript.cs
+Assets\poortScript.cs
+Assets\racePositionCode.cs
+Assets\rollScript.cs
+Assets\sliderHeightControl.cs
+Assets\sliderHeightControl1Player1.cs
+Assets\targetRotation.cs
