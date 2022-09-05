@@ -47,69 +47,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
-    <Compile Include="Assets\PostProcessing\Editor\Models\BloomModelEditor.cs" />
-    <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\MixerSnapshotPropertyDrawer.cs" />
-    <Compile Include="Assets\Oculus\OVR\Scripts\Editor\OVRManagerEditor.cs" />
-    <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\AudioImportPostProcessor.cs" />
-    <Compile Include="Assets\Oculus\OVR\Editor\OVRPluginUpdater.cs" />
-    <Compile Include="Assets\Oculus\OVR\Editor\OVRBuild.cs" />
-    <Compile Include="Assets\Oculus\OculusPlatform\Editor\OculusPlatformSettingsEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Utils\EditorResources.cs" />
-    <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\OSPPropsPropertyDrawer.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\ChromaticAberrationEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\PostProcessingFactory.cs" />
-    <Compile Include="Assets\Oculus\OculusPlatform\Editor\GUIHelper.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\ColorGradingModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Utils\FxStyles.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\PropertyDrawers\GetSetDrawer.cs" />
-    <Compile Include="Assets\Oculus\OVR\Editor\OVRPluginUpdaterStub.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\ScreenSpaceReflectionModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\PropertyDrawers\TrackballGroupDrawer.cs" />
-    <Compile Include="Assets\Oculus\OVR\Editor\OVRManifestPreprocessor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Monitors\ParadeMonitor.cs" />
-    <Compile Include="Assets\Editor\LineInspector.cs" />
-    <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\MinMaxPropertyDrawer.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\FogModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\DepthOfFieldModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\PostProcessingModelEditor.cs" />
-    <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\AudioManagerInspector.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Utils\ReflectionUtils.cs" />
-    <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Utils\Editor\DrawerInspectorNote.cs" />
-    <Compile Include="Assets\Editor\BezierCurveInspector.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\VignetteModelEditor.cs" />
-    <Compile Include="Assets\Oculus\OSPNative\editor\ONSPAudioSourceEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\DitheringModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\PostProcessingBehaviourEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\DefaultPostFxModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\EyeAdaptationModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\PostProcessingInspector.cs" />
-    <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\SoundFXPropertyDrawer.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\PostProcessingMonitor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Monitors\HistogramMonitor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Attributes\PostProcessingModelEditorAttribute.cs" />
-    <Compile Include="Assets\Oculus\OSPNative\editor\ONSPReflectionCustomGUI.cs" />
-    <Compile Include="Assets\Oculus\OvrAvatar\Editor\AvatarMaterialEditor.cs" />
-    <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\SoundFXRefPropertyDrawer.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\BuiltinDebugViewsEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\UserLutModelEditor.cs" />
-    <Compile Include="Assets\Oculus\OVR\Editor\OVRScreenshotWizard.cs" />
-    <Compile Include="Assets\Oculus\OVR\Editor\OVRLayerAttributeEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\MotionBlurModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\AmbientOcclusionModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\GrainModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Monitors\WaveformMonitor.cs" />
-    <Compile Include="Assets\Oculus\OVR\Editor\OVRMoonlightLoader.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Utils\EditorGUIHelper.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Models\AntialiasingModelEditor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Monitors\VectorscopeMonitor.cs" />
-    <Compile Include="Assets\PostProcessing\Editor\Utils\CurveEditor.cs" />
-    <Compile Include="Assets\Editor\SplineInspector.cs" />
-  </ItemGroup>
-  <ItemGroup>
-     <None Include="Assets\Oculus\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
-=======
->>>>>>> Stashed changes
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.11f1\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -138,6 +75,7 @@
      <Compile Include="Assets\PostProcessing\Editor\PropertyDrawers\TrackballGroupDrawer.cs" />
      <Compile Include="Assets\Oculus\OVR\Editor\OVRManifestPreprocessor.cs" />
      <Compile Include="Assets\PostProcessing\Editor\Monitors\ParadeMonitor.cs" />
+     <Compile Include="Assets\Editor\LineInspector.cs" />
      <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\MinMaxPropertyDrawer.cs" />
      <Compile Include="Assets\PostProcessing\Editor\Models\FogModelEditor.cs" />
      <Compile Include="Assets\PostProcessing\Editor\Models\DepthOfFieldModelEditor.cs" />
@@ -145,9 +83,11 @@
      <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Audio\Editor\AudioManagerInspector.cs" />
      <Compile Include="Assets\PostProcessing\Editor\Utils\ReflectionUtils.cs" />
      <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Utils\Editor\DrawerInspectorNote.cs" />
+     <Compile Include="Assets\Editor\BezierCurveInspector.cs" />
      <Compile Include="Assets\PostProcessing\Editor\Models\VignetteModelEditor.cs" />
      <Compile Include="Assets\Oculus\OSPNative\editor\ONSPAudioSourceEditor.cs" />
      <Compile Include="Assets\PostProcessing\Editor\Models\DitheringModelEditor.cs" />
+     <Compile Include="Assets\Editor\SplineInspector.cs" />
      <Compile Include="Assets\PostProcessing\Editor\PostProcessingBehaviourEditor.cs" />
      <Compile Include="Assets\PostProcessing\Editor\Models\DefaultPostFxModelEditor.cs" />
      <Compile Include="Assets\PostProcessing\Editor\Models\EyeAdaptationModelEditor.cs" />
