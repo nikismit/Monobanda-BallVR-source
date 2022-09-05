@@ -108,7 +108,7 @@
      <Compile Include="Assets\Oculus\OVR\Scripts\Util\OVRPlayerController.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\LivestreamingMicrophoneStatus.cs" />
      <Compile Include="Assets\SpawnManager.cs" />
-     <Compile Include="Assets\_Prefabs\Prefab_RoadSpline\Scripts\BezierCurve.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\Spline\BezierCurve.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\ApplicationVersion.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\TimeWindow.cs" />
      <Compile Include="Assets\Oculus\OvrAvatar\Scripts\OvrAvatarSDKManager.cs" />
@@ -177,7 +177,6 @@
      <Compile Include="Assets\Oculus\OVR\Scripts\OVRCommon.cs" />
      <Compile Include="Assets\Oculus\OVR\Scripts\Util\OVRDebugInfo.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\MatchmakingStats.cs" />
-     <Compile Include="Assets\_Prefabs\Prefab_RoadSpline\Scripts\Bezier.cs" />
      <Compile Include="Assets\Oculus\OvrAvatar\Scripts\OvrAvatarSkinnedMeshRenderPBSComponent.cs" />
      <Compile Include="Assets\Oculus\OVRAudioManager\Scripts\Utils\InspectorNoteAttribute.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\AchievementProgress.cs" />
@@ -187,7 +186,7 @@
      <Compile Include="Assets\PostProcessing\Runtime\Models\MotionBlurModel.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\MicrophoneInputNative.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\Room.cs" />
-     <Compile Include="Assets\_Prefabs\Prefab_RoadSpline\Scripts\BezierControlPointMode.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\Spline\BezierControlPointMode.cs" />
      <Compile Include="Assets\AudioMovement_ForPhoneInput.cs" />
      <Compile Include="Assets\_Scripts\MicrophoneInput.cs" />
      <Compile Include="Assets\Oculus\OVR\Scripts\Util\OVRScreenFade.cs" />
@@ -214,7 +213,7 @@
      <Compile Include="Assets\RingScaler.cs" />
      <Compile Include="Assets\Oculus\OVR\Scripts\OVRTouchpad.cs" />
      <Compile Include="Assets\Pitch Detection Full Source Code\example\AudioPitch1.cs" />
-     <Compile Include="Assets\_Prefabs\Prefab_RoadSpline\Scripts\Line.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\Spline\Line.cs" />
      <Compile Include="Assets\Pitch Detection Full Source Code\example\AudioPitch_Player2.cs" />
      <Compile Include="Assets\SimpleAnimationSinglePlayer.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\VoipSampleRate.cs" />
@@ -249,7 +248,6 @@
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\PeerConnectionState.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Components\BloomComponent.cs" />
      <Compile Include="Assets\AngleLimiter.cs" />
-     <Compile Include="Assets\_Prefabs\Prefab_RoadSpline\Scripts\BezierSpline.cs" />
      <Compile Include="Assets\Oculus\OVR\Scripts\Util\OVRChromaticAberration.cs" />
      <Compile Include="Assets\Oculus\OVR\Scripts\Util\OVRSceneSampleController.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\Purchase.cs" />
@@ -355,6 +353,12 @@
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\Models\AchievementDefinition.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Models\AmbientOcclusionModel.cs" />
      <Compile Include="Assets\Oculus\OculusPlatform\Scripts\LaunchType.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\Spline\Bezier.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\RoadMesh\RoadCreator.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\Spline\BezierSpline.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\CheckPointPlacer\CheckPointPlacer.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\RoadMesh\RoadPlacer.cs" />
+     <Compile Include="Assets\_Prefabs\Prefab_Spline\Scripts\RoadMesh\SplineMesh.cs" />
      <None Include="Assets\Oculus\OvrAvatar\Content\Materials\AvatarSurfaceShaderSelfOccluding.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
      <None Include="Assets\Oculus\OVR\THIRD_PARTY_NOTICES.txt" />
