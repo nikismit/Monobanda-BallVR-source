@@ -61,7 +61,7 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
             //CrashKnockBack();
     }
 
-    public void onCollisionCorrection(){
+    public void onCollisionCorrection(Vector3 wallCol){
       posDiff.Clear();
       var pathLength = path.points.Count;
 
@@ -85,8 +85,12 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
             minVector = (posDiff[i].magnitude < minVector.magnitude) ?  posDiff[i] : minVector;
         maxVector = (posDiff[i].magnitude > maxVector.magnitude) ?  posDiff[i] : maxVector;
         }
+
+
+        m_Rigidbody.AddForce(wallCol * 10, ForceMode.Impulse);
+
         //m_Rigidbody.AddForce(new Vector3(minVector.x * 20f, 0f, minVector.z * 20f), ForceMode.Force);
-        m_Rigidbody.AddForce(new Vector3(closest.transform.position.x * 20, 0f, closest.transform.position.z * 20), ForceMode.Force);
+        //m_Rigidbody.AddForce(new Vector3(wallCol.x * 20, 0f, wallCol.z * 20), ForceMode.Force);
 
         //CrashKnockBack();
 
@@ -94,6 +98,7 @@ public class collisionAdjustmentScriptPlayer1 : MonoBehaviour
 
 
         car.transform.eulerAngles = closest.transform.eulerAngles;
+        //car.transform.eulerAngles = new Vector3(transform.position.x, wallCol.y, transform.position.z);
     }
 
     IEnumerator CrashKnockBack()

@@ -35,7 +35,10 @@ public class AiPathFollowDriver : MonoBehaviour
     currentSpeed = currentSpeed;
   }
   else if(collision.gameObject.tag == "Track"){
-    onCollisionCorrection();
+
+            Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
+
+            onCollisionCorrection(col);
     sfx.crashIntoTrack();
     if(currentSpeed> Player1.maximumForwardSpeed){
         currentSpeed = 0.50f * currentSpeed;
@@ -79,7 +82,8 @@ private void OnTriggerEnter(Collider other)
         return closest;
         Debug.Log(closest);
     }
-    public void onCollisionCorrection(){
+    public void onCollisionCorrection(Vector3 wallCol)
+    {
       posDiff.Clear();
       var pathLength = path.points.Count;
       for (int i=0; i < pathLength; i++){
@@ -87,14 +91,16 @@ private void OnTriggerEnter(Collider other)
           var posDifference = pointTransform - vehicle.transform.position;
           posDiff.Add(posDifference);
       }
-      Vector3 minVector = Vector3.positiveInfinity;
+        Vector3 minVector = Vector3.positiveInfinity;
       Vector3 maxVector = Vector3.zero;
       for(int i = 0; i < posDiff.Count; i++){
         minVector = (posDiff[i].magnitude < minVector.magnitude) ?  posDiff[i] : minVector;
         maxVector = (posDiff[i].magnitude > maxVector.magnitude) ?  posDiff[i] : maxVector;
       }
-      m_Rigidbody.AddForce(new Vector3(minVector.x*20f,0f,minVector.z*20f), ForceMode.Force);
-      car.transform.eulerAngles = closest.transform.eulerAngles;
+        //m_Rigidbody.AddForce(new Vector3(minVector.x*20f,0f,minVector.z*20f), ForceMode.Force);
+        m_Rigidbody.AddForce(wallCol * 10, ForceMode.Impulse);
+
+        car.transform.eulerAngles = closest.transform.eulerAngles;
     }
 
     // public void SetBlendedEulerAngles(Vector3 angles)

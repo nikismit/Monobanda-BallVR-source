@@ -89,7 +89,8 @@ public class AudioFlyingPlayer1 : MonoBehaviour {
 			currentSpeed = currentSpeed;
 		}
 		else if(collision.gameObject.tag == "Track"){
-			crashForce.onCollisionCorrection();
+			//crashForce.onCollisionCorrection();
+			crashForce.onCollisionCorrection(transform.position);
 			sfx.crashIntoTrack();
 			if(currentSpeed> maximumForwardSpeed){
 					currentSpeed = 0.50f * currentSpeed;

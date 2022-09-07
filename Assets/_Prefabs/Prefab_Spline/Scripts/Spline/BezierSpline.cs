@@ -205,7 +205,7 @@ public class BezierSpline : MonoBehaviour
 			t -= i;
 			i *= 3;
 		}
-		return transform.TransformPoint(Bezier.GetPoint(
+		return transform.TransformPoint(BezierCheckPoints.GetPoint(
 			points[i], points[i + 1], points[i + 2], points[i + 3], t));
 	}
 
@@ -224,7 +224,7 @@ public class BezierSpline : MonoBehaviour
 			t -= i;
 			i *= 3;
 		}
-		return transform.TransformPoint(Bezier.GetFirstDerivative(
+		return transform.TransformPoint(BezierCheckPoints.GetFirstDerivative(
 			points[i], points[i + 1], points[i + 2], points[i + 3], t)) - transform.position;
 	}
 

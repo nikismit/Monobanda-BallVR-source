@@ -89,7 +89,12 @@ public class AudioMovement : MonoBehaviour {
 			currentSpeed = currentSpeed;
 		}
 		else if(collision.gameObject.tag == "Track"){
-			crashForce.onCollisionCorrection();
+
+			Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
+
+			//Debug.LogWarning(collision.contacts[0].normal);
+
+			crashForce.onCollisionCorrection(col);
 			sfx.crashIntoTrack();
 			if(currentSpeed> maximumForwardSpeed){
 					currentSpeed = 0.50f * currentSpeed;
