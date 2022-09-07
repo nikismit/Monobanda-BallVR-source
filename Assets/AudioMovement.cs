@@ -139,6 +139,7 @@ public class AudioMovement : MonoBehaviour {
 		currentAmp = pitch._currentPublicAmplitude;
 		Volume = pitch._currentPublicAmplitude;
 		currentPitchValue = currentPitch;
+
 		objectHeight = this.transform.position.y;
 		if (objectHeight > 0.6f){
 			this.transform.Translate(0,-0.1f,0);
@@ -152,6 +153,13 @@ public class AudioMovement : MonoBehaviour {
 		// if(currentPitch > minimumPitch && currentAmp > -15f){
 		// 		currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
 
+		RaycastHit hit;
+		if (!Physics.Raycast(transform.position, Vector3.down, out hit, 5))
+        {
+			//Debug.Log(hit.transform.name);
+
+
+        }
 
 	}
 
