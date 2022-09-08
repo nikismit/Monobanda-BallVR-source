@@ -116,7 +116,14 @@ public class AudioMovement : MonoBehaviour {
 			transform.rotation = other.transform.rotation;
 			currentSpeed = speedBoost * currentSpeed;
 			}
-    }
+
+		Debug.Log(other);
+		if (other.gameObject.GetComponent<JumpPad>())
+		{
+
+			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
+		}
+	}
 
     void FixedUpdate()
     {
@@ -337,6 +344,13 @@ public class AudioMovement : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void JumpBoost(float jumpBoost)
+    {
+		//Debug.LogError("JAJA");
+		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+		//this.transform.Translate(transform.up * jumpBoost * Time.fixedDeltaTime, Space.World);
 	}
 
 
