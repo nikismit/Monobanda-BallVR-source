@@ -15,8 +15,10 @@ public class AiPathFollowDriver : MonoBehaviour
   public AudioMovement Player1;
   public AudioPitch_Player1 pitch;
   public SFXManager sfx;
+  private LayerMask layer;
 
-  [Range(0.01f,1f)]
+
+    [Range(0.01f,1f)]
   public float AiDisadvantage = 1f;
 
   public float currentSpeed = 0f;
@@ -26,15 +28,19 @@ public class AiPathFollowDriver : MonoBehaviour
 
   public float turningRate = 10f;
 
- //private Quaternion _targetRotation = Quaternion.identity;
+    //private Quaternion _targetRotation = Quaternion.identity;
 
-  void OnCollisionEnter(Collision collision)
+    private void Start()
+    {
+        layer = 8;
+    }
+
+    void OnCollisionEnter(Collision collision)
 {
-
-  if (collision.gameObject.tag == "Box"){
+            if (collision.gameObject.tag == "Box"){
     currentSpeed = currentSpeed;
   }
-  else if(collision.gameObject.tag == "Track"){
+  else if(collision.gameObject.tag == "Track"|| collision.gameObject.tag == "Player"){
 
             Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
@@ -59,7 +65,10 @@ private void OnTriggerEnter(Collider other)
     if (other.gameObject.tag == "Ring"){
       currentSpeed = Player1.speedBoost * 0.75f * currentSpeed;
     }
-  }
+
+        if (other.gameObject.GetComponent<JumpPad>())
+            JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
+    }
 
     public GameObject FindClosestEnemy()
     {
@@ -131,6 +140,25 @@ private void OnTriggerEnter(Collider other)
         this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
       }
 
+        if (!IsGrounded())
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), 1 * Time.deltaTime);
+    }
 
+    public bool IsGrounded()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down + Vector3.forward, 5, layer) ||
+            Physics.Raycast(transform.position, Vector3.down + Vector3.back, 5, layer) ||
+            Physics.Raycast(transform.position, Vector3.down + Vector3.left, 5, layer) ||
+            Physics.Raycast(transform.position, Vector3.down + Vector3.right, 5, layer))
+            return true;
+        else
+            return false;
+    }
+
+    public void JumpBoost(float jumpBoost)
+    {
+        //Debug.LogError("JAJA");
+        m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+        //this.transform.Translate(transform.up * jumpBoost * Time.fixedDeltaTime, Space.World);
     }
 }

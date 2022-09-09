@@ -48,7 +48,6 @@ GameObject:
   - component: {fileID: 8290383418986650680}
   - component: {fileID: 8290383418986650681}
   - component: {fileID: 8290383418986650682}
-  - component: {fileID: 8290383418986650674}
   m_Layer: 0
   m_Name: Player_AI
   m_TagString: Player
@@ -4958,45 +4957,6 @@ MonoBehaviour:
   index: 0
   P1Pos: 0
   turningRate: 0.6
---- !u!114 &8290383418986650674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8290383418986650683}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59006cd2a5ca0ab489ee9cf4393f45f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crashForce: {fileID: 0}
-  pitch: {fileID: 0}
-  sfx: {fileID: 0}
-  currentPitch: 0
-  currentAmp: 0
-  maximumForwardSpeed: 0
-  forwardAccelaration: 0
-  forwardDecelerationSinglePlayer: 0
-  forwardDecelerationMultiplayerPlayer: 0
-  turningSpeed: 0
-  turningDeceleration: 0
-  speedBoost: 0
-  currentTurn: 0
-  currentSpeed: 0
-  objectHeight: 0
-  Volume: 0
-  camera: {fileID: 0}
-  FOV: 0
-  FovWanted: 0
-  Done: {fileID: 0}
-  minimumPitch: 0
-  maximumPitch: 0
-  currentPitchValue: 0
-  highPitchIsTurnRight: 0
-  soundTriggersParticles: 0
-  isSinglePlayer: 0
-  comingFromMainMenu: 0
 --- !u!135 &8290383420300023026
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -82,7 +82,7 @@ public class SFXManager : MonoBehaviour
     void Update()
     {
     Player1EngineSFX();
-    if(isSingleplayer = true){
+    if(!isSingleplayer){
         Player2EngineSFX();
     }
     }
