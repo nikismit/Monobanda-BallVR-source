@@ -8,7 +8,7 @@ public class Roller : MonoBehaviour
 
     [SerializeField] float rollSpeed;
 
-    void Update()
+    void LateUpdate()
     {
         transform.Rotate(0, rollSpeed * Time.deltaTime, 0);
     }
