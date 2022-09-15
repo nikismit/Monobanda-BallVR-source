@@ -44,8 +44,7 @@ public class AudioMovement : MonoBehaviour {
 	public bool FovWanted;
 
 
-
-	// public FinishScript Done;
+	[SerializeField]private LayerMask layer;
 
 	[Header("Options")]
 	public float minimumPitch;
@@ -76,19 +75,39 @@ public class AudioMovement : MonoBehaviour {
 		SavedFOV = FOV;
 
 		//SetMinAndMaxPitch
-		if(comingFromMainMenu == true){
+		if (comingFromMainMenu == true){
 			minimumPitch = PlayerPrefs.GetFloat("Player1Lowest");
 			maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 		}
 
     }
 
-		void OnCollisionEnter(Collision collision)
-{
+	void OnCollisionEnter(Collision collision)
+	{
+		/*
+		if (collision.gameObject.tag == "Player")
+        {
+			Debug.Log("yyoyoyo");
+
+			Vector3 otherVel = collision.rigidbody.velocity;
+
+			var speed = m_Rigidbody.velocity.magnitude;
+
+			var dir = Vector3.Reflect(m_Rigidbody.velocity.normalized, collision.contacts[0].normal);
+
+			m_Rigidbody.velocity = dir * Mathf.Max(speed, 0f);
+
+        }
+		*/
+		if (collision.gameObject.tag == "Box")
+		{
+			currentSpeed = currentSpeed;
+		}
+
 		if (collision.gameObject.tag == "Box"){
 			currentSpeed = currentSpeed;
 		}
-		else if(collision.gameObject.tag == "Track"){
+		else if(collision.gameObject.tag == "Track" || collision.gameObject.tag == "Player"){
 
 			Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
@@ -109,7 +128,7 @@ public class AudioMovement : MonoBehaviour {
 		else{
 			currentSpeed = 0.75f * currentSpeed;
 		}
-}
+	}
 	private void OnTriggerEnter(Collider other)
     {
 			if (other.gameObject.tag == "Ring"){
@@ -119,13 +138,10 @@ public class AudioMovement : MonoBehaviour {
 
 		Debug.Log(other);
 		if (other.gameObject.GetComponent<JumpPad>())
-		{
-
 			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
-		}
 	}
 
-    void FixedUpdate()
+	void FixedUpdate()
     {
 			var mult = speedBoost * maximumForwardSpeed;
 			var diffCoef = (currentSpeed/((maximumForwardSpeed*speedBoost)-maximumForwardSpeed))*mult;
@@ -165,14 +181,19 @@ public class AudioMovement : MonoBehaviour {
 		// if(currentPitch > minimumPitch && currentAmp > -15f){
 		// 		currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
 
-		RaycastHit hit;
-		if (!Physics.Raycast(transform.position, Vector3.down, out hit, 5))
-        {
-			//Debug.Log(hit.transform.name);
+        if (!IsGrounded())
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), 1 * Time.deltaTime);
+	}
 
-
-        }
-
+	public bool IsGrounded()
+    {
+		if (Physics.Raycast(transform.position, Vector3.down + Vector3.forward, 5, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.back, 5, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.left, 5, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.right, 5, layer))
+			return true;
+		else
+			return false;
 	}
 
 	void CarKeyMovement()
