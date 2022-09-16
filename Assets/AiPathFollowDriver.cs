@@ -17,6 +17,8 @@ public class AiPathFollowDriver : MonoBehaviour
   public SFXManager sfx;
   private LayerMask layer;
 
+    private AudioMovement player;//Debug purpose
+
 
     [Range(0.01f,1f)]
   public float AiDisadvantage = 1f;
@@ -33,6 +35,7 @@ public class AiPathFollowDriver : MonoBehaviour
     private void Start()
     {
         layer = 8;
+        player = GameObject.FindObjectOfType<AudioMovement>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -40,11 +43,25 @@ public class AiPathFollowDriver : MonoBehaviour
             if (collision.gameObject.tag == "Box"){
     currentSpeed = currentSpeed;
   }
-  else if(collision.gameObject.tag == "Track"){
+  else if(collision.gameObject.tag == "Track" || player.setCrashCol && collision.gameObject.tag == "Player")
+        {
 
             Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
+
+            if (player.testRailControl)//TODO: only works on right wall
+            {
+                Vector3 reflect = Vector3.zero;
+
+                if (player.currentTurn > 0)
+                    reflect = Vector3.Reflect(-transform.right, collision.contacts[0].normal);
+                else
+                    reflect = Vector3.Reflect(transform.right, collision.contacts[0].normal);
+                transform.Translate(reflect, Space.World);
+            }
+            else
             onCollisionCorrection(col);
+
     sfx.crashIntoTrack();
     if(currentSpeed> Player1.maximumForwardSpeed){
         currentSpeed = 0.50f * currentSpeed;

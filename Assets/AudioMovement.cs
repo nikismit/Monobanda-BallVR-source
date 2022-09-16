@@ -420,7 +420,7 @@ public class AudioMovement : MonoBehaviour {
 
 	public void JumpBoost(float jumpBoost)
     {
-		Debug.LogError("JAJA");
+		//Debug.LogError("JAJA");
 		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//this.transform.Translate(transform.up * jumpBoost * Time.fixedDeltaTime, Space.World);
 	}
