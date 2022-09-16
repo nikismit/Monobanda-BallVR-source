@@ -40,7 +40,7 @@ public class AiPathFollowDriver : MonoBehaviour
             if (collision.gameObject.tag == "Box"){
     currentSpeed = currentSpeed;
   }
-  else if(collision.gameObject.tag == "Track"|| collision.gameObject.tag == "Player"){
+  else if(collision.gameObject.tag == "Track"){
 
             Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 

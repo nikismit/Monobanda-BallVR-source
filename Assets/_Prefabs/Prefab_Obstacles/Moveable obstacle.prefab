@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 6310470503722329017}
   - component: {fileID: 6623585475306929629}
   - component: {fileID: 5665042761368885985}
-  - component: {fileID: 8266562751155377497}
   - component: {fileID: 1937571275808279515}
+  - component: {fileID: 494059061695818282}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Track
@@ -176,20 +176,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8266562751155377497
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5352040896970354152}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1937571275808279515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,3 +192,17 @@ MonoBehaviour:
   - {fileID: 6367385783079959104}
   - {fileID: 8928029554215088068}
   speed: 10
+--- !u!64 &494059061695818282
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5352040896970354152}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}

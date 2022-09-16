@@ -91,9 +91,9 @@ MonoBehaviour:
   currentAmp: 0
   maximumForwardSpeed: 25
   forwardAccelaration: 9
-  forwardDecelerationSinglePlayer: 0.1
+  forwardDecelerationSinglePlayer: 0
   forwardDecelerationMultiplayerPlayer: 4
-  turningSpeed: 50
+  turningSpeed: 120
   turningDeceleration: 3.5
   speedBoost: 1.5
   currentTurn: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   isSinglePlayer: 1
   comingFromMainMenu: 1
   debugKeyControl: 1
+  testRailControl: 1
 --- !u!33 &4767737315599181010
 MeshFilter:
   m_ObjectHideFlags: 0

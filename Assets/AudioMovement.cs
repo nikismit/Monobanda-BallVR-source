@@ -57,11 +57,15 @@ public class AudioMovement : MonoBehaviour {
 
 	[Header("Debug")]
 	public bool debugKeyControl;
+	public bool testRailControl;
+	[Range(0f, 50f)]
+	public float railSteerSpeed;
+	private float railSteerRef;
 
 
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
-    Rigidbody m_Rigidbody;
+	Rigidbody m_Rigidbody;
 	ParticleSystem _partSys;
 
     void Start()
@@ -80,9 +84,11 @@ public class AudioMovement : MonoBehaviour {
 			maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 		}
 
-    }
+		railSteerRef = railSteerSpeed;
+		railSteerSpeed = 0;
+	}
 
-	void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
 	{
 		/*
 		if (collision.gameObject.tag == "Player")
@@ -107,11 +113,25 @@ public class AudioMovement : MonoBehaviour {
 		if (collision.gameObject.tag == "Box"){
 			currentSpeed = currentSpeed;
 		}
-		else if(collision.gameObject.tag == "Track" || collision.gameObject.tag == "Player"){
+		else if(collision.gameObject.tag == "Track"){
 
 			Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
+
 			//Debug.LogWarning(collision.contacts[0].normal);
+
+			
+			if (testRailControl)//TODO: only works on right wall
+            {
+				Vector3 reflect = Vector3.zero;
+
+				if(currentTurn > 0)
+					reflect = Vector3.Reflect(transform.right, collision.contacts[0].normal);
+					else
+				reflect = Vector3.Reflect(-transform.right, collision.contacts[0].normal);
+				transform.Translate(reflect, Space.World);
+			}
+			
 
 			crashForce.onCollisionCorrection(col);
 			sfx.crashIntoTrack();
@@ -133,7 +153,8 @@ public class AudioMovement : MonoBehaviour {
     {
 			if (other.gameObject.tag == "Ring"){
 			transform.rotation = other.transform.rotation;
-			currentSpeed = speedBoost * currentSpeed;
+			//currentSpeed = speedBoost * currentSpeed;
+			currentSpeed = 55;
 			}
 
 		Debug.Log(other);
@@ -234,8 +255,15 @@ public class AudioMovement : MonoBehaviour {
 			{
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
-			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+
+			if (testRailControl)
+				this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+            else
+            {
+				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+				this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			}
+
 			if (FovWanted == true)
 			{
 				if (FOV >= 60f && FOV < 80f)
@@ -263,8 +291,15 @@ public class AudioMovement : MonoBehaviour {
 				currentTurn += Time.fixedDeltaTime * turningDeceleration;
 			}
 			emission.rateOverTime = 0;
-			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+
+			if(testRailControl)
+				this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+            else
+            {
+				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+				this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			}
+
 			if (FovWanted == true)
 			{
 				if (FOV > 60f && FOV <= 80f)
@@ -320,8 +355,13 @@ public class AudioMovement : MonoBehaviour {
 			{
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
-			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			if (testRailControl)
+				this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+			else
+			{
+				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+				this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			}
 			if (FovWanted == true)
 			{
 				if (FOV >= 60f && FOV < 80f)
@@ -349,8 +389,13 @@ public class AudioMovement : MonoBehaviour {
 				currentTurn += Time.fixedDeltaTime * turningDeceleration;
 			}
 			emission.rateOverTime = 0;
-			this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-			this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			if (testRailControl)
+				this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+			else
+			{
+				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+				this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+			}
 			if (FovWanted == true)
 			{
 				if (FOV > 60f && FOV <= 80f)
@@ -374,5 +419,9 @@ public class AudioMovement : MonoBehaviour {
 		//this.transform.Translate(transform.up * jumpBoost * Time.fixedDeltaTime, Space.World);
 	}
 
-
+	public void SetRailConstrains()
+	{
+		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
+		railSteerSpeed = railSteerRef;
+	}
 }

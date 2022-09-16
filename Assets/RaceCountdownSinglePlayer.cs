@@ -112,6 +112,9 @@ public class RaceCountdownSinglePlayer : MonoBehaviour
                     Rigidbody rb = cars[i].gameObject.GetComponent<Rigidbody>();
                     rb.constraints = RigidbodyConstraints.None;
                     rb.constraints = RigidbodyConstraints.FreezeRotationZ;
+
+                    if (Player1.testRailControl)
+                    Player1.SetRailConstrains();
                     //Debug.LogWarning(cars[i] + " / " + rb);
                 }
                 //raceStarted = true;
