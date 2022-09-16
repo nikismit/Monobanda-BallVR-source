@@ -58,9 +58,12 @@ public class AudioMovement : MonoBehaviour {
 	[Header("Debug")]
 	public bool debugKeyControl;
 	public bool testRailControl;
-	[Range(0f, 50f)]
+	[Range(1f, 50f)]
 	public float railSteerSpeed;
 	private float railSteerRef;
+
+	public bool setCrashCol;
+	public bool lockRigidbodyRotation;
 
 
 
@@ -86,6 +89,9 @@ public class AudioMovement : MonoBehaviour {
 
 		railSteerRef = railSteerSpeed;
 		railSteerSpeed = 0;
+
+		//if (lockRigidbody)
+			//m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
 	}
 
     void OnCollisionEnter(Collision collision)
@@ -104,16 +110,17 @@ public class AudioMovement : MonoBehaviour {
 			m_Rigidbody.velocity = dir * Mathf.Max(speed, 0f);
 
         }
-		*/
+
 		if (collision.gameObject.tag == "Box")
 		{
 			currentSpeed = currentSpeed;
 		}
-
+				*/
 		if (collision.gameObject.tag == "Box"){
 			currentSpeed = currentSpeed;
 		}
-		else if(collision.gameObject.tag == "Track"){
+		else if(collision.gameObject.tag == "Track" || setCrashCol && collision.gameObject.tag == "Player")
+		{
 
 			Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
@@ -131,9 +138,9 @@ public class AudioMovement : MonoBehaviour {
 				reflect = Vector3.Reflect(-transform.right, collision.contacts[0].normal);
 				transform.Translate(reflect, Space.World);
 			}
-			
-
+			else
 			crashForce.onCollisionCorrection(col);
+
 			sfx.crashIntoTrack();
 			if(currentSpeed> maximumForwardSpeed){
 					currentSpeed = 0.50f * currentSpeed;
@@ -373,7 +380,6 @@ public class AudioMovement : MonoBehaviour {
 						FOV += 1f;
 						Camera.main.fieldOfView = FOV;
 					}
-
 				}
 			}
 		}
@@ -414,14 +420,16 @@ public class AudioMovement : MonoBehaviour {
 
 	public void JumpBoost(float jumpBoost)
     {
-		//Debug.LogError("JAJA");
+		Debug.LogError("JAJA");
 		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//this.transform.Translate(transform.up * jumpBoost * Time.fixedDeltaTime, Space.World);
 	}
 
 	public void SetRailConstrains()
 	{
-		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
+		if(lockRigidbodyRotation)
+		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		railSteerSpeed = railSteerRef;
 	}
 }
