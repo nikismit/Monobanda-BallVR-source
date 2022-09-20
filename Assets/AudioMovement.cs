@@ -58,14 +58,29 @@ public class AudioMovement : MonoBehaviour {
 	[Header("Debug")]
 	public bool debugKeyControl;
 	public bool testRailControl;
+	public bool PitchSliderMovement;
+	private Vector3 sliderVector;
 	[Range(1f, 50f)]
 	public float railSteerSpeed;
 	private float railSteerRef;
 
+	public bool ignorePlayerCol;
+	private Collider col;
+
 	public bool setCrashCol;
 	public bool lockRigidbodyRotation;
 
+	[Header("Debug CarRail movement")]
+	[SerializeField] float roadWidth = 60;
+	private float roadHalf;
+	[Range(1f, 5000f)] public float railSpeed;
+	float sliderPitchInvLerp;
 
+	Vector3 sliderPos;
+	private Vector3 velocity = Vector3.zero;
+	private float lastValidPitch;
+
+	private bool hasStarted = false;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
@@ -73,6 +88,8 @@ public class AudioMovement : MonoBehaviour {
 
     void Start()
     {
+		col = gameObject.GetComponent<Collider>();
+
         //Fetch the Rigidbody from the GameObject with this script attached
         m_Rigidbody = GetComponent<Rigidbody>();
 		_partSys = GetComponent<ParticleSystem>();
@@ -89,6 +106,8 @@ public class AudioMovement : MonoBehaviour {
 
 		railSteerRef = railSteerSpeed;
 		railSteerSpeed = 0;
+
+		roadHalf = roadWidth / 2;
 
 		//if (lockRigidbody)
 			//m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
@@ -116,10 +135,17 @@ public class AudioMovement : MonoBehaviour {
 			currentSpeed = currentSpeed;
 		}
 				*/
+
+		if (collision.gameObject.tag == "Player")
+		{
+			Physics.IgnoreCollision(collision.collider, col, ignorePlayerCol);
+		}
+
+
 		if (collision.gameObject.tag == "Box"){
 			currentSpeed = currentSpeed;
 		}
-		else if(collision.gameObject.tag == "Track" || setCrashCol && collision.gameObject.tag == "Player")
+		else if(collision.gameObject.tag == "Track" || setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
 		{
 
 			Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
@@ -194,12 +220,31 @@ public class AudioMovement : MonoBehaviour {
 		currentPitch = pitch._currentpublicpitch;
 		currentAmp = pitch._currentPublicAmplitude;
 		Volume = pitch._currentPublicAmplitude;
-		currentPitchValue = currentPitch;
+		//currentPitchValue = currentPitch;
 
 		objectHeight = this.transform.position.y;
 		if (objectHeight > 0.6f){
 			this.transform.Translate(0,-0.1f,0);
 		}
+
+
+		if (currentPitch < 7)
+		{
+			sliderPitchInvLerp = lastValidPitch;
+		}
+		else
+        {
+			sliderPitchInvLerp = Mathf.InverseLerp(maximumPitch, minimumPitch, currentPitch);// set value from 0 to 1 (Min pitch value = 7, max pitch value = 30)
+			lastValidPitch = sliderPitchInvLerp;
+		}
+
+		if (hasStarted)
+			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
+		else
+			sliderVector = transform.position;
+        //
+			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+
 
 
 		if (!debugKeyControl)
@@ -363,11 +408,28 @@ public class AudioMovement : MonoBehaviour {
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
 			if (testRailControl)
-				this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+            {
+				if (PitchSliderMovement)
+					this.transform.position = sliderPos + transform.forward * currentSpeed * Time.fixedDeltaTime;
+				else if (testRailControl)
+					this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+				else
+				{
+					this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+					this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+				}
+			}
 			else
 			{
-				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-				this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+				if (PitchSliderMovement)
+					this.transform.position = sliderPos + transform.forward * currentSpeed * Time.fixedDeltaTime;
+				else if (testRailControl)
+					this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+				else
+				{
+					this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+					this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+				}
 			}
 			if (FovWanted == true)
 			{
@@ -395,12 +457,27 @@ public class AudioMovement : MonoBehaviour {
 				currentTurn += Time.fixedDeltaTime * turningDeceleration;
 			}
 			emission.rateOverTime = 0;
-			if (testRailControl)
-				this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
-			else
 			{
-				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
-				this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+				if (PitchSliderMovement)
+					this.transform.position = sliderPos + transform.forward * currentSpeed * Time.fixedDeltaTime;
+				else if (testRailControl)
+					this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+				else
+				{
+					this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+					this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+				}
+			}
+			{
+				if (PitchSliderMovement)
+					this.transform.position = sliderPos + transform.forward * currentSpeed * Time.fixedDeltaTime;
+				else if (testRailControl)
+					this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+				else
+				{
+					this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
+					this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
+				}
 			}
 			if (FovWanted == true)
 			{
@@ -417,7 +494,6 @@ public class AudioMovement : MonoBehaviour {
 			}
 		}
 	}
-
 	public void JumpBoost(float jumpBoost)
     {
 		//Debug.LogError("JAJA");
@@ -431,5 +507,12 @@ public class AudioMovement : MonoBehaviour {
 		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		railSteerSpeed = railSteerRef;
+
+		Invoke("SetRailMovement",1);
+	}
+
+	void SetRailMovement()
+    {
+		hasStarted = true;
 	}
 }

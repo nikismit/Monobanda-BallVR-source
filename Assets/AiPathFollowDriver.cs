@@ -30,20 +30,31 @@ public class AiPathFollowDriver : MonoBehaviour
 
   public float turningRate = 10f;
 
+    private bool ignorePlayerCol;
+    private Collider col;
+
     //private Quaternion _targetRotation = Quaternion.identity;
 
     private void Start()
     {
+        ignorePlayerCol = Player1.ignorePlayerCol;
+        col = gameObject.GetComponent<Collider>();
+
         layer = 8;
         player = GameObject.FindObjectOfType<AudioMovement>();
     }
 
     void OnCollisionEnter(Collision collision)
 {
-            if (collision.gameObject.tag == "Box"){
+        if (collision.gameObject.tag == "Player")
+        {
+            Physics.IgnoreCollision(collision.collider, col, ignorePlayerCol);
+        }
+
+        if (collision.gameObject.tag == "Box"){
     currentSpeed = currentSpeed;
   }
-  else if(collision.gameObject.tag == "Track" || player.setCrashCol && collision.gameObject.tag == "Player")
+  else if(collision.gameObject.tag == "Track" || player.setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
         {
 
             Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);

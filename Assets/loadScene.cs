@@ -29,6 +29,11 @@ public class loadScene : MonoBehaviour
     public void loadSinglePlayerScene(){
       SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervySinglePlayerMap");
     }
+    public void loadEndlessRunnerScene()
+    {
+        SceneManager.LoadScene("EndlessRunnerTEST_Main");
+    }
+
     public void moveToCalibration(){
       MainMenu.SetActive(false);
       CalibrationMenu.SetActive(true);
