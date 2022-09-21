@@ -160,7 +160,7 @@ public class AudioMovement : MonoBehaviour {
 
 			//Debug.LogWarning(collision.contacts[0].normal);
 
-			
+
 			if (testRailControl)//TODO: only works on right wall
             {
 				Vector3 reflect = Vector3.zero;
