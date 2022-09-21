@@ -440,6 +440,8 @@ MonoBehaviour:
   heightDamping: 2
   rotationDamping: 5
   lockZaxis: 0
+  multiplayer: 0
+  player: {fileID: 0}
 --- !u!4 &33246344 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5727917350813428852, guid: 3c406b4f0977c0b46949bea9474153b3,
@@ -23230,7 +23232,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 81728904}
         m_TargetAssemblyTypeName: loadScene, Assembly-CSharp
-        m_MethodName: load2ndCoopScene
+        m_MethodName: loadEndlessRunnerSceneCoop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

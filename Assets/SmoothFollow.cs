@@ -27,10 +27,20 @@ public class SmoothFollow : MonoBehaviour {
 
     [Header("Debug Settings")]
     [SerializeField] bool lockZaxis;
- 
+    [SerializeField] bool multiplayer;
+    [SerializeField] private AudioMovement player;
+    float playerSpeed;
+
+
     void Start()
     {
         transform.LookAt(target);
+
+        //player = target.gameObject.GetComponent<AudioMovement>();
+
+        playerSpeed = player.maximumForwardSpeed;
+
+        //transform.position -= transform.eulerAngles.y * Vector3.forward * distance;
     }
 
      void  FixedUpdate ()
@@ -53,15 +63,25 @@ public class SmoothFollow : MonoBehaviour {
  
          // Convert the angle into a rotation
          Quaternion currentRotation = Quaternion.Euler (0, currentRotationAngle, 0);
-     
-         // Set the position of the camera on the x-z plane to:
-         // distance meters behind the target
-         transform.position = target.position;
-         transform.position -= currentRotation * Vector3.forward * distance;
- 
-         // Set the height of the camera
-         //
-         if(lockZaxis)
+
+        // Set the position of the camera on the x-z plane to:
+        // distance meters behind the target
+        if (multiplayer && player.isMoving)
+        {
+            //transform.position = Vector3.forward * 1 * Time.deltaTime;
+            //transform.Translate((transform.forward * playerSpeed) * Time.fixedDeltaTime, Space.World);
+            transform.position += transform.forward * (playerSpeed * 1.111f)* Time.fixedDeltaTime;
+        }
+        else
+        {
+            transform.position = target.position;
+            transform.position -= currentRotation * Vector3.forward * distance;
+        }
+
+
+        // Set the height of the camera
+        //
+        if (lockZaxis)
             transform.position = new Vector3(transform.position.x, currentHeight, 0);
          else
             transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);

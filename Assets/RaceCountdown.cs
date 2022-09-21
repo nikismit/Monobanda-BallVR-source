@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class RaceCountdown : MonoBehaviour
 {
-  public AudioMovement Player1;
+    public List<GameObject> rbCars;
+    GameObject[] cars;
+
+    public AudioMovement Player1;
   public AudioMovementPlayer2 Player2;
 
   public GameObject No5;
@@ -14,21 +17,38 @@ public class RaceCountdown : MonoBehaviour
   public GameObject No2;
   public GameObject No1;
   public GameObject GO;
-  public GameObject Player1Slider;
-  public GameObject Player2Slider;
+
+    public GameObject Player1Slider;
+    public GameObject Player2Slider;
+
+
+
 
   public float timer;
 
     void Start()
     {
-      No5.SetActive(false);
+        cars = GameObject.FindGameObjectsWithTag("Player");
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            Rigidbody rb = cars[i].gameObject.GetComponent<Rigidbody>();
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            //Debug.LogWarning(cars[i] + " / " + rb);
+        }
+
+        No5.SetActive(false);
       No4.SetActive(false);
       No3.SetActive(false);
       No2.SetActive(false);
       No1.SetActive(false);
       GO.SetActive(false);
-      Player1Slider.SetActive(false);
-      Player2Slider.SetActive(false);
+        if (Player1Slider != null ||Player2Slider != null)
+        {
+            Player1Slider.SetActive(false);
+            Player2Slider.SetActive(false);
+        }
+
       timer = 6f;
     }
 
@@ -64,10 +84,32 @@ public class RaceCountdown : MonoBehaviour
         No1.SetActive(false);
         GO.SetActive(true);
       }
-      else if(timer<=0f){
-        GO.SetActive(false);
-        Player1Slider.SetActive(true);
-        Player2Slider.SetActive(true);
-      }
+      else if(timer<=0f)
+        {
+            GO.SetActive(false);
+            if (Player1Slider != null || Player2Slider != null)
+            {
+                Player1Slider.SetActive(true);
+                Player2Slider.SetActive(true);
+            }
+
+
+            GO.SetActive(false);
+
+            for (int i = 0; i < cars.Length; i++)
+            {
+                Rigidbody rb = cars[i].gameObject.GetComponent<Rigidbody>();
+                rb.constraints = RigidbodyConstraints.None;
+                rb.constraints = RigidbodyConstraints.FreezeRotationZ;
+
+                if (Player1.testRailControl)
+                {
+                    Player1.SetRailConstrains();
+                    Player2.SetRailConstrains();
+                }
+                //Debug.LogWarning(cars[i] + " / " + rb);
+            }
+        }
+
     }
 }

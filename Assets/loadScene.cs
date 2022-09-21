@@ -33,6 +33,10 @@ public class loadScene : MonoBehaviour
     {
         SceneManager.LoadScene("EndlessRunnerTEST_Main");
     }
+    public void loadEndlessRunnerSceneCoop()
+    {
+        SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");
+    }
 
     public void moveToCalibration(){
       MainMenu.SetActive(false);

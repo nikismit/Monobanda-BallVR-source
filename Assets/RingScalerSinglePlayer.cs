@@ -26,6 +26,7 @@ public class RingScalerSinglePlayer : MonoBehaviour
 
     void Update()
     {
+        /*
       averageVolume();
       if (scale>1.1f && scale<2f){
         for (int i=0; i<rings.Count; i++){
@@ -35,5 +36,6 @@ public class RingScalerSinglePlayer : MonoBehaviour
       else{
         scale = 1f;
       }
+        */
     }
 }

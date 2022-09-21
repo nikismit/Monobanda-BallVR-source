@@ -127,6 +127,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.09375, z: 1.09375}
   m_Children:
   - {fileID: 865901338004557211}
+  - {fileID: 8187766332555592072}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -206,6 +207,9 @@ MonoBehaviour:
   height: 5
   heightDamping: 2
   rotationDamping: 5
+  lockZaxis: 0
+  multiplayer: 0
+  player: {fileID: 0}
 --- !u!1 &865901337379235988
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,3 +466,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orbSpeed: 0.552
   targ: {fileID: 865901337379235988}
+--- !u!1 &7292812049291490196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8187766332555592072}
+  m_Layer: 0
+  m_Name: CarDistRef
+  m_TagString: CarDistRef
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8187766332555592072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292812049291490196}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3, y: -2.1, z: 27.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 865901336933553550}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

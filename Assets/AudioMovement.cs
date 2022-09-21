@@ -62,7 +62,7 @@ public class AudioMovement : MonoBehaviour {
 	private Vector3 sliderVector;
 	[Range(1f, 50f)]
 	public float railSteerSpeed;
-	private float railSteerRef;
+	[HideInInspector] public float railSteerRef;
 
 	public bool ignorePlayerCol;
 	private Collider col;
@@ -81,6 +81,11 @@ public class AudioMovement : MonoBehaviour {
 	private float lastValidPitch;
 
 	private bool hasStarted = false;
+	[HideInInspector] public bool isMoving = false;
+
+	private float boostTimer = 100;
+
+	private Transform camDist;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
@@ -109,8 +114,10 @@ public class AudioMovement : MonoBehaviour {
 
 		roadHalf = roadWidth / 2;
 
+		camDist = GameObject.FindGameObjectWithTag("CarDistRef").transform;
+
 		//if (lockRigidbody)
-			//m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
+		//m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
 	}
 
     void OnCollisionEnter(Collision collision)
@@ -184,20 +191,51 @@ public class AudioMovement : MonoBehaviour {
 	}
 	private void OnTriggerEnter(Collider other)
     {
-			if (other.gameObject.tag == "Ring"){
+		if (other.gameObject.tag == "Ring")
+		{
 			transform.rotation = other.transform.rotation;
 			//currentSpeed = speedBoost * currentSpeed;
-			currentSpeed = 55;
-			}
+			//currentSpeed = 55;
+			//transform.position
+			boostTimer = 0;
+		}
 
 		Debug.Log(other);
 		if (other.gameObject.GetComponent<JumpPad>())
 			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
 	}
 
-	void FixedUpdate()
+void FixedUpdate()
     {
-			var mult = speedBoost * maximumForwardSpeed;
+        if (isMoving)
+        {
+			if (boostTimer < 1)
+			{
+				boostTimer += Time.deltaTime;
+
+				float ease = Mathf.InverseLerp(0, 2, boostTimer) * 5;
+				Debug.Log(boostTimer);
+				//ringModels[0].transform.Rotate(new Vector3(0, 0, 200));
+				currentSpeed += 10;
+
+			}
+			else if (transform.position.x >= camDist.position.x)
+			{
+				currentSpeed -= 5;
+				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
+			}
+			else if (transform.position.x < camDist.position.x -0.1f)
+			{
+				currentSpeed += 5;
+				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
+			}
+			else
+				currentSpeed = maximumForwardSpeed;
+		}
+
+
+
+		var mult = speedBoost * maximumForwardSpeed;
 			var diffCoef = (currentSpeed/((maximumForwardSpeed*speedBoost)-maximumForwardSpeed))*mult;
 			if (currentSpeed > maximumForwardSpeed+1f){
 				speedBoostDecelerator = diffCoef;
@@ -507,6 +545,8 @@ public class AudioMovement : MonoBehaviour {
 		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		railSteerSpeed = railSteerRef;
+		currentSpeed = maximumForwardSpeed;
+		isMoving = true;
 
 		Invoke("SetRailMovement",1);
 	}
