@@ -88,10 +88,12 @@ public class SnakeBehavior : MonoBehaviour
 
             if (i == 1)
             {
-                PrevBodyPart = gameObject.transform;
+                //PrevBodyPart = gameObject.transform;
+
+                curBodyPart.position = (curBodyPart.position - gameObject.transform.position).normalized * 0.5f + gameObject.transform.position;
                 //bodyParts.RemoveAt(0);
             }
-
+            else
 
 
             curBodyPart.position = (curBodyPart.position - PrevBodyPart.transform.position).normalized * minDistance + PrevBodyPart.transform.position;//Keeps distance objects
@@ -104,22 +106,24 @@ public class SnakeBehavior : MonoBehaviour
         }
     }
 
-    private bool firstSpawn = false;
+    private bool firstSpawn = true;
 
     public void AddBodyPart(int _count, float _lineDist)
     {
-        /*
+        Transform newpart;
         if (firstSpawn)
         {
-            Transform newpart = (Instantiate(bodyParts[1].gameObject,
-    bodyParts[bodyParts.Count - 1].position = new Vector3(-minDistance + bodyParts[bodyParts.Count - 1].transform.position.x,
+            firstSpawn = false;
+            Debug.Log("firstSpawn!");
+            newpart = (Instantiate(bodyParts[1].gameObject,
+    bodyParts[bodyParts.Count - 1].position = new Vector3(-minDistance + transform.position.x,
     bodyParts[bodyParts.Count - 1].transform.position.y,
     bodyParts[bodyParts.Count - 1].transform.position.z),
     bodyParts[bodyParts.Count - 1].rotation = gameObject.transform.rotation) as GameObject).transform;
         }
         else
         {
-            Transform newpart = (Instantiate(bodyParts[1].gameObject,
+            newpart = (Instantiate(bodyParts[1].gameObject,
     bodyParts[bodyParts.Count - 1].position = new Vector3(-minDistance + bodyParts[bodyParts.Count - 1].transform.position.x,
     bodyParts[bodyParts.Count - 1].transform.position.y,
     bodyParts[bodyParts.Count - 1].transform.position.z),
@@ -129,6 +133,5 @@ public class SnakeBehavior : MonoBehaviour
         //newpart.SetParent(transform);
 
         bodyParts.Add(newpart);
-        */
     }
 }

@@ -7,9 +7,12 @@ using UnityEngine;
 public class BoosterRing : MonoBehaviour
 {
     [SerializeField] GameObject[] ringModels;
-
+    [SerializeField] GameObject cam;
 
     [SerializeField] float rotateSpeed = 1;
+
+    private GameObject[] players;
+    public int[] playerCheck = new int[2];
 
     float easeOutlength = 2;
 
@@ -18,16 +21,20 @@ public class BoosterRing : MonoBehaviour
 
     private Vector3 sizeRef;
 
-    // Start is called before the first frame update
     void Start()
     {
+        players = GameObject.FindGameObjectsWithTag("Player");
+        cam = GameObject.FindGameObjectWithTag("MainCamera");
+
+        playerCheck[0] = 0;
+        playerCheck[1] = 0;
+
         sizeRef = transform.localScale;
         //timer = easeOutlenght;
         timer = easeOutlength + 1;
         boostSound = gameObject.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (timer < easeOutlength)
@@ -48,10 +55,58 @@ public class BoosterRing : MonoBehaviour
         }
     }
 
+    void OutCam()
+    {
+        //if (transform.position.x < cam.transform.position.x)
+        //if (Vector3.Distance(transform.position, cam.transform.position) < 10)
+        {
+            for (int i = 0; i < playerCheck.Length; i++)
+            {
+                if (playerCheck[i] == 0)
+                {
+                    AudioMovement audiomove = players[i].GetComponent<AudioMovement>();
+                    AudioMovementPlayer2 audiomove2 = players[i].GetComponent<AudioMovementPlayer2>();
+
+                    if (audiomove != null)
+                    {
+                        audiomove.RemoveRing();
+                    }
+
+                    if (audiomove2 != null)
+                    {
+                        audiomove2.RemoveRing();
+                    }
+                }    
+                    
+            }
+
+            gameObject.SetActive(false);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "OutboundCam")
+        {
+            OutCam();
+            return;
+        }
+
         timer = 0;
         boostSound.Play();
+        if (other.gameObject == players[0])
+        {
+            Debug.Log(other);//player2
+            playerCheck[0] = 1;
+        }
+        else if (other.gameObject == players[1])
+        {
+                Debug.Log(other);//player1
+            playerCheck[1] = 1;
+        }
+
+
+
     }
 
     float easeOutQuart(float x){

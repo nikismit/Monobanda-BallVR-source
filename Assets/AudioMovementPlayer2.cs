@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class AudioMovementPlayer2 : MonoBehaviour {
@@ -9,6 +10,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private SnakeBehavior carLine;
 	public AudioPitch_Player2 pitch;
 	public SFXManager sfx;
+	public Text ringCount;
 	public int currentPitch;
 
 	public float currentAmp;
@@ -168,7 +170,12 @@ private void OnTriggerEnter(Collider other)
 			if (canAddCar)
 			{
 				canAddCar = false;
-				numRings++;
+				if (numRings < 5)
+                {
+					numRings++;
+					ringCount.text = numRings.ToString();
+				}
+
 				carLine.AddBodyPart(1, 0);
 			}
 			transform.rotation = other.transform.rotation;
@@ -329,6 +336,16 @@ private void OnTriggerEnter(Collider other)
 
 
     }
+
+	public void RemoveRing()
+	{
+        if (numRings > 0)
+        {
+			numRings--;
+			ringCount.text = numRings.ToString();
+		}
+	}
+
 
 	public void JumpBoost(float jumpBoost)
 	{
