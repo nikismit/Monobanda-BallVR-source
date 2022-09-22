@@ -88,7 +88,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	private int numRings;
 	public Sprite[] ringcountUIArray;
-	public SpriteRenderer ringcountUI;
+	public Image ringcountUI;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
@@ -165,7 +165,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	private bool canAddCar = true;
 
-private void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring"){
 

@@ -4947,6 +4947,7 @@ MonoBehaviour:
   crashForce: {fileID: 0}
   pitch: {fileID: 0}
   sfx: {fileID: 0}
+  ringCount: {fileID: 0}
   currentPitch: 0
   currentAmp: 0
   maximumForwardSpeed: 25
@@ -4972,6 +4973,14 @@ MonoBehaviour:
   isSinglePlayer: 1
   comingFromMainMenu: 1
   endlessRunner: 0
+  ringcountUIArray:
+  - {fileID: 21300000, guid: c3b15f133dc79214d9480c9460379c0c, type: 3}
+  - {fileID: 21300000, guid: 9d307305641ef124ca17eb62f25ec7ac, type: 3}
+  - {fileID: 21300000, guid: e2b4ed9201356f248bebc1513aab665d, type: 3}
+  - {fileID: 21300000, guid: ed55cdcc21234e749bbaf7a59bbba54e, type: 3}
+  - {fileID: 21300000, guid: d1759b5153d340d42b9d2a3724540d63, type: 3}
+  - {fileID: 21300000, guid: ab41179ee8f5f4b489b976422a61470b, type: 3}
+  ringcountUI: {fileID: 0}
 --- !u!114 &756581993228108342
 MonoBehaviour:
   m_ObjectHideFlags: 0

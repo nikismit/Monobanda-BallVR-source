@@ -87,7 +87,7 @@ public class AudioMovement : MonoBehaviour {
 	[HideInInspector] public bool isMoving = false;
 
 	public Sprite[] ringcountUIArray;
-	public SpriteRenderer ringcountUI;
+	public Image ringcountUI;
 
 	private float boostTimer = 100;
 

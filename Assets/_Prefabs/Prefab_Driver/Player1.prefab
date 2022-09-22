@@ -88,6 +88,7 @@ MonoBehaviour:
   crashForce: {fileID: 0}
   pitch: {fileID: 0}
   sfx: {fileID: 0}
+  ringCount: {fileID: 0}
   currentPitch: 0
   currentAmp: 0
   maximumForwardSpeed: 25
@@ -118,11 +119,21 @@ MonoBehaviour:
   testRailControl: 1
   PitchSliderMovement: 0
   railSteerSpeed: 0
+  railSteerRef: 0
   ignorePlayerCol: 0
   setCrashCol: 0
   lockRigidbodyRotation: 0
   roadWidth: 60
   railSpeed: 0
+  isMoving: 0
+  ringcountUIArray:
+  - {fileID: 21300000, guid: c3b15f133dc79214d9480c9460379c0c, type: 3}
+  - {fileID: 21300000, guid: 9d307305641ef124ca17eb62f25ec7ac, type: 3}
+  - {fileID: 21300000, guid: e2b4ed9201356f248bebc1513aab665d, type: 3}
+  - {fileID: 21300000, guid: ed55cdcc21234e749bbaf7a59bbba54e, type: 3}
+  - {fileID: 21300000, guid: d1759b5153d340d42b9d2a3724540d63, type: 3}
+  - {fileID: 21300000, guid: ab41179ee8f5f4b489b976422a61470b, type: 3}
+  ringcountUI: {fileID: 0}
 --- !u!33 &4767737315599181010
 MeshFilter:
   m_ObjectHideFlags: 0

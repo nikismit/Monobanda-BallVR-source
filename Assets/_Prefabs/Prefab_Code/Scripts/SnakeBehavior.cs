@@ -114,7 +114,7 @@ public class SnakeBehavior : MonoBehaviour
         if (firstSpawn)
         {
             firstSpawn = false;
-            Debug.Log("firstSpawn!");
+            //Debug.Log("firstSpawn!");
             newpart = (Instantiate(bodyParts[1].gameObject,
     bodyParts[bodyParts.Count - 1].position = new Vector3(-minDistance + transform.position.x,
     bodyParts[bodyParts.Count - 1].transform.position.y,
