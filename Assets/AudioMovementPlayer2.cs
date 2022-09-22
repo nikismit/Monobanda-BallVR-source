@@ -87,9 +87,11 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private AudioMovement playerOne;
 
 	private int numRings;
+	public Sprite[] ringcountUIArray;
+	public SpriteRenderer ringcountUI;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
-    Rigidbody m_Rigidbody;
+	Rigidbody m_Rigidbody;
 	ParticleSystem _partSys;
 
     void Start()
@@ -173,7 +175,8 @@ private void OnTriggerEnter(Collider other)
 				if (numRings < 5)
                 {
 					numRings++;
-					ringCount.text = numRings.ToString();
+					ringcountUI.sprite = ringcountUIArray[numRings];
+					//ringCount.text = numRings.ToString();
 				}
 
 				carLine.AddBodyPart(1, 0);
@@ -342,7 +345,8 @@ private void OnTriggerEnter(Collider other)
         if (numRings > 0)
         {
 			numRings--;
-			ringCount.text = numRings.ToString();
+			ringcountUI.sprite = ringcountUIArray[numRings];
+			//ringCount.text = numRings.ToString();
 		}
 	}
 

@@ -86,6 +86,9 @@ public class AudioMovement : MonoBehaviour {
 	private bool hasStarted = false;
 	[HideInInspector] public bool isMoving = false;
 
+	public Sprite[] ringcountUIArray;
+	public SpriteRenderer ringcountUI;
+
 	private float boostTimer = 100;
 
 	private Transform camDist;
@@ -208,7 +211,8 @@ public class AudioMovement : MonoBehaviour {
 				if (numRings < 5)
 				{
 					numRings++;
-					ringCount.text = numRings.ToString();
+					ringcountUI.sprite = ringcountUIArray[numRings];
+					//ringCount.text = numRings.ToString();
 				}
 				carLine.AddBodyPart(1, 0);
 			}
@@ -563,7 +567,8 @@ public class AudioMovement : MonoBehaviour {
 		if (numRings > 0)
 		{
 			numRings--;
-			ringCount.text = numRings.ToString();
+			ringcountUI.sprite = ringcountUIArray[numRings];
+			//ringCount.text = numRings.ToString();
 		}
 	}
 
