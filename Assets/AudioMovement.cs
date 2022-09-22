@@ -166,6 +166,7 @@ public class AudioMovement : MonoBehaviour {
 
 			Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
+			RemoveRing();
 
 			//Debug.LogWarning(collision.contacts[0].normal);
 
@@ -562,10 +563,17 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
+	float lastHit;
+
 	public void RemoveRing()
     {
 		if (numRings > 0)
 		{
+			if (Time.time - lastHit < 2)
+			{
+				return;
+			}
+			lastHit = Time.time;
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
 			//ringCount.text = numRings.ToString();

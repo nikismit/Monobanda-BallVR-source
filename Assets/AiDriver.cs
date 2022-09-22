@@ -81,7 +81,7 @@ public class AiDriver : MonoBehaviour {
 		currentSpeed = currentSpeed;
 	}
 	else if(collision.gameObject.tag == "Track"){
-		crashForce.onCollisionCorrection();
+		//crashForce.onCollisionCorrection(col);
 		sfx.crashIntoTrack();
 		if(currentSpeed> maximumForwardSpeed){
 				currentSpeed = 0.50f * currentSpeed;

@@ -146,7 +146,22 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	}
 	else if(collision.gameObject.tag == "Track" || setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
 		{
-		crashForce.onCollisionCorrection();
+			Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
+
+			RemoveRing();
+
+			if (testRailControl)//TODO: only works on right wall
+			{
+				Vector3 reflect = Vector3.zero;
+
+				if (currentTurn > 0)
+					reflect = Vector3.Reflect(transform.right, collision.contacts[0].normal);
+				else
+					reflect = Vector3.Reflect(-transform.right, collision.contacts[0].normal);
+				transform.Translate(reflect, Space.World);
+			}
+			else
+				crashForce.onCollisionCorrection(col);
 		sfx.crashIntoTrack();
 		if(currentSpeed> maximumForwardSpeed){
 				currentSpeed = 0.50f * currentSpeed;
@@ -340,10 +355,19 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
     }
 
+	float lastHit;
+
 	public void RemoveRing()
 	{
+
+
         if (numRings > 0)
         {
+            if (Time.time-lastHit < 2)
+            {
+				return;
+            }
+			lastHit = Time.time;
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
 			//ringCount.text = numRings.ToString();
