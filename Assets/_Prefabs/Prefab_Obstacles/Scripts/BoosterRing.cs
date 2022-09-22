@@ -16,9 +16,12 @@ public class BoosterRing : MonoBehaviour
     private float timer;
     private AudioSource boostSound;
 
+    private Vector3 sizeRef;
+
     // Start is called before the first frame update
     void Start()
     {
+        sizeRef = transform.localScale;
         //timer = easeOutlenght;
         timer = easeOutlength + 1;
         boostSound = gameObject.GetComponent<AudioSource>();
@@ -35,13 +38,13 @@ public class BoosterRing : MonoBehaviour
 
             ringModels[0].transform.Rotate(new Vector3(0, 0, 200));
             
-            transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            transform.localScale = sizeRef * 1.2f;
 
         }
         else
         {
             ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
-            transform.localScale = new Vector3(1,1,1);
+            transform.localScale = sizeRef;
         }
     }
 

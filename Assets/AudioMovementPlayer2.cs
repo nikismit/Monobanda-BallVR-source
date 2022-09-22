@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class AudioMovementPlayer2 : MonoBehaviour {
 
 	public collisionAdjustmentScriptPlayer2 crashForce;
+	private SnakeBehavior carLine;
 	public AudioPitch_Player2 pitch;
 	public SFXManager sfx;
 	public int currentPitch;
@@ -83,6 +84,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	private AudioMovement playerOne;
 
+	private int numRings;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
     Rigidbody m_Rigidbody;
@@ -90,8 +92,10 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
     void Start()
     {
-        //Fetch the Rigidbody from the GameObject with this script attached
-        m_Rigidbody = GetComponent<Rigidbody>();
+		carLine = gameObject.GetComponent<SnakeBehavior>();
+
+		//Fetch the Rigidbody from the GameObject with this script attached
+		m_Rigidbody = GetComponent<Rigidbody>();
 		_partSys = GetComponent<ParticleSystem>();
 		startMaxSpeed = maximumForwardSpeed;
 		startAccel = forwardAccelaration;
@@ -154,9 +158,19 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		currentSpeed = 0.75f * currentSpeed;
 	}
 }
+
+	private bool canAddCar = true;
+
 private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring"){
+
+			if (canAddCar)
+			{
+				canAddCar = false;
+				numRings++;
+				carLine.AddBodyPart(1, 0);
+			}
 			transform.rotation = other.transform.rotation;
 			//currentSpeed = speedBoost * currentSpeed;
 			//currentSpeed = 55;
@@ -167,7 +181,13 @@ private void OnTriggerEnter(Collider other)
 			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
 	}
 
-    void FixedUpdate()
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.tag == "Ring")
+			canAddCar = true;
+	}
+
+	void FixedUpdate()
     {
 		if (playerOne.isMoving)
 		{
@@ -181,12 +201,12 @@ private void OnTriggerEnter(Collider other)
 				currentSpeed += 10;
 
 			}
-			else if (transform.position.x >= camDist.position.x)
+			else if (transform.position.x >= camDist.position.x + (numRings * 2))
 			{
 				currentSpeed -= 5;
 				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
 			}
-			else if (transform.position.x < camDist.position.x - 0.1f)
+			else if (transform.position.x < camDist.position.x - 0.1f + (numRings * 2))
 			{
 				currentSpeed += 5;
 				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));

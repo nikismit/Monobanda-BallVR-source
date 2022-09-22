@@ -7,6 +7,7 @@ public class SnakeBehavior : MonoBehaviour
 {
 
     public List<Transform> bodyParts = new List<Transform>();
+    //public Transform car;
 
     public float minDistance;
 
@@ -23,13 +24,16 @@ public class SnakeBehavior : MonoBehaviour
 
     void Start()
     {
+        /*
         beginSize = bodyParts.Count + 1;
 
-        /*
+        //lineDist = lineDist + minDistance;
+
+        
         if (minDistances.Length != bodyParts.Count)
             Debug.LogError("The Array minDistance: " + minDistances.Length + " isnt equal to bodyParts: " + bodyParts.Count + "!");
         */
-
+        /*
         for (int i = 0; i < beginSize - 1; i++)
         {
             lineDist = lineDist + minDistance;
@@ -41,16 +45,20 @@ public class SnakeBehavior : MonoBehaviour
         }
         bodyParts.RemoveRange(0, beginSize - 1);
         bodyParts[0].gameObject.SetActive(false);
+        */
+
     }
 
     void LateUpdate()
     {
         Move();
 
+        /*
         if (Input.GetKey(KeyCode.Tab))
         {
             AddBodyPart(1, lineDist);
         }
+        */
     }
 
     public void Move()
@@ -96,16 +104,31 @@ public class SnakeBehavior : MonoBehaviour
         }
     }
 
+    private bool firstSpawn = false;
+
     public void AddBodyPart(int _count, float _lineDist)
     {
+        /*
+        if (firstSpawn)
+        {
+            Transform newpart = (Instantiate(bodyParts[1].gameObject,
+    bodyParts[bodyParts.Count - 1].position = new Vector3(-minDistance + bodyParts[bodyParts.Count - 1].transform.position.x,
+    bodyParts[bodyParts.Count - 1].transform.position.y,
+    bodyParts[bodyParts.Count - 1].transform.position.z),
+    bodyParts[bodyParts.Count - 1].rotation = gameObject.transform.rotation) as GameObject).transform;
+        }
+        else
+        {
+            Transform newpart = (Instantiate(bodyParts[1].gameObject,
+    bodyParts[bodyParts.Count - 1].position = new Vector3(-minDistance + bodyParts[bodyParts.Count - 1].transform.position.x,
+    bodyParts[bodyParts.Count - 1].transform.position.y,
+    bodyParts[bodyParts.Count - 1].transform.position.z),
+    bodyParts[bodyParts.Count - 1].rotation = gameObject.transform.rotation) as GameObject).transform;
+        }
 
-        Transform newpart = (Instantiate(bodyParts[_count].gameObject,
-            bodyParts[bodyParts.Count - 1].position = new Vector3(-minDistance + bodyParts[bodyParts.Count -1].transform.position.x,
-            bodyParts[bodyParts.Count - 1].transform.position.y,
-            bodyParts[bodyParts.Count - 1].transform.position.z),
-            bodyParts[bodyParts.Count - 1].rotation = gameObject.transform.rotation) as GameObject).transform;
         //newpart.SetParent(transform);
 
         bodyParts.Add(newpart);
+        */
     }
 }
