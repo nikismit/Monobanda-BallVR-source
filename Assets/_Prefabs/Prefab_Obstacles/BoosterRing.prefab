@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 935502646446249937}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 321.44, y: 4.2, z: -7.1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 5493324653105730779}
   m_Father: {fileID: 0}
@@ -194,7 +194,9 @@ MonoBehaviour:
   ringModels:
   - {fileID: 919518449740877863}
   - {fileID: 6858538685469984487}
+  cam: {fileID: 0}
   rotateSpeed: 1
+  playerCheck: 0000000000000000
 --- !u!82 &-4497578398106078628
 AudioSource:
   m_ObjectHideFlags: 0

@@ -34,7 +34,7 @@ public class SmoothFollow : MonoBehaviour {
 
     void Start()
     {
-        transform.LookAt(target);
+        //transform.LookAt(target);
 
         //player = target.gameObject.GetComponent<AudioMovement>();
         if(player != null)
@@ -51,7 +51,8 @@ public class SmoothFollow : MonoBehaviour {
 
          // Calculate the current rotation angles
          float wantedRotationAngle = target.eulerAngles.y;
-         float wantedHeight = target.position.y + height;
+         float wantedHeight = target.position.y;
+         //float wantedHeight = target.position.y + height;
          float currentRotationAngle = transform.eulerAngles.y;
          float currentHeight = transform.position.y;
 
@@ -59,7 +60,7 @@ public class SmoothFollow : MonoBehaviour {
          //currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
 
          // Damp the height
-         currentHeight = Mathf.Lerp (currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+         //currentHeight = Mathf.Lerp (currentHeight, wantedHeight, heightDamping * Time.deltaTime);
 
          // Convert the angle into a rotation
          Quaternion currentRotation = Quaternion.Euler (0, currentRotationAngle, 0);
@@ -70,21 +71,21 @@ public class SmoothFollow : MonoBehaviour {
         {
             //transform.position = Vector3.forward * 1 * Time.deltaTime;
             //transform.Translate((transform.forward * playerSpeed) * Time.fixedDeltaTime, Space.World);
-            transform.position += transform.forward * (playerSpeed * 1.111f)* Time.fixedDeltaTime;
+            transform.position += Vector3.right * (playerSpeed * 1.111f)* Time.fixedDeltaTime;
         }
         else
         {
-            transform.position = target.position;
-            transform.position -= currentRotation * Vector3.forward * distance;
+            //transform.position = target.position;
+            //transform.position -= currentRotation * Vector3.forward * distance;
         }
 
 
         // Set the height of the camera
         //
         if (lockZaxis)
-            transform.position = new Vector3(transform.position.x, currentHeight, 0);
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
          else
-            transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         // Always look at the target
         //transform.LookAt (target);

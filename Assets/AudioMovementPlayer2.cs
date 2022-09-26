@@ -12,6 +12,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public SFXManager sfx;
 	public Text ringCount;
 	public int currentPitch;
+	public RingMissedHitBox ringMissed;
 
 	public float currentAmp;
 	[Header("Movement Speeds")]
@@ -86,7 +87,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	private AudioMovement playerOne;
 
-	private int numRings;
+	private int numRings = 5;
 	public Sprite[] ringcountUIArray;
 	public Image ringcountUI;
 
@@ -146,9 +147,17 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	}
 	else if(collision.gameObject.tag == "Track" || setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
 		{
-			Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
+			Vector3 colReflect = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
 			RemoveRing();
+
+
+			if (Time.time - lastHit < 2)
+			{
+				lastHit = Time.time;
+				Physics.IgnoreCollision(collision.collider, col, true);
+			}
+
 
 			if (testRailControl)//TODO: only works on right wall
 			{
@@ -161,7 +170,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 				transform.Translate(reflect, Space.World);
 			}
 			else
-				crashForce.onCollisionCorrection(col);
+				crashForce.onCollisionCorrection(colReflect);
 		sfx.crashIntoTrack();
 		if(currentSpeed> maximumForwardSpeed){
 				currentSpeed = 0.50f * currentSpeed;
@@ -183,6 +192,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring"){
+
+			ringMissed.PlayerHasEntered();
 
 			if (canAddCar)
 			{
@@ -226,12 +237,12 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 				currentSpeed += 10;
 
 			}
-			else if (transform.position.x >= camDist.position.x + (numRings * 2))
+			else if (transform.position.x >= camDist.position.x - 7.5f + (numRings * 5f))
 			{
 				currentSpeed -= 5;
 				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
 			}
-			else if (transform.position.x < camDist.position.x - 0.1f + (numRings * 2))
+			else if (transform.position.x < camDist.position.x - 0.1f - 7.5f + (numRings * 5f))
 			{
 				currentSpeed += 5;
 				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
@@ -364,14 +375,19 @@ public class AudioMovementPlayer2 : MonoBehaviour {
         if (numRings > 0)
         {
             if (Time.time-lastHit < 2)
-            {
 				return;
-            }
+
 			lastHit = Time.time;
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
 			//ringCount.text = numRings.ToString();
+			Debug.Log("Player2 REMOVERING!");
 		}
+        else
+        {
+			Debug.Log("Player2 GAME OVER!");
+			Destroy(gameObject);
+        }
 	}
 
 

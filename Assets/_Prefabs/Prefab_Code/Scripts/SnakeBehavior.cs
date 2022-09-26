@@ -52,33 +52,11 @@ public class SnakeBehavior : MonoBehaviour
     void LateUpdate()
     {
         Move();
-
-        /*
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            AddBodyPart(1, lineDist);
-        }
-        */
     }
 
     public void Move()
     {
-        //bodyParts[0].Translate(bodyParts[0].forward * speed * Time.smoothDeltaTime, Space.World);
-
-
         /*
-        if (Input.GetAxis("Horizontal") != 0)
-            bodyParts[0].Rotate(Vector3.up * rotationSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
-        */
-
-        //bodyParts[0].position = Vector3.Slerp(bodyParts[0].position, pointer.position, 0.5f);
-
-        //Quaternion ToRotMain = Quaternion.LookRotation(pointer.position - bodyParts[0].position);
-
-        //bodyParts[0].rotation = Quaternion.RotateTowards(bodyParts[0].rotation, ToRotMain, rotationSpeed * Time.deltaTime);
-
-
-
         for (int i = 1; i < bodyParts.Count; i++)
         {
             curBodyPart = bodyParts[i];
@@ -104,12 +82,14 @@ public class SnakeBehavior : MonoBehaviour
 
             curBodyPart.rotation = lookAt;
         }
+        */
     }
 
     private bool firstSpawn = true;
 
     public void AddBodyPart(int _count, float _lineDist)
     {
+        /*
         Transform newpart;
         if (firstSpawn)
         {
@@ -133,5 +113,6 @@ public class SnakeBehavior : MonoBehaviour
         //newpart.SetParent(transform);
 
         bodyParts.Add(newpart);
+        */
     }
 }
