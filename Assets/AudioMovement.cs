@@ -13,6 +13,7 @@ public class AudioMovement : MonoBehaviour {
 	public Text ringCount;
 	public int currentPitch;
 	public RingMissedHitBox ringMissed;
+	PlayerFeedBack feedBack;
 
 	public float currentAmp;
 	[Header("Movement Speeds")]
@@ -64,6 +65,7 @@ public class AudioMovement : MonoBehaviour {
 	public bool testRailControl;
 	public bool PitchSliderMovement;
 	private Vector3 sliderVector;
+	[SerializeField] GameObject ui;
 	[Range(1f, 50f)]
 	public float railSteerSpeed;
 	[HideInInspector] public float railSteerRef;
@@ -96,6 +98,13 @@ public class AudioMovement : MonoBehaviour {
 
 	private int numRings = 5;
 
+	private bool canAddCar = true;
+
+	public AudioMovementPlayer2 player2;
+
+	public WinState winState;
+	private float invulnerableState = 160;
+
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
 	ParticleSystem _partSys;
@@ -104,6 +113,14 @@ public class AudioMovement : MonoBehaviour {
     {
 		col = gameObject.GetComponent<Collider>();
 		carLine = gameObject.GetComponent<SnakeBehavior>();
+		feedBack = gameObject.GetComponent<PlayerFeedBack>();
+		lastHit = invulnerableState + 1;
+		//ui = GameObject.FindGameObjectWithTag("UI");
+        if (!ui.activeSelf)
+        {
+			ui.SetActive(true);
+
+		}
 
         //Fetch the Rigidbody from the GameObject with this script attached
         m_Rigidbody = GetComponent<Rigidbody>();
@@ -120,7 +137,7 @@ public class AudioMovement : MonoBehaviour {
 		}
 
 		railSteerRef = railSteerSpeed;
-		railSteerSpeed = 0;
+		//railSteerSpeed = 0;
 
 		roadHalf = roadWidth / 2;
 
@@ -162,19 +179,29 @@ public class AudioMovement : MonoBehaviour {
 		if (collision.gameObject.tag == "Box"){
 			currentSpeed = currentSpeed;
 		}
-		else if(collision.gameObject.tag == "Track" || setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
+		if (setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
+        {
+			//m_Rigidbody.AddForce(Vector3.forward * 25, ForceMode.Impulse);
+			m_Rigidbody.AddForce(Vector3.forward * (currentTurn - player2.currentTurn) * 20, ForceMode.Impulse);
+			m_Rigidbody.drag = 1;
+        }
+		else if(collision.gameObject.tag == "Track")
 		{
-
 			Vector3 colReflect = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
-			RemoveRing();
+			Physics.IgnoreCollision(collision.collider, col, true);
 
-
-			if (Time.time - lastHit < 2)
+			if (lastHit > invulnerableState)
             {
-				lastHit = Time.time;
-				Physics.IgnoreCollision(collision.collider, col, true);
+				lastHit = 0;
+				RemoveRing();
+				sfx.crashIntoTrack();
 			}
+
+
+
+
+
 
 
 			//Debug.LogWarning(collision.contacts[0].normal);
@@ -193,7 +220,7 @@ public class AudioMovement : MonoBehaviour {
 			else
 			crashForce.onCollisionCorrection(colReflect);
 
-			sfx.crashIntoTrack();
+
 			if(currentSpeed> maximumForwardSpeed){
 					currentSpeed = 0.50f * currentSpeed;
 			}
@@ -209,13 +236,13 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
-	private bool canAddCar = true;
 
 	private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring")
 		{
 			ringMissed.PlayerHasEntered();
+			//lastHit = 0;
 
 			if (canAddCar)
             {
@@ -245,17 +272,31 @@ public class AudioMovement : MonoBehaviour {
 		if (other.gameObject.tag == "Ring")
 			canAddCar = true;
 	}
+	
+	
 
     void FixedUpdate()
     {
-        if (isMoving)
+		if (lastHit < invulnerableState)
+		{
+			lastHit++;
+			//Debug.Log("Blinking!");
+			feedBack.BlinkFeedBack(true);
+		}
+		else
+			feedBack.BlinkFeedBack(false);
+
+
+		if (isMoving)
         {
+			currentSpeed = maximumForwardSpeed;
+
 			if (boostTimer < 1)
 			{
 				boostTimer += Time.deltaTime;
 
 				float ease = Mathf.InverseLerp(0, 2, boostTimer) * 5;
-				Debug.Log(boostTimer);
+				//Debug.Log(boostTimer);
 				//ringModels[0].transform.Rotate(new Vector3(0, 0, 200));
 				currentSpeed += 10;
 
@@ -370,6 +411,10 @@ public class AudioMovement : MonoBehaviour {
 			{
 				emission.rateOverTime = 0;
 			}
+            if (hasStarted)
+            {
+
+
 			if (currentSpeed < maximumForwardSpeed)
 			{
 				currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
@@ -377,6 +422,7 @@ public class AudioMovement : MonoBehaviour {
 			else
 			{
 				currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+			}
 			}
 			if (isSinglePlayer == true)
 			{
@@ -470,13 +516,16 @@ public class AudioMovement : MonoBehaviour {
 			{
 				emission.rateOverTime = 0;
 			}
-			if (currentSpeed < maximumForwardSpeed)
+			if (hasStarted)
 			{
-				currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
-			}
-			else
-			{
-				currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+				if (currentSpeed < maximumForwardSpeed)
+				{
+					currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
+				}
+				else
+				{
+					currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+				}
 			}
 			if (isSinglePlayer == true)
 			{
@@ -578,6 +627,9 @@ public class AudioMovement : MonoBehaviour {
 
 	public void RemoveRing()
     {
+		feedBack.HitFeedBack();
+		//sfx.crashIntoTrack();
+
 		if (numRings > 0)
 		{
 			if (Time.time - lastHit < 2)
@@ -587,11 +639,12 @@ public class AudioMovement : MonoBehaviour {
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
 			//ringCount.text = numRings.ToString();
-			Debug.Log("Player1 REMOVERING!");
+			//Debug.Log("Player1 REMOVERING!");
 		}
 		else
 		{
-			Debug.Log("Player1 GAME OVER!");
+			//Debug.Log("Player1 GAME OVER!");
+			winState.PlayerTwoWins();
 			Destroy(gameObject);
 		}
 	}
@@ -609,9 +662,7 @@ public class AudioMovement : MonoBehaviour {
 		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		railSteerSpeed = railSteerRef;
-		currentSpeed = maximumForwardSpeed;
 		isMoving = true;
-
 		Invoke("SetRailMovement",1);
 	}
 

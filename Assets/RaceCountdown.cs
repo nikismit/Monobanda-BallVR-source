@@ -21,11 +21,11 @@ public class RaceCountdown : MonoBehaviour
     public GameObject Player1Slider;
     public GameObject Player2Slider;
 
+    public bool startCountDown;
 
 
-
-  public float timer;
-
+    public float timer;
+    private bool hasStarted = false;
     void Start()
     {
         cars = GameObject.FindGameObjectsWithTag("Player");
@@ -54,6 +54,10 @@ public class RaceCountdown : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!hasStarted && startCountDown)
+        {
+
+
       //Freezes cars until the countdown is over
       if (timer > 0f){
         timer -= 0.02f;
@@ -106,9 +110,12 @@ public class RaceCountdown : MonoBehaviour
                 {
                     Player1.SetRailConstrains();
                     Player2.SetRailConstrains();
-                }
+                        hasStarted = true;
+                    }
                 //Debug.LogWarning(cars[i] + " / " + rb);
             }
+
+        }
         }
 
     }

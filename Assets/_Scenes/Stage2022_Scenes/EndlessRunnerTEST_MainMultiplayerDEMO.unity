@@ -996,7 +996,7 @@ GameObject:
   - component: {fileID: 19165271}
   - component: {fileID: 19165270}
   m_Layer: 0
-  m_Name: MovingRoad
+  m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41280,7 +41280,7 @@ PrefabInstance:
     - target: {fileID: 5099273271849414125, guid: f6873cf5d7e3d1244baa06967d419720,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.84
+      value: 1.9627432
       objectReference: {fileID: 0}
     - target: {fileID: 5099273271849414125, guid: f6873cf5d7e3d1244baa06967d419720,
         type: 3}
@@ -41325,7 +41325,7 @@ PrefabInstance:
     - target: {fileID: 5099273271849414125, guid: f6873cf5d7e3d1244baa06967d419720,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -3.63
+      value: -3.6208222
       objectReference: {fileID: 0}
     - target: {fileID: 5099273271849414125, guid: f6873cf5d7e3d1244baa06967d419720,
         type: 3}
@@ -57586,7 +57586,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439769256}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.2, y: 0.7, z: 18.7}
+  m_LocalPosition: {x: 54.5, y: 0.7, z: 20.5}
   m_LocalScale: {x: 1.77, y: 1.77, z: 1.77}
   m_Children:
   - {fileID: 1214143630}
@@ -75852,7 +75852,7 @@ GameObject:
   - component: {fileID: 1861597677}
   - component: {fileID: 1861597676}
   m_Layer: 0
-  m_Name: MovingRoad
+  m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86727,11 +86727,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 1910943074049748485, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1910943074049748490, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -86799,24 +86794,9 @@ PrefabInstance:
       objectReference: {fileID: 981521319}
     - target: {fileID: 2988102853517852522, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
         type: 3}
-      propertyPath: movingRoads.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2988102853517852522, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
-        type: 3}
       propertyPath: countDown
       value: 
       objectReference: {fileID: 1318558293}
-    - target: {fileID: 2988102853517852522, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
-        type: 3}
-      propertyPath: movingRoads.Array.data[0]
-      value: 
-      objectReference: {fileID: 19165267}
-    - target: {fileID: 2988102853517852522, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
-        type: 3}
-      propertyPath: movingRoads.Array.data[1]
-      value: 
-      objectReference: {fileID: 1861597675}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90c6d2c7fa03a5e45a846aff266a12f9, type: 3}
 --- !u!1001 &2049321970005947709

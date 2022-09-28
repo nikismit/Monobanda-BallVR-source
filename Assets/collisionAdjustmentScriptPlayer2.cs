@@ -19,7 +19,7 @@ public class collisionAdjustmentScriptPlayer2 : MonoBehaviour
   public int index = 0;
   public float P2Pos = 0f;
 
-
+    Vector3 position;
 
     public void playerPosition(){
       var leng = path.points.Count;
@@ -36,7 +36,8 @@ public class collisionAdjustmentScriptPlayer2 : MonoBehaviour
         // GameObject closest = null;
         closest = null;
         float distance = Mathf.Infinity;
-        Vector3 position = vehicle.transform.position;
+        if(vehicle != null)
+        position = vehicle.transform.position;
         foreach (GameObject go in gos)
         {
             Vector3 diff = go.transform.position - position;
