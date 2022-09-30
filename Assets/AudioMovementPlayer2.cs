@@ -12,7 +12,6 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public SFXManager sfx;
 	public Text ringCount;
 	public int currentPitch;
-	public RingMissedHitBox ringMissed;
 	PlayerFeedBack feedBack;
 
 	public float currentAmp;
@@ -38,8 +37,6 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	[Header("Diagnostics")]
 	public float currentTurn;
 	public float currentSpeed;
-	private float startMaxSpeed;
-	private float startAccel;
 
 	public float objectHeight;
 	public float Volume;
@@ -59,8 +56,9 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public bool isSinglePlayer;
 	public bool comingFromMainMenu;
 
-	[Header("EndlessRunner")]
+	[Header("DebugEndlessRunner")]
 	[SerializeField] bool endlessRunner;
+	[SerializeField] bool removeHealth;
 
 	private bool setCrashCol;
 	private bool lockRigidbodyRotation;
@@ -104,21 +102,19 @@ public class AudioMovementPlayer2 : MonoBehaviour {
     {
 		carLine = gameObject.GetComponent<SnakeBehavior>();
 		feedBack = gameObject.GetComponent<PlayerFeedBack>();
-		lastHit = invulnerableState + 1;
-
-		//Fetch the Rigidbody from the GameObject with this script attached
 		m_Rigidbody = GetComponent<Rigidbody>();
 		_partSys = GetComponent<ParticleSystem>();
-		startMaxSpeed = maximumForwardSpeed;
-		startAccel = forwardAccelaration;
+
+		lastHit = invulnerableState + 1;
 		FOV = 60.0f;
 		SavedFOV = FOV;
 		if(comingFromMainMenu == true){
 			minimumPitch = PlayerPrefs.GetFloat("Player2Lowest");
 			maximumPitch = PlayerPrefs.GetFloat("Player2Highest");
 		}
+		ringcountUI.sprite = ringcountUIArray[numRings];
 
-        if (endlessRunner)
+		if (endlessRunner)
         {
 			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             for (int i = 0; i < players.Length; i++)
@@ -154,11 +150,10 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 		if (setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
 		{
-			//m_Rigidbody.AddForce(Vector3.forward * 25, ForceMode.Impulse);
 			m_Rigidbody.AddForce(Vector3.forward * (currentTurn - player1.currentTurn) * 20, ForceMode.Impulse);
 			m_Rigidbody.drag = 1;
 		}
-		else if(collision.gameObject.tag == "Track")
+		else if(collision.gameObject.tag == "Track" && !removeHealth)
 		{
 			Vector3 colReflect = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
@@ -206,7 +201,6 @@ public class AudioMovementPlayer2 : MonoBehaviour {
     {
 		if (other.gameObject.tag == "Ring"){
 
-			ringMissed.PlayerHasEntered();
 
 			if (canAddCar)
 			{
@@ -215,14 +209,11 @@ public class AudioMovementPlayer2 : MonoBehaviour {
                 {
 					numRings++;
 					ringcountUI.sprite = ringcountUIArray[numRings];
-					//ringCount.text = numRings.ToString();
 				}
 
 				carLine.AddBodyPart(1, 0);
 			}
 			transform.rotation = other.transform.rotation;
-			//currentSpeed = speedBoost * currentSpeed;
-			//currentSpeed = 55;
 			boostTimer = 0;
 		}
 
@@ -241,7 +232,6 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		if (lastHit < invulnerableState)
 		{
 			lastHit++;
-			//Debug.Log("Blinking!");
 			feedBack.BlinkFeedBack(true);
 		}
 		else
@@ -254,35 +244,31 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			if (boostTimer < 1)
 			{
 				boostTimer += Time.deltaTime;
-
 				float ease = Mathf.InverseLerp(0, 2, boostTimer) * 5;
-				Debug.Log(boostTimer);
-				//ringModels[0].transform.Rotate(new Vector3(0, 0, 200));
 				currentSpeed += 10;
-
 			}
 			else if (transform.position.x >= camDist.position.x - 7.5f + (numRings * 5f))
 			{
 				currentSpeed -= 5;
-				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
 			}
 			else if (transform.position.x < camDist.position.x - 0.1f - 7.5f + (numRings * 5f))
 			{
 				currentSpeed += 5;
-				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
 			}
 			else
 				currentSpeed = maximumForwardSpeed;
 		}
 
 		var mult = speedBoost * maximumForwardSpeed;
-			var diffCoef = (currentSpeed/((maximumForwardSpeed*speedBoost)-maximumForwardSpeed))*mult;
-			if (currentSpeed > maximumForwardSpeed+1f){
-				speedBoostDecelerator = diffCoef;
-			}
-			else{
-				speedBoostDecelerator = 1f;
-			}
+		var diffCoef = (currentSpeed/((maximumForwardSpeed*speedBoost)-maximumForwardSpeed))*mult;
+		if (currentSpeed > maximumForwardSpeed+1f)
+		{
+			speedBoostDecelerator = diffCoef;
+		}
+		else
+		{
+			speedBoostDecelerator = 1f;
+		}
 
 		currentPitch = pitch._currentpublicpitch;
 		currentAmp = pitch._currentPublicAmplitude;
@@ -311,21 +297,23 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		//
 		sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
-
-
-		// if(currentPitch > minimumPitch && currentAmp > -15f){
-		// 		currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
-		if (currentAmp > pitch.minVolumeDB){
-			if(currentPitch > minimumPitch){
-				currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1-0.3f;
+		if (currentAmp > pitch.minVolumeDB)
+		{
+			if (currentPitch > minimumPitch)
+			{
+				currentTurn = (((currentPitch - minimumPitch) / (maximumPitch - minimumPitch)) * 2) - 1 - 0.3f;
 			}
-			if(highPitchIsTurnRight == false){
+			if (highPitchIsTurnRight == false)
+			{
 				currentTurn *= -1;
 			}
-			if(soundTriggersParticles == true){
+			if (soundTriggersParticles == true)
+			{
 
 				emission.rateOverTime = 10;
-			} else {
+			}
+			else
+			{
 				emission.rateOverTime = 0;
 			}
 			if (hasStarted)
@@ -339,9 +327,12 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 					currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
 				}
 			}
-			if (isSinglePlayer == true) {
+			if (isSinglePlayer == true)
+			{
 				forwardDeceleration = forwardDecelerationSinglePlayer;
-			} else {
+			}
+			else
+			{
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
 			if (PitchSliderMovement)
@@ -353,22 +344,30 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
 				this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
 			}
-			if (FovWanted == true){
-			if (FOV >= 60f && FOV < 80f) {
-				SavedFOV = FOV;
-				SavedFOV += 1f;
-				if (SavedFOV >= 61f && SavedFOV <= 79f){
-					FOV += 1f;
-					Camera.main.fieldOfView = FOV ;
+			if (FovWanted == true)
+			{
+				if (FOV >= 60f && FOV < 80f)
+				{
+					SavedFOV = FOV;
+					SavedFOV += 1f;
+					if (SavedFOV >= 61f && SavedFOV <= 79f)
+					{
+						FOV += 1f;
+						Camera.main.fieldOfView = FOV;
+					}
 				}
 			}
 		}
-		} else if(currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB) {
-			currentSpeed -= forwardDeceleration* speedBoostDecelerator *Time.fixedDeltaTime;
-			if(currentTurn > 0){
-				currentTurn -= Time.fixedDeltaTime *turningDeceleration;
-			}else if(currentTurn < 0){
-				currentTurn += Time.fixedDeltaTime *turningDeceleration;
+		else if (currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB)
+		{
+			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+			if (currentTurn > 0)
+			{
+				currentTurn -= Time.fixedDeltaTime * turningDeceleration;
+			}
+			else if (currentTurn < 0)
+			{
+				currentTurn += Time.fixedDeltaTime * turningDeceleration;
 			}
 			emission.rateOverTime = 0;
 			if (PitchSliderMovement)
@@ -380,21 +379,21 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
 				this.transform.Rotate(Vector3.up * turningSpeed * currentTurn * Time.fixedDeltaTime, Space.World);
 			}
-			if (FovWanted == true){
-			if (FOV > 60f && FOV <= 80f) {
-				SavedFOV = FOV;
-				SavedFOV -= 0.1f;
-				if (SavedFOV >= 61f && SavedFOV <= 79f){
-					FOV -= 0.1f;
-					Camera.main.fieldOfView = FOV ;
+			if (FovWanted == true)
+			{
+				if (FOV > 60f && FOV <= 80f)
+				{
+					SavedFOV = FOV;
+					SavedFOV -= 0.1f;
+					if (SavedFOV >= 61f && SavedFOV <= 79f)
+					{
+						FOV -= 0.1f;
+						Camera.main.fieldOfView = FOV;
+					}
 				}
 			}
 		}
-		}
-
-
-
-    }
+	}
 
 	float lastHit;
 
@@ -410,12 +409,9 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			lastHit = Time.time;
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
-			//ringCount.text = numRings.ToString();
-			//Debug.Log("Player2 REMOVERING!");
 		}
         else
         {
-			//Debug.Log("Player2 GAME OVER!");
 			winState.PlayerOneWins();
 			Destroy(gameObject);
 		}
@@ -424,25 +420,21 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	public void JumpBoost(float jumpBoost)
 	{
-		//Debug.LogError("JAJA");
 		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
-		//this.transform.Translate(transform.up * jumpBoost * Time.fixedDeltaTime, Space.World);
 	}
 
 	public void SetRailConstrains()
 	{
 		if (lockRigidbodyRotation)
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-		railSteerSpeed = railSteerRef;
 
+		railSteerSpeed = railSteerRef;
 
 		Invoke("SetRailMovement", 1);
 	}
 
 	void SetRailMovement()
 	{
-		//railSteerSpeed = playerOne.railSteerSpeed;
 		hasStarted = true;
 	}
 
