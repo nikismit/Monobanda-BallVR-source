@@ -252,29 +252,24 @@ public class AudioMovement : MonoBehaviour {
 				float ease = Mathf.InverseLerp(0, 2, boostTimer) * 5;
 				currentSpeed += 10;
 
-				if (!IsGrounded())
-				{
-					float lerpFall = Mathf.Lerp(0, 1, boostTimer);
-					Debug.Log(lerpFall);
-					transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), 1 * Time.deltaTime);
-				}
+				StabilizeCarRot(1);
 
 			}
 			else if (transform.position.x >= camDist.position.x - 7.5f + (numRings * 5f))
 			{//- 7.5f
 				currentSpeed -= 5;
-				StabilizeCarRot();
+				StabilizeCarRot(5);
 				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
 			}
 			else if (transform.position.x < camDist.position.x - 0.1f - 7.5f + (numRings * 5f))
 			{
 				currentSpeed += 5;
-				StabilizeCarRot();
+				StabilizeCarRot(5);
 				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
 			}
             else
             {
-				StabilizeCarRot();
+				StabilizeCarRot(5);
 				currentSpeed = maximumForwardSpeed;
 			}
 		}
@@ -311,7 +306,6 @@ public class AudioMovement : MonoBehaviour {
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
 		else
 			sliderVector = transform.position;
-        //
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
 
@@ -320,23 +314,21 @@ public class AudioMovement : MonoBehaviour {
 			CarSoundMovement();
 		else
 			CarKeyMovement();
-		// if(currentPitch > minimumPitch && currentAmp > -15f){
-		// 		currentTurn = (((currentPitch-minimumPitch)/(maximumPitch-minimumPitch))*2)-1;
-
-        //if (!IsGrounded() && boostTimer > 1)
-		//transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), 5 * Time.deltaTime);
 	}
 
-	void StabilizeCarRot()
+	void StabilizeCarRot(float stabilizeSpeed)
 	{
-
-
 		if (!IsGrounded())
-			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), 5 * Time.deltaTime);
+			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), stabilizeSpeed * Time.deltaTime);
 	}
 
 	public bool IsGrounded()
     {
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.forward) * 1, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.back) * 1, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.left) * 1, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.right) * 1, Color.green);
+
 		if (Physics.Raycast(transform.position, Vector3.down + Vector3.forward, 1, layer) ||
 			Physics.Raycast(transform.position, Vector3.down + Vector3.back, 1, layer) ||
 			Physics.Raycast(transform.position, Vector3.down + Vector3.left, 1, layer) ||
@@ -603,6 +595,9 @@ public class AudioMovement : MonoBehaviour {
 
 	public void JumpBoost(float jumpBoost)
     {
+		//cubeRb.velocity = new vector3(cubeRB.velocity.x, 0, 0);
+		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
+
 		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//transform.Translate(Vector3.up * jumpBoost);
 
