@@ -308,8 +308,6 @@ public class AudioMovement : MonoBehaviour {
 			sliderVector = transform.position;
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
-
-
 		if (!debugKeyControl)
 			CarSoundMovement();
 		else
@@ -319,20 +317,29 @@ public class AudioMovement : MonoBehaviour {
 	void StabilizeCarRot(float stabilizeSpeed)
 	{
 		if (!IsGrounded())
+        {
 			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), stabilizeSpeed * Time.deltaTime);
+		}
+
+		if (transform.rotation.eulerAngles.x < 290 && transform.rotation.eulerAngles.x > 10)
+        {
+			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
+
+		}
+
 	}
 
 	public bool IsGrounded()
     {
-		Debug.DrawRay(transform.position, (Vector3.down + Vector3.forward) * 1, Color.green);
-		Debug.DrawRay(transform.position, (Vector3.down + Vector3.back) * 1, Color.green);
-		Debug.DrawRay(transform.position, (Vector3.down + Vector3.left) * 1, Color.green);
-		Debug.DrawRay(transform.position, (Vector3.down + Vector3.right) * 1, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.forward) * 0.5f, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.back) * 0.5f, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.left) * 0.5f, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.right) * 0.5f, Color.green);
 
-		if (Physics.Raycast(transform.position, Vector3.down + Vector3.forward, 1, layer) ||
-			Physics.Raycast(transform.position, Vector3.down + Vector3.back, 1, layer) ||
-			Physics.Raycast(transform.position, Vector3.down + Vector3.left, 1, layer) ||
-			Physics.Raycast(transform.position, Vector3.down + Vector3.right, 1, layer))
+		if (Physics.Raycast(transform.position, Vector3.down + Vector3.forward, 0.5f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.back, 0.5f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.left, 0.5f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.right, 0.5f, layer))
 			return true;
 		else
 			return false;
