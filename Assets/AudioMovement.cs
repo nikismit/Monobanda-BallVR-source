@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class AudioMovement : MonoBehaviour {
 
@@ -324,7 +323,7 @@ public class AudioMovement : MonoBehaviour {
 		if (transform.rotation.eulerAngles.x < 290 && transform.rotation.eulerAngles.x > 10)
         {
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
-
+			Debug.Log("FIX ROT");
 		}
 
 	}
@@ -336,10 +335,10 @@ public class AudioMovement : MonoBehaviour {
 		Debug.DrawRay(transform.position, (Vector3.down + Vector3.left) * 0.5f, Color.green);
 		Debug.DrawRay(transform.position, (Vector3.down + Vector3.right) * 0.5f, Color.green);
 
-		if (Physics.Raycast(transform.position, Vector3.down + Vector3.forward, 0.5f, layer) ||
-			Physics.Raycast(transform.position, Vector3.down + Vector3.back, 0.5f, layer) ||
-			Physics.Raycast(transform.position, Vector3.down + Vector3.left, 0.5f, layer) ||
-			Physics.Raycast(transform.position, Vector3.down + Vector3.right, 0.5f, layer))
+		if (Physics.Raycast(transform.position, Vector3.down + Vector3.forward, 0.8f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.back, 0.8f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.left, 0.8f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.right, 0.8f, layer))
 			return true;
 		else
 			return false;
@@ -617,7 +616,7 @@ public class AudioMovement : MonoBehaviour {
 		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		railSteerSpeed = railSteerRef;
 		isMoving = true;
-		Invoke("SetRailMovement",1);
+		Invoke("SetRailMovement", 1);
 	}
 
 	void SetRailMovement()

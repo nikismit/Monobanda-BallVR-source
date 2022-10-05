@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class AudioMovementPlayer2 : MonoBehaviour {
 
@@ -13,6 +12,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public Text ringCount;
 	public int currentPitch;
 	PlayerFeedBack feedBack;
+	[SerializeField] LayerMask layer;
 
 	public float currentAmp;
 	[Header("Movement Speeds")]
@@ -101,9 +101,12 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	void Start()
     {
 		carLine = gameObject.GetComponent<SnakeBehavior>();
+		_partSys = GetComponent<ParticleSystem>();
+
+		col = gameObject.GetComponent<Collider>();
 		feedBack = gameObject.GetComponent<PlayerFeedBack>();
 		m_Rigidbody = GetComponent<Rigidbody>();
-		_partSys = GetComponent<ParticleSystem>();
+
 
 		lastHit = invulnerableState + 1;
 		FOV = 60.0f;
@@ -129,7 +132,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			railSpeed = playerOne.railSpeed;
 			roadHalf = roadWidth / 2;
 
-			col = gameObject.GetComponent<Collider>();
+
 			ignorePlayerCol = playerOne.ignorePlayerCol;
 			testRailControl = playerOne.testRailControl;
 			PitchSliderMovement = playerOne.PitchSliderMovement;
@@ -146,7 +149,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 
 		if (collision.gameObject.tag == "Box"){
-		currentSpeed = currentSpeed;
+			currentSpeed = currentSpeed;
 		}
 		if (setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
 		{
@@ -166,7 +169,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 				sfx.crashIntoTrack();
 			}
 
-
+			/*
 			if (testRailControl)//TODO: only works on right wall
 			{
 				Vector3 reflect = Vector3.zero;
@@ -180,6 +183,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			else
 				crashForce.onCollisionCorrection(colReflect);
 		sfx.crashIntoTrack();
+			*/
+
 		if(currentSpeed> maximumForwardSpeed){
 				currentSpeed = 0.50f * currentSpeed;
 		}
@@ -237,6 +242,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		else
 			feedBack.BlinkFeedBack(false);
 
+
 		if (playerOne.isMoving)
 		{
 			currentSpeed = maximumForwardSpeed;
@@ -244,19 +250,27 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			if (boostTimer < 1)
 			{
 				boostTimer += Time.deltaTime;
+
 				float ease = Mathf.InverseLerp(0, 2, boostTimer) * 5;
 				currentSpeed += 10;
+
+				StabilizeCarRot(1);
 			}
 			else if (transform.position.x >= camDist.position.x - 7.5f + (numRings * 5f))
 			{
 				currentSpeed -= 5;
+				StabilizeCarRot(5);
 			}
 			else if (transform.position.x < camDist.position.x - 0.1f - 7.5f + (numRings * 5f))
 			{
 				currentSpeed += 5;
+				StabilizeCarRot(5);
 			}
-			else
+            else
+            {
+				StabilizeCarRot(5);
 				currentSpeed = maximumForwardSpeed;
+			}
 		}
 
 		var mult = speedBoost * maximumForwardSpeed;
@@ -273,12 +287,13 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		currentPitch = pitch._currentpublicpitch;
 		currentAmp = pitch._currentPublicAmplitude;
 		Volume = pitch._currentPublicAmplitude;
+
 		currentPitchValue = currentPitch;
 		objectHeight = this.transform.position.y;
 		if (objectHeight > 0.6f){
 			this.transform.Translate(0,-0.1f,0);
 		}
-		var emission = _partSys.emission;
+
 
 		if (currentPitch < 7)
 		{
@@ -294,8 +309,14 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
 		else
 			sliderVector = transform.position;
-		//
-		sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+
+		CarSoundMovement();
+	}
+
+    void CarSoundMovement()
+    {
+		var emission = _partSys.emission;
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
@@ -395,6 +416,37 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 	}
 
+	void StabilizeCarRot(float stabilizeSpeed)
+	{
+		if (!IsGrounded())
+		{
+			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), stabilizeSpeed * Time.deltaTime);
+		}
+
+		if (transform.rotation.eulerAngles.x < 290 && transform.rotation.eulerAngles.x > 10)
+		{
+			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
+			Debug.Log("FIX ROT Player2");
+		}
+
+	}
+
+	public bool IsGrounded()
+	{
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.forward) * 0.5f, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.back) * 0.5f, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.left) * 0.5f, Color.green);
+		Debug.DrawRay(transform.position, (Vector3.down + Vector3.right) * 0.5f, Color.green);
+
+		if (Physics.Raycast(transform.position, Vector3.down + Vector3.forward, 0.8f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.back, 0.8f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.left, 0.8f, layer) ||
+			Physics.Raycast(transform.position, Vector3.down + Vector3.right, 0.8f, layer))
+			return true;
+		else
+			return false;
+	}
+
 	float lastHit;
 
 	public void RemoveRing()
@@ -420,6 +472,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	public void JumpBoost(float jumpBoost)
 	{
+		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
 		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 	}
 
