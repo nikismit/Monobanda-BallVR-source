@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3291017745901148184}
   - component: {fileID: 1874571261099562941}
   - component: {fileID: 4460577836036399991}
+  - component: {fileID: 5804900152403090836}
   m_Layer: 0
   m_Name: mod_thorns
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5804900152403090836
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803450741480587938}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 11.431, y: 6.926628, z: 1.2799997}
+  m_Center: {x: 0.09517074, y: 3.463314, z: -0.00000014901161}
