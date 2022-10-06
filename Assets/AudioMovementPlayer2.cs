@@ -480,7 +480,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public void SetRailConstrains()
 	{
 		if (lockRigidbodyRotation)
-			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
+		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
 		railSteerSpeed = railSteerRef;
 
