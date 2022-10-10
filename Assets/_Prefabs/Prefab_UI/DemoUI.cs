@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class DemoUI : MonoBehaviour
 {
-    [SerializeField] GameObject[] movingRoads;
     [SerializeField] CanvasGroup canvasGroup;
     [SerializeField] RaceCountdown countDown;
+    [SerializeField] TutorialHandler tutHandler;
     
     AudioMovement player1;
     AudioMovementPlayer2 player2;
 
-    // Start is called before the first frame update
+    private bool startTut = false;
     void Start()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -30,26 +30,26 @@ public class DemoUI : MonoBehaviour
         }
     }
 
-    public void StartGameEvent()
+    public void RemoveDemoUIEvent()
     {
+        startTut = true;
         //SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");    
-        countDown.startCountDown = true;
-
-        for (int i = 0; i < movingRoads.Length; i++)
-        {
-            movingRoads[i].SetActive(false);
-        }
-
+        //countDown.startCountDown = true;
+        tutHandler.InitializeTutorial();
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetKey(KeyCode.Space))
         {
-            StartGameEvent();
+            RemoveDemoUIEvent();
         }
-        if (countDown.startCountDown && canvasGroup.alpha >= 0)
+        
+        if (startTut && canvasGroup.alpha >= 0)
         {
             canvasGroup.alpha -= Time.deltaTime;
         }
