@@ -226,8 +226,7 @@ public class AudioMovement : MonoBehaviour {
 		if (other.gameObject.tag == "Ring")
 			canAddCar = true;
 	}
-	
-	
+
 
     void FixedUpdate()
     {
@@ -274,13 +273,15 @@ public class AudioMovement : MonoBehaviour {
 		}
 
 		var mult = speedBoost * maximumForwardSpeed;
-			var diffCoef = (currentSpeed/((maximumForwardSpeed*speedBoost)-maximumForwardSpeed))*mult;
-			if (currentSpeed > maximumForwardSpeed+1f){
-				speedBoostDecelerator = diffCoef;
-			}
-			else{
-				speedBoostDecelerator = 1f;
-			}
+		var diffCoef = (currentSpeed / ((maximumForwardSpeed * speedBoost) - maximumForwardSpeed)) * mult;
+		if (currentSpeed > maximumForwardSpeed + 1f)
+		{
+			speedBoostDecelerator = diffCoef;
+		}
+		else
+		{
+			speedBoostDecelerator = 1f;
+		}
 		currentPitch = pitch._currentpublicpitch;
 		currentAmp = pitch._currentPublicAmplitude;
 		Volume = pitch._currentPublicAmplitude;
@@ -301,11 +302,23 @@ public class AudioMovement : MonoBehaviour {
 			lastValidPitch = sliderPitchInvLerp;
 		}
 
-		if (hasStarted)
+		//if (hasStarted)
+        //{
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
-		else
-			sliderVector = transform.position;
+		//}
+		//else
+			//sliderVector = transform.position;
+
+		if(currentAmp > -110)
+        {
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+		}
+        else
+        {
+			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
+			//Vector3 sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
+			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
+		}
 
 		if (!debugKeyControl)
 			CarSoundMovement();
@@ -325,7 +338,6 @@ public class AudioMovement : MonoBehaviour {
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
 			Debug.Log("FIX ROT");
 		}
-
 	}
 
 	public bool IsGrounded()
