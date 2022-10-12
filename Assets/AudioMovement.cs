@@ -102,7 +102,7 @@ public class AudioMovement : MonoBehaviour {
 	ParticleSystem _partSys;
 	private Collider col;
 
-
+	float lastHit;
 	void Start()
     {
 		m_Rigidbody = GetComponent<Rigidbody>();
@@ -140,12 +140,13 @@ public class AudioMovement : MonoBehaviour {
 	}
 
     void OnCollisionEnter(Collision collision)
-	{		
+	{	
+		
 		if (collision.gameObject.tag == "Player")
 		{
 			Physics.IgnoreCollision(collision.collider, col, ignorePlayerCol);
 		}
-
+		
 
 		if (collision.gameObject.tag == "Box"){
 			currentSpeed = currentSpeed;
@@ -159,6 +160,7 @@ public class AudioMovement : MonoBehaviour {
 		{
 			Vector3 colReflect = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
+
 			Physics.IgnoreCollision(collision.collider, col, true);
 
 			if (lastHit > invulnerableState)
@@ -167,6 +169,7 @@ public class AudioMovement : MonoBehaviour {
 				RemoveRing();
 				sfx.crashIntoTrack();
 			}
+			//else
 
 			/*
 			if (testRailControl)//TODO: only works on right wall
@@ -198,22 +201,20 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
-
-	private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring")
 		{
-			if (canAddCar)
-            {
-				canAddCar = false;
+
 				if (numRings < 5)
 				{
+					Debug.Log(numRings);
 					numRings++;
 					ringcountUI.sprite = ringcountUIArray[numRings];
 					//ringCount.text = numRings.ToString();
 				}
-				carLine.AddBodyPart(1, 0);
-			}
+				//carLine.AddBodyPart(1, 0);
+
 			transform.rotation = other.transform.rotation;
 			boostTimer = 0;
 		}
@@ -221,22 +222,31 @@ public class AudioMovement : MonoBehaviour {
 			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
 	}
 
-    private void OnTriggerExit(Collider other)
-    {
-		if (other.gameObject.tag == "Ring")
-			canAddCar = true;
-	}
-
-
     void FixedUpdate()
     {
+		float colDist = Vector3.Distance(transform.position, player2.transform.position);
+
+		if (colDist < 1)
+		{
+			Vector3 currentDirection = (transform.position - player2.transform.position).normalized;
+
+			float PushAmount = Mathf.InverseLerp(0, 1, colDist);
+			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 80);			
+		}
+
+
+
 		if (lastHit < invulnerableState)
 		{
 			lastHit++;
 			feedBack.BlinkFeedBack(true);
 		}
-		else
+        else
+        {
+			lastHit = invulnerableState + 1;
 			feedBack.BlinkFeedBack(false);
+		}
+
 
 
 		if (isMoving)
@@ -324,22 +334,43 @@ public class AudioMovement : MonoBehaviour {
 			CarSoundMovement();
 		else
 			CarKeyMovement();
+
+		
+		if (IsGrounded())
+		{
+			RampControl(GroundCtrl());
+		}
+        else
+        {
+			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
+			Debug.Log("Ground");
+		}
+		/*
+		if(transform.rotation.y != 90)
+        {
+			transform.rotation = Quaternion.Euler(0, 90, 0);
+		}
+		*/
+
 	}
 
 	void StabilizeCarRot(float stabilizeSpeed)
 	{
+		
 		if (!IsGrounded())
         {
 			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), stabilizeSpeed * Time.deltaTime);
 		}
-
+		
 		if (transform.rotation.eulerAngles.x < 290 && transform.rotation.eulerAngles.x > 10)
         {
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
 			Debug.Log("FIX ROT");
 		}
+		
 	}
 
+	
 	public bool IsGrounded()
     {
 		Debug.DrawRay(transform.position, (Vector3.down + Vector3.forward) * 0.5f, Color.green);
@@ -354,6 +385,18 @@ public class AudioMovement : MonoBehaviour {
 			return true;
 		else
 			return false;
+	}
+	
+
+	public Transform GroundCtrl()
+	{
+		Debug.DrawRay(transform.position, (Vector3.down) * 0.8f, Color.green);
+		RaycastHit hit;
+
+		if (Physics.Raycast(transform.position, Vector3.down, out hit,0.8f, layer))
+			return hit.transform;
+		else
+			return null;
 	}
 
 	void CarKeyMovement()
@@ -379,16 +422,14 @@ public class AudioMovement : MonoBehaviour {
 			}
             if (hasStarted)
             {
-
-
-			if (currentSpeed < maximumForwardSpeed)
-			{
-				currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
-			}
-			else
-			{
-				currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
-			}
+				if (currentSpeed < maximumForwardSpeed)
+				{
+					currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
+				}
+				else
+				{
+					currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+				}
 			}
 			if (isSinglePlayer == true)
 			{
@@ -589,7 +630,14 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
-	float lastHit;
+	void RampControl(Transform trans)
+    {
+		Vector3 gravityUp = trans.up;
+		Vector3 localUp = transform.up;
+
+		transform.up = Vector3.Lerp(transform.up, gravityUp, 20 * Time.deltaTime);
+		transform.rotation = Quaternion.Euler(-transform.rotation.eulerAngles.z, 90, 0);
+	}
 
 	public void RemoveRing()
     {
@@ -597,10 +645,10 @@ public class AudioMovement : MonoBehaviour {
 
 		if (numRings > 0)
 		{
-			if (Time.time - lastHit < 2)
-				return;
+			//if (Time.time - lastHit < 2)
+				//return;
 
-			lastHit = Time.time;
+			//lastHit = Time.time;
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
 		}
@@ -624,8 +672,8 @@ public class AudioMovement : MonoBehaviour {
 	public void SetRailConstrains()
 	{
 		if(lockRigidbodyRotation)
-		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
-		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
+		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		railSteerSpeed = railSteerRef;
 		isMoving = true;
 		Invoke("SetRailMovement", 1);

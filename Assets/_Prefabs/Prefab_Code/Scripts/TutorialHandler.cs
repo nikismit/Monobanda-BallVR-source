@@ -17,6 +17,7 @@ public class TutorialHandler : MonoBehaviour
 
     public void SpawnPlane()
     {
+        /*
         for (int i = 0; i < tutorialPlane.Length; i++)
         {
             if (activatePlane == i)
@@ -24,6 +25,15 @@ public class TutorialHandler : MonoBehaviour
             else
                 tutorialPlane[i].SetActive(false);
         }
+        */
+
+        if(activatePlane == 0)
+        {
+            tutorialPlane[0].SetActive(true);
+            tutorialPlane[1].SetActive(true);
+        }
+        if(activatePlane == 2)
+            tutorialPlane[2].SetActive(true);
 
         //activatePlane++;
 
