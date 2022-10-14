@@ -9,8 +9,9 @@ public class AudioMovement : MonoBehaviour {
 	public collisionAdjustmentScriptPlayer1 crashForce;
 	public WinState winState;
 	private Transform camDist;
-	private SnakeBehavior carLine;
+	//private SnakeBehavior carLine;
 	[SerializeField] GameObject ui;
+	//private PlayerNotifyHandler notifyHandler;
 
 	public Sprite[] ringcountUIArray;
 	public Image ringcountUI;
@@ -93,7 +94,6 @@ public class AudioMovement : MonoBehaviour {
 	private float boostTimer = 100;
 
 	private int numRings = 5;
-	private bool canAddCar = true;
 
 	private float invulnerableState = 160;
 
@@ -103,16 +103,18 @@ public class AudioMovement : MonoBehaviour {
 	private Collider col;
 
 	float lastHit;
+
 	void Start()
     {
 		m_Rigidbody = GetComponent<Rigidbody>();
 		_partSys = GetComponent<ParticleSystem>();
 
 		col = gameObject.GetComponent<Collider>();
-		carLine = gameObject.GetComponent<SnakeBehavior>();
+		//carLine = gameObject.GetComponent<SnakeBehavior>();
 		feedBack = gameObject.GetComponent<PlayerFeedBack>();
 		camDist = GameObject.FindGameObjectWithTag("CarDistRef").transform;
 
+		//notifyHandler = gameObject.GetComponent<PlayerNotifyHandler>();
 
 		lastHit = invulnerableState + 1;
 		if (!ui.activeSelf && ui != null)
@@ -224,6 +226,8 @@ public class AudioMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
+		//notifyHandler.currentVolume = Volume;
+
 		float colDist = Vector3.Distance(transform.position, player2.transform.position);
 
 		if (colDist < 1)
@@ -336,7 +340,7 @@ public class AudioMovement : MonoBehaviour {
 			CarKeyMovement();
 
 		
-		if (IsGrounded())
+		if (IsGrounded() && GroundCtrl() != null)
 		{
 			RampControl(GroundCtrl());
 		}
@@ -659,15 +663,29 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
+	bool jumpCoolDown = false;
+
 	public void JumpBoost(float jumpBoost)
     {
 		//cubeRb.velocity = new vector3(cubeRB.velocity.x, 0, 0);
 		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
 
-		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+        if (!jumpCoolDown)
+        {
+			jumpCoolDown = true;
+			StartCoroutine(Jumping(jumpBoost));
+        }
+		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//transform.Translate(Vector3.up * jumpBoost);
 
 	}
+
+	IEnumerator Jumping(float jumpBoost)
+    {
+		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+		yield return new WaitForSeconds(0.5f);
+		jumpCoolDown = false;
+    }
 
 	public void SetRailConstrains()
 	{

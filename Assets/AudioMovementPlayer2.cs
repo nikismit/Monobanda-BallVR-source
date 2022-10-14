@@ -320,7 +320,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 		CarSoundMovement();
 
-		if (IsGrounded())
+		if (IsGrounded() && GroundCtrl() != null)
 		{
 			RampControl(GroundCtrl());
 		}
@@ -506,12 +506,25 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 	}
 
+	bool jumpCoolDown = false;
 
 	public void JumpBoost(float jumpBoost)
 	{
 		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
-		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
+		//m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
+		if (!jumpCoolDown)
+		{
+			jumpCoolDown = true;
+			StartCoroutine(Jumping(jumpBoost));
+		}
+		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+	}
+
+	IEnumerator Jumping(float jumpBoost)
+	{
 		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+		yield return new WaitForSeconds(0.5f);
+		jumpCoolDown = false;
 	}
 
 	public void SetRailConstrains()
