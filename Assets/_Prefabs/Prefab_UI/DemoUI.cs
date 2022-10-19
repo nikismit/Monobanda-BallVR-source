@@ -6,16 +6,29 @@ using UnityEngine.UI;
 
 public class DemoUI : MonoBehaviour
 {
-    [SerializeField] CanvasGroup canvasGroup;
+    //[SerializeField] CanvasGroup canvasGroup;
     [SerializeField] RaceCountdown countDown;
     [SerializeField] TutorialHandler tutHandler;
-    
+    [SerializeField] GameObject transitionUI;
+    [SerializeField] GameObject demoCanvas;
+    ///[SerializeField] TutorialHandler tutHandler;
+    [HideInInspector] RectTransform uiTransform;
+    [HideInInspector] CanvasGroup uiFade;
+
     AudioMovement player1;
     AudioMovementPlayer2 player2;
+
+
+    float scale = 0;
 
     private bool startTut = false;
     void Start()
     {
+        uiTransform = transitionUI.GetComponent<RectTransform>();
+        uiFade = transitionUI.GetComponent<CanvasGroup>();
+
+        uiTransform.sizeDelta = new Vector2(scale, scale);
+
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < players.Length; i++)
         {
@@ -35,23 +48,39 @@ public class DemoUI : MonoBehaviour
         startTut = true;
         //SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");    
         //countDown.startCountDown = true;
-        tutHandler.InitializeTutorial();
+        //tutHandler.InitializeTutorial();
     }
 
-
+    bool courotineStarted = false;
 
     // Update is called once per frame
     void Update()
     {
-        
+        /*
         if (Input.GetKey(KeyCode.Space))
         {
             RemoveDemoUIEvent();
         }
         
-        if (startTut && canvasGroup.alpha >= 0)
+        */
+        /*
+        if (startTut && canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha -= Time.deltaTime;
+            canvasGroup.alpha -= Time.deltaTime / 2;
         }
+        */
+
+        if (startTut && scale <= 10)
+        {
+            scale++;
+            uiTransform.sizeDelta = new Vector2(scale * 50, scale * 50);
+        }
+        else if (scale >= 10)
+        {
+            tutHandler.RemoveRoads();
+            demoCanvas.SetActive(false);
+            uiFade.alpha -= Time.deltaTime / 3;
+        }
+        //Debug.Log("KLaarjonge");
     }
 }

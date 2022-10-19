@@ -7,12 +7,15 @@ public class TutorialPlanes : MonoBehaviour
     private TutorialHandler tutHandler;
     [Header("Debug")]
     [SerializeField] private AudioMovement audioMovement;
+    [SerializeField] private GameObject[] readyUI;
+    [SerializeField] private int UIid;
 
     private int playerNum;
     private int hasEntered = 0;
 
     void OnEnable()
     {
+        //readyUI = GameObject.FindGameObjectsWithTag("StartUI");
         playerNum = GameObject.FindGameObjectsWithTag("Player").Length;
         tutHandler = gameObject.GetComponentInParent<TutorialHandler>();
     }
@@ -35,13 +38,28 @@ public class TutorialPlanes : MonoBehaviour
                 Invoke("DisableSelf", 1);
             }
 
+            if (other.gameObject.GetComponent<AudioMovement>() && tutHandler.activatePlane >= 2)
+            {
+                //tutHandler.StartCoroutine(tutHandler.Hold());
+                //Invoke("DisableSelf", 1);
+                readyUI[0].SetActive(true);
+            }
+            if (other.gameObject.GetComponent<AudioMovementPlayer2>() && tutHandler.activatePlane >= 2)
+            {
+                //tutHandler.StartCoroutine(tutHandler.Hold());
+                //Invoke("DisableSelf", 1);
+                readyUI[1].SetActive(true);
+            }
+
+
             /*
-            else if (hasEntered >= playerNum)
+            else if (hasEntered >= playerNum && tutHandler.activatePlane >= 2)
             {
                 tutHandler.StartCoroutine(tutHandler.Hold());
                 Invoke("DisableSelf", 1);
 
-            }*/
+            }
+            */
         }     //tutHandler.StartCoroutine(tutHandler.Hold());        
     }
 
@@ -49,10 +67,23 @@ public class TutorialPlanes : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+    private void OnDisable()
+    {
+        if(UIid == 1)
+        for (int i = 0; i < readyUI.Length; i++)
+        readyUI[i].SetActive(false);
+    }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
             hasEntered--;
+
+        if (other.gameObject.GetComponent<AudioMovement>() && tutHandler.activatePlane >= 2)
+        {
+            //tutHandler.StartCoroutine(tutHandler.Hold());
+            //Invoke("DisableSelf", 1);
+            readyUI[0].SetActive(false);
+        }
     }
 }

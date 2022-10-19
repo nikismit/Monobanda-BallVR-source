@@ -217,7 +217,11 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 
 		if (other.gameObject.GetComponent<JumpPad>())
-			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
+		{
+			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
+
+			JumpBoost(jumpPadRef);
+		}
 	}
 
 	private void OnTriggerExit(Collider other)
@@ -508,21 +512,22 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	bool jumpCoolDown = false;
 
-	public void JumpBoost(float jumpBoost)
+	public void JumpBoost(JumpPad jumpRef)
 	{
 		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
 		if (!jumpCoolDown)
 		{
 			jumpCoolDown = true;
-			StartCoroutine(Jumping(jumpBoost));
+			StartCoroutine(Jumping(jumpRef));
 		}
 		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 	}
 
-	IEnumerator Jumping(float jumpBoost)
+	IEnumerator Jumping(JumpPad jumpRef)
 	{
-		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
+		jumpRef.source.Play();
 		yield return new WaitForSeconds(0.5f);
 		jumpCoolDown = false;
 	}

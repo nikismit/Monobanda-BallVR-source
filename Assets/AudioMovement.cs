@@ -221,7 +221,11 @@ public class AudioMovement : MonoBehaviour {
 			boostTimer = 0;
 		}
 		if (other.gameObject.GetComponent<JumpPad>())
-			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
+        {
+			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
+
+			JumpBoost(jumpPadRef);
+		}
 	}
 
     void FixedUpdate()
@@ -665,7 +669,7 @@ public class AudioMovement : MonoBehaviour {
 
 	bool jumpCoolDown = false;
 
-	public void JumpBoost(float jumpBoost)
+	public void JumpBoost(JumpPad jumpRef)
     {
 		//cubeRb.velocity = new vector3(cubeRB.velocity.x, 0, 0);
 		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
@@ -673,16 +677,17 @@ public class AudioMovement : MonoBehaviour {
         if (!jumpCoolDown)
         {
 			jumpCoolDown = true;
-			StartCoroutine(Jumping(jumpBoost));
+			StartCoroutine(Jumping(jumpRef));
         }
 		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//transform.Translate(Vector3.up * jumpBoost);
 
 	}
 
-	IEnumerator Jumping(float jumpBoost)
+	IEnumerator Jumping(JumpPad jumpRef)
     {
-		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
+		jumpRef.source.Play();
 		yield return new WaitForSeconds(0.5f);
 		jumpCoolDown = false;
     }
