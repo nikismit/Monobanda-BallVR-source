@@ -33,7 +33,7 @@ public class TutorialPlanes : MonoBehaviour
             if (hasEntered >= playerNum - 1 && !hasActivated)
             //if (hasEntered >= playerNum)
             {
-                hasActivated = false;
+                hasActivated = true;
                 tutHandler.StartCoroutine(tutHandler.Hold());
                 Invoke("DisableSelf", 1);
             }

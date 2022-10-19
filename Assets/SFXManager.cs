@@ -25,6 +25,7 @@ public class SFXManager : MonoBehaviour
 
   void Start(){
     AudioSourceMusic.clip = Music;
+    AudioSourceMusic.volume = 0.5f;
     AudioSourceMusic.Play();
 
     P1Volume = 0f;

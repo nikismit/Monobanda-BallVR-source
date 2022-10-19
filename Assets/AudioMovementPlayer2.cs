@@ -83,6 +83,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private Collider col;
 	private Transform camDist;
 	private float boostTimer = 100;
+	private float minimumAmp = 0;
 
 	private AudioMovement playerOne;
 
@@ -319,8 +320,18 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		//if (hasStarted)
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
 		//else
-			//sliderVector = transform.position;
+		//sliderVector = transform.position;
+		if (currentAmp > -110)
+		{
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+		}
+		else
+		{
+			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
+			//Vector3 sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
+			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
+		}
+		//sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
 		CarSoundMovement();
 
@@ -331,7 +342,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		else
 		{
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
-			Debug.Log("Ground");
+			//Debug.Log("Ground");
 		}
 	}
 

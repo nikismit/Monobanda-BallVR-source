@@ -351,7 +351,7 @@ public class AudioMovement : MonoBehaviour {
         else
         {
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
-			Debug.Log("Ground");
+			//Debug.Log("Ground");
 		}
 		/*
 		if(transform.rotation.y != 90)
