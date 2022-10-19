@@ -83,6 +83,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private Collider col;
 	private Transform camDist;
 	private float boostTimer = 100;
+	private float minimumAmp = 0;
 
 	private AudioMovement playerOne;
 
@@ -217,7 +218,11 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 
 		if (other.gameObject.GetComponent<JumpPad>())
-			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
+		{
+			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
+
+			JumpBoost(jumpPadRef);
+		}
 	}
 
 	private void OnTriggerExit(Collider other)
@@ -315,19 +320,29 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		//if (hasStarted)
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
 		//else
-			//sliderVector = transform.position;
+		//sliderVector = transform.position;
+		if (currentAmp > -110)
+		{
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+		}
+		else
+		{
+			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
+			//Vector3 sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
+			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
+		}
+		//sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
 		CarSoundMovement();
 
-		if (IsGrounded())
+		if (IsGrounded() && GroundCtrl() != null)
 		{
 			RampControl(GroundCtrl());
 		}
 		else
 		{
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
-			Debug.Log("Ground");
+			//Debug.Log("Ground");
 		}
 	}
 
@@ -506,12 +521,26 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 	}
 
+	bool jumpCoolDown = false;
 
-	public void JumpBoost(float jumpBoost)
+	public void JumpBoost(JumpPad jumpRef)
 	{
 		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
-		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
-		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+		//m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
+		if (!jumpCoolDown)
+		{
+			jumpCoolDown = true;
+			StartCoroutine(Jumping(jumpRef));
+		}
+		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+	}
+
+	IEnumerator Jumping(JumpPad jumpRef)
+	{
+		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
+		jumpRef.source.Play();
+		yield return new WaitForSeconds(0.5f);
+		jumpCoolDown = false;
 	}
 
 	public void SetRailConstrains()

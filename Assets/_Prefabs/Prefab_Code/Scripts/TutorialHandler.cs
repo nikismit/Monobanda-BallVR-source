@@ -5,14 +5,23 @@ using UnityEngine;
 public class TutorialHandler : MonoBehaviour
 {
     [SerializeField] RaceCountdown countDown;
+    [SerializeField] DemoUI demo;
     [SerializeField] GameObject[] movingRoads;
 
     [SerializeField] GameObject[] tutorialPlane;
-    private int activatePlane = 0;
+    [HideInInspector] public int activatePlane = 0;
+
+    [SerializeField] private GameObject[] startCanvasUIs;
+
+    private void Start()
+    {
+        //startCanvasUIs = GameObject.FindGameObjectsWithTag("StartUI");
+        SpawnPlane();
+    }
 
     public void InitializeTutorial()
     {
-        SpawnPlane();
+        //SpawnPlane();
     }
 
     public void SpawnPlane()
@@ -39,7 +48,8 @@ public class TutorialHandler : MonoBehaviour
 
         if (activatePlane >= tutorialPlane.Length)
         {
-            StartCoroutine(HoldStart());
+            //StartCoroutine(HoldStart());
+            demo.RemoveDemoUIEvent();
         }
     }
 
@@ -53,14 +63,33 @@ public class TutorialHandler : MonoBehaviour
 
     public IEnumerator HoldStart()
     {
+        //StartCoroutine(ReadyPopUp());
         yield return new WaitForSeconds(1);
-        RemoveRoads();
+        //RemoveRoads();
         countDown.startCountDown = true;
         //SpawnPlane();
     }
 
-    void RemoveRoads()
+    public IEnumerator ReadyPopUp()
     {
+        for (int i = 0; i < startCanvasUIs.Length; i++)
+        {
+            startCanvasUIs[i].SetActive(true);
+        }
+        yield return new WaitForSeconds(2);
+        //RemoveRoads();
+        for (int i = 0; i < startCanvasUIs.Length; i++)
+        {
+            startCanvasUIs[i].SetActive(false);
+        }
+        countDown.startCountDown = true;
+        //SpawnPlane();
+    }
+
+    public void RemoveRoads()
+    {
+        countDown.startCountDown = true;
+
         for (int i = 0; i < movingRoads.Length; i++)
         {
             movingRoads[i].SetActive(false);
