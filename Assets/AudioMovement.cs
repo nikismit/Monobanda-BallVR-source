@@ -223,7 +223,7 @@ public class AudioMovement : MonoBehaviour {
 		if (other.gameObject.GetComponent<JumpPad>())
         {
 			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
-
+			//Debug.LogError("JUMPING");
 			JumpBoost(jumpPadRef);
 		}
 	}

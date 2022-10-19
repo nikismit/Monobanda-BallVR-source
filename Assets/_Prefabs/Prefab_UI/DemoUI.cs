@@ -70,12 +70,12 @@ public class DemoUI : MonoBehaviour
         }
         */
 
-        if (startTut && scale <= 10)
+        if (startTut && scale <= 50)
         {
             scale++;
             uiTransform.sizeDelta = new Vector2(scale * 50, scale * 50);
         }
-        else if (scale >= 10)
+        else if (scale >= 50)
         {
             tutHandler.RemoveRoads();
             demoCanvas.SetActive(false);
