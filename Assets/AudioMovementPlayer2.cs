@@ -319,9 +319,15 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 		//if (hasStarted)
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
-		//else
-		//sliderVector = transform.position;
-		if (currentAmp > -110)
+        //else
+        //sliderVector = transform.position;
+
+        if (currentAmp < minimumAmp)
+        {
+			minimumAmp = currentAmp;
+        }
+
+		if (currentAmp > minimumAmp + 20)
 		{
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 		}

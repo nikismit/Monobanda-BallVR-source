@@ -96,6 +96,7 @@ public class AudioMovement : MonoBehaviour {
 	private int numRings = 5;
 
 	private float invulnerableState = 160;
+	private float minimumAmp = 0;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
@@ -325,9 +326,14 @@ public class AudioMovement : MonoBehaviour {
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
 		//}
 		//else
-			//sliderVector = transform.position;
+		//sliderVector = transform.position;
+		if (currentAmp < minimumAmp)
+		{
+			minimumAmp = currentAmp;
+		}
 
-		if(currentAmp > -110)
+
+		if (currentAmp > minimumAmp + 20)
         {
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 		}
