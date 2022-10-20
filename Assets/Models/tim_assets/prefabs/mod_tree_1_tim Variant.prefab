@@ -1,5 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5522857695163776106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3069462302208758198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0.51530623, g: 0.44419718, b: 0.5849056, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &2709760759490740430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5422840994763045824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0.5660378, g: 0, b: 0.31617546, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &2889701834796774052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94,3 +130,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 9134b68b069638c42b527886af427bb4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b6f20bb3ae6fa149b4515dc62322e97, type: 3}
+--- !u!1 &3069462302208758198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 180886367360787218, guid: 6b6f20bb3ae6fa149b4515dc62322e97,
+    type: 3}
+  m_PrefabInstance: {fileID: 2889701834796774052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5422840994763045824 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7159462976747850084, guid: 6b6f20bb3ae6fa149b4515dc62322e97,
+    type: 3}
+  m_PrefabInstance: {fileID: 2889701834796774052}
+  m_PrefabAsset: {fileID: 0}
