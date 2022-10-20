@@ -323,7 +323,7 @@ public class AudioMovement : MonoBehaviour {
 
 		//if (hasStarted)
         //{
-			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
+			sliderVector = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(sliderPitchInvLerp * roadWidth - roadHalf, -roadHalf,roadHalf));
 		//}
 		//else
 		//sliderVector = transform.position;
