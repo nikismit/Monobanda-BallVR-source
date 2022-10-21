@@ -18,6 +18,7 @@ public class DropShadow : MonoBehaviour
 
     void LateUpdate()
     {
+        /*
         Ray ray = new Ray(playerTrans.position, Vector3.down);
 
         if (Physics.Raycast(ray, out hit))
@@ -25,7 +26,8 @@ public class DropShadow : MonoBehaviour
             float shadowSize = Mathf.Lerp(1, 0.15f, hit.distance / 10);
             proj.orthographicSize = shadowSize;
         }
-
+        */
         transform.position = playerTrans.position;
+
     }
 }

@@ -83,6 +83,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private Collider col;
 	private Transform camDist;
 	private float boostTimer = 100;
+	private float minimumAmp = 0;
 
 	private AudioMovement playerOne;
 
@@ -205,25 +206,23 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring"){
-
-
-			if (canAddCar)
-			{
-				canAddCar = false;
 				if (numRings < 5)
                 {
 					numRings++;
 					ringcountUI.sprite = ringcountUIArray[numRings];
 				}
 
-				carLine.AddBodyPart(1, 0);
-			}
+				//carLine.AddBodyPart(1, 0);
 			transform.rotation = other.transform.rotation;
 			boostTimer = 0;
 		}
 
 		if (other.gameObject.GetComponent<JumpPad>())
-			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
+		{
+			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
+
+			JumpBoost(jumpPadRef);
+		}
 	}
 
 	private void OnTriggerExit(Collider other)
@@ -234,13 +233,26 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	void FixedUpdate()
     {
+		float colDist = Vector3.Distance(transform.position, player1.transform.position);
+
+		if (colDist < 1)
+		{
+			Vector3 currentDirection = (transform.position - player1.transform.position).normalized;
+
+			float PushAmount = Mathf.InverseLerp(0, 1, colDist);
+			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 80);
+		}
+
 		if (lastHit < invulnerableState)
 		{
 			lastHit++;
 			feedBack.BlinkFeedBack(true);
 		}
 		else
+		{
+			lastHit = invulnerableState + 1;
 			feedBack.BlinkFeedBack(false);
+		}
 
 
 		if (playerOne.isMoving)
@@ -305,13 +317,39 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			lastValidPitch = sliderPitchInvLerp;
 		}
 
-		if (hasStarted)
+		//if (hasStarted)
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
-		else
-			sliderVector = transform.position;
+        //else
+        //sliderVector = transform.position;
+
+        if (currentAmp < minimumAmp)
+        {
+			minimumAmp = currentAmp;
+        }
+
+		if (currentAmp > minimumAmp + 20)
+		{
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+		}
+		else
+		{
+			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
+			//Vector3 sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
+			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
+		}
+		//sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
 		CarSoundMovement();
+
+		if (IsGrounded() && GroundCtrl() != null)
+		{
+			RampControl(GroundCtrl());
+		}
+		else
+		{
+			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
+			//Debug.Log("Ground");
+		}
 	}
 
     void CarSoundMovement()
@@ -416,6 +454,15 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 	}
 
+	void RampControl(Transform trans)
+	{
+		Vector3 gravityUp = trans.up;
+		Vector3 localUp = transform.up;
+
+		transform.up = Vector3.Lerp(transform.up, gravityUp, 20 * Time.deltaTime);
+		transform.rotation = Quaternion.Euler(-transform.rotation.eulerAngles.z, 90, 0);
+	}
+
 	void StabilizeCarRot(float stabilizeSpeed)
 	{
 		if (!IsGrounded())
@@ -447,6 +494,17 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			return false;
 	}
 
+	public Transform GroundCtrl()
+	{
+		Debug.DrawRay(transform.position, (Vector3.down) * 0.8f, Color.green);
+		RaycastHit hit;
+
+		if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.8f, layer))
+			return hit.transform;
+		else
+			return null;
+	}
+
 	float lastHit;
 
 	public void RemoveRing()
@@ -455,10 +513,10 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 		if (numRings > 0)
         {
-            if (Time.time-lastHit < 2)
-				return;
+            //if (Time.time-lastHit < 2)
+				//return;
 
-			lastHit = Time.time;
+			//lastHit = Time.time;
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
 		}
@@ -469,12 +527,26 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 	}
 
+	bool jumpCoolDown = false;
 
-	public void JumpBoost(float jumpBoost)
+	public void JumpBoost(JumpPad jumpRef)
 	{
 		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
-		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
-		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+		//m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
+		if (!jumpCoolDown)
+		{
+			jumpCoolDown = true;
+			StartCoroutine(Jumping(jumpRef));
+		}
+		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+	}
+
+	IEnumerator Jumping(JumpPad jumpRef)
+	{
+		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
+		jumpRef.source.Play();
+		yield return new WaitForSeconds(0.5f);
+		jumpCoolDown = false;
 	}
 
 	public void SetRailConstrains()

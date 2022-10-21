@@ -9,8 +9,9 @@ public class AudioMovement : MonoBehaviour {
 	public collisionAdjustmentScriptPlayer1 crashForce;
 	public WinState winState;
 	private Transform camDist;
-	private SnakeBehavior carLine;
+	//private SnakeBehavior carLine;
 	[SerializeField] GameObject ui;
+	//private PlayerNotifyHandler notifyHandler;
 
 	public Sprite[] ringcountUIArray;
 	public Image ringcountUI;
@@ -93,15 +94,16 @@ public class AudioMovement : MonoBehaviour {
 	private float boostTimer = 100;
 
 	private int numRings = 5;
-	private bool canAddCar = true;
 
 	private float invulnerableState = 160;
+	private float minimumAmp = 0;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
 	ParticleSystem _partSys;
 	private Collider col;
 
+	float lastHit;
 
 	void Start()
     {
@@ -109,10 +111,11 @@ public class AudioMovement : MonoBehaviour {
 		_partSys = GetComponent<ParticleSystem>();
 
 		col = gameObject.GetComponent<Collider>();
-		carLine = gameObject.GetComponent<SnakeBehavior>();
+		//carLine = gameObject.GetComponent<SnakeBehavior>();
 		feedBack = gameObject.GetComponent<PlayerFeedBack>();
 		camDist = GameObject.FindGameObjectWithTag("CarDistRef").transform;
 
+		//notifyHandler = gameObject.GetComponent<PlayerNotifyHandler>();
 
 		lastHit = invulnerableState + 1;
 		if (!ui.activeSelf && ui != null)
@@ -140,12 +143,13 @@ public class AudioMovement : MonoBehaviour {
 	}
 
     void OnCollisionEnter(Collision collision)
-	{		
+	{	
+		
 		if (collision.gameObject.tag == "Player")
 		{
 			Physics.IgnoreCollision(collision.collider, col, ignorePlayerCol);
 		}
-
+		
 
 		if (collision.gameObject.tag == "Box"){
 			currentSpeed = currentSpeed;
@@ -159,6 +163,7 @@ public class AudioMovement : MonoBehaviour {
 		{
 			Vector3 colReflect = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
+
 			Physics.IgnoreCollision(collision.collider, col, true);
 
 			if (lastHit > invulnerableState)
@@ -167,6 +172,7 @@ public class AudioMovement : MonoBehaviour {
 				RemoveRing();
 				sfx.crashIntoTrack();
 			}
+			//else
 
 			/*
 			if (testRailControl)//TODO: only works on right wall
@@ -198,45 +204,58 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
-
-	private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring")
 		{
-			if (canAddCar)
-            {
-				canAddCar = false;
+
 				if (numRings < 5)
 				{
+					Debug.Log(numRings);
 					numRings++;
 					ringcountUI.sprite = ringcountUIArray[numRings];
 					//ringCount.text = numRings.ToString();
 				}
-				carLine.AddBodyPart(1, 0);
-			}
+				//carLine.AddBodyPart(1, 0);
+
 			transform.rotation = other.transform.rotation;
 			boostTimer = 0;
 		}
 		if (other.gameObject.GetComponent<JumpPad>())
-			JumpBoost(other.gameObject.GetComponent<JumpPad>().jumpStrength);
+        {
+			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
+			//Debug.LogError("JUMPING");
+			JumpBoost(jumpPadRef);
+		}
 	}
-
-    private void OnTriggerExit(Collider other)
-    {
-		if (other.gameObject.tag == "Ring")
-			canAddCar = true;
-	}
-
 
     void FixedUpdate()
     {
+		//notifyHandler.currentVolume = Volume;
+
+		float colDist = Vector3.Distance(transform.position, player2.transform.position);
+
+		if (colDist < 1)
+		{
+			Vector3 currentDirection = (transform.position - player2.transform.position).normalized;
+
+			float PushAmount = Mathf.InverseLerp(0, 1, colDist);
+			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 80);			
+		}
+
+
+
 		if (lastHit < invulnerableState)
 		{
 			lastHit++;
 			feedBack.BlinkFeedBack(true);
 		}
-		else
+        else
+        {
+			lastHit = invulnerableState + 1;
 			feedBack.BlinkFeedBack(false);
+		}
+
 
 
 		if (isMoving)
@@ -304,12 +323,17 @@ public class AudioMovement : MonoBehaviour {
 
 		//if (hasStarted)
         //{
-			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
+			sliderVector = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(sliderPitchInvLerp * roadWidth - roadHalf, -roadHalf,roadHalf));
 		//}
 		//else
-			//sliderVector = transform.position;
+		//sliderVector = transform.position;
+		if (currentAmp < minimumAmp)
+		{
+			minimumAmp = currentAmp;
+		}
 
-		if(currentAmp > -110)
+
+		if (currentAmp > minimumAmp + 20)
         {
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 		}
@@ -324,22 +348,43 @@ public class AudioMovement : MonoBehaviour {
 			CarSoundMovement();
 		else
 			CarKeyMovement();
+
+		
+		if (IsGrounded() && GroundCtrl() != null)
+		{
+			RampControl(GroundCtrl());
+		}
+        else
+        {
+			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
+			//Debug.Log("Ground");
+		}
+		/*
+		if(transform.rotation.y != 90)
+        {
+			transform.rotation = Quaternion.Euler(0, 90, 0);
+		}
+		*/
+
 	}
 
 	void StabilizeCarRot(float stabilizeSpeed)
 	{
+		
 		if (!IsGrounded())
         {
 			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0), stabilizeSpeed * Time.deltaTime);
 		}
-
+		
 		if (transform.rotation.eulerAngles.x < 290 && transform.rotation.eulerAngles.x > 10)
         {
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
 			Debug.Log("FIX ROT");
 		}
+		
 	}
 
+	
 	public bool IsGrounded()
     {
 		Debug.DrawRay(transform.position, (Vector3.down + Vector3.forward) * 0.5f, Color.green);
@@ -354,6 +399,18 @@ public class AudioMovement : MonoBehaviour {
 			return true;
 		else
 			return false;
+	}
+	
+
+	public Transform GroundCtrl()
+	{
+		Debug.DrawRay(transform.position, (Vector3.down) * 0.8f, Color.green);
+		RaycastHit hit;
+
+		if (Physics.Raycast(transform.position, Vector3.down, out hit,0.8f, layer))
+			return hit.transform;
+		else
+			return null;
 	}
 
 	void CarKeyMovement()
@@ -379,16 +436,14 @@ public class AudioMovement : MonoBehaviour {
 			}
             if (hasStarted)
             {
-
-
-			if (currentSpeed < maximumForwardSpeed)
-			{
-				currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
-			}
-			else
-			{
-				currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
-			}
+				if (currentSpeed < maximumForwardSpeed)
+				{
+					currentSpeed += forwardAccelaration * Time.fixedDeltaTime;
+				}
+				else
+				{
+					currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
+				}
 			}
 			if (isSinglePlayer == true)
 			{
@@ -589,7 +644,14 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
-	float lastHit;
+	void RampControl(Transform trans)
+    {
+		Vector3 gravityUp = trans.up;
+		Vector3 localUp = transform.up;
+
+		transform.up = Vector3.Lerp(transform.up, gravityUp, 20 * Time.deltaTime);
+		transform.rotation = Quaternion.Euler(-transform.rotation.eulerAngles.z, 90, 0);
+	}
 
 	public void RemoveRing()
     {
@@ -597,10 +659,10 @@ public class AudioMovement : MonoBehaviour {
 
 		if (numRings > 0)
 		{
-			if (Time.time - lastHit < 2)
-				return;
+			//if (Time.time - lastHit < 2)
+				//return;
 
-			lastHit = Time.time;
+			//lastHit = Time.time;
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
 		}
@@ -611,21 +673,36 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
-	public void JumpBoost(float jumpBoost)
+	bool jumpCoolDown = false;
+
+	public void JumpBoost(JumpPad jumpRef)
     {
 		//cubeRb.velocity = new vector3(cubeRB.velocity.x, 0, 0);
 		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
 
-		m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
+        if (!jumpCoolDown)
+        {
+			jumpCoolDown = true;
+			StartCoroutine(Jumping(jumpRef));
+        }
+		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//transform.Translate(Vector3.up * jumpBoost);
 
 	}
 
+	IEnumerator Jumping(JumpPad jumpRef)
+    {
+		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
+		jumpRef.source.Play();
+		yield return new WaitForSeconds(0.5f);
+		jumpCoolDown = false;
+    }
+
 	public void SetRailConstrains()
 	{
 		if(lockRigidbodyRotation)
-		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
-		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
+		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		railSteerSpeed = railSteerRef;
 		isMoving = true;
 		Invoke("SetRailMovement", 1);

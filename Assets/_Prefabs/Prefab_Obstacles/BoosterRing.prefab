@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 7663517760820803316}
   - component: {fileID: 9117115000330507889}
   - component: {fileID: 6917049247255819169}
+  - component: {fileID: 7742712820127865057}
   - component: {fileID: -4497578398106078628}
   m_Layer: 0
   m_Name: BoosterRing
@@ -196,6 +197,24 @@ MonoBehaviour:
   - {fileID: 6858538685469984487}
   cam: {fileID: 0}
   rotateSpeed: 5
+--- !u!114 &7742712820127865057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935502646446249937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.3397382, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!82 &-4497578398106078628
 AudioSource:
   m_ObjectHideFlags: 0
