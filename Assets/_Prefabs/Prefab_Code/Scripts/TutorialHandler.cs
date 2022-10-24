@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class TutorialHandler : MonoBehaviour
 {
@@ -12,9 +13,11 @@ public class TutorialHandler : MonoBehaviour
     [HideInInspector] public int activatePlane = 0;
 
     [SerializeField] private GameObject[] startCanvasUIs;
+    private AudioSource tutorialSound;
 
     private void Start()
     {
+        tutorialSound = GetComponent<AudioSource>();
         //startCanvasUIs = GameObject.FindGameObjectsWithTag("StartUI");
         SpawnPlane();
     }
@@ -39,9 +42,14 @@ public class TutorialHandler : MonoBehaviour
         if(activatePlane == 0)
         {
             tutorialPlane[0].SetActive(true);
+            //tutorialPlane[1].SetActive(true);
+        }
+        if (activatePlane == 1)
+        {
+            //tutorialPlane[0].SetActive(true);
             tutorialPlane[1].SetActive(true);
         }
-        if(activatePlane == 2)
+        if (activatePlane == 2)
             tutorialPlane[2].SetActive(true);
 
         //activatePlane++;
@@ -55,7 +63,8 @@ public class TutorialHandler : MonoBehaviour
 
     public IEnumerator Hold()
     {
-        Debug.Log("holding");
+        //Debug.Log("holding");
+        tutorialSound.Play();
         yield return new WaitForSeconds(1);
         activatePlane++;
         SpawnPlane();
