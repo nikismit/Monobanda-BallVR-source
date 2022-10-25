@@ -221,9 +221,9 @@ public class AudioMovement : MonoBehaviour {
 			transform.rotation = other.transform.rotation;
 			boostTimer = 0;
 		}
-		if (other.gameObject.GetComponent<JumpPad>())
+		if (other.gameObject.GetComponent<NewJumpPad>())
         {
-			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
+			NewJumpPad jumpPadRef = other.gameObject.GetComponent<NewJumpPad>();
 			//Debug.LogError("JUMPING");
 			JumpBoost(jumpPadRef);
 		}
@@ -675,7 +675,7 @@ public class AudioMovement : MonoBehaviour {
 
 	bool jumpCoolDown = false;
 
-	public void JumpBoost(JumpPad jumpRef)
+	public void JumpBoost(NewJumpPad jumpRef)
     {
 		//cubeRb.velocity = new vector3(cubeRB.velocity.x, 0, 0);
 		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
@@ -683,8 +683,17 @@ public class AudioMovement : MonoBehaviour {
         if (!jumpCoolDown)
         {
 			jumpCoolDown = true;
-			StartCoroutine(Jumping(jumpRef));
-        }
+			//StartCoroutine(Jumping(jumpRef));
+			float newAngle = jumpRef.angle * Mathf.Deg2Rad;
+
+			float v0;
+			float time;
+			float angle;
+			//jumpRef.CalculatePath(jumpRef.targetPos.position, newAngle, out v0, out time);
+			jumpRef.CalculatePathWithHeight(jumpRef.targetPos.position, jumpRef.height, out v0, out angle, out time);
+
+			StartCoroutine(CourotineJump(v0, angle , time));
+		}
 		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//transform.Translate(Vector3.up * jumpBoost);
 
@@ -697,6 +706,20 @@ public class AudioMovement : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 		jumpCoolDown = false;
     }
+
+	IEnumerator CourotineJump(float v0, float angle, float time)
+	{
+		float t = 0;
+		while (t < time)
+		{
+			float x = v0 * t * Mathf.Cos(angle);
+			float y = v0 * t * Mathf.Sin(angle) - (1f / 2f) * -Physics.gravity.y * Mathf.Pow(t, 2);
+			transform.position = transform.position + new Vector3(x, y, 0);
+
+			t += Time.deltaTime;
+			yield return null;
+		}
+	}
 
 	public void SetRailConstrains()
 	{

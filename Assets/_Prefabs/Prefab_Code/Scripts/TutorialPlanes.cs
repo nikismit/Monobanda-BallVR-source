@@ -76,7 +76,7 @@ public class TutorialPlanes : MonoBehaviour
     }
     private void OnDisable()
     {
-        if(UIid == 1)
+        //if(UIid == 1)
         for (int i = 0; i < readyUI.Length; i++)
         readyUI[i].SetActive(false);
     }
