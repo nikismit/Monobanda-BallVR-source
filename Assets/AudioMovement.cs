@@ -67,6 +67,7 @@ public class AudioMovement : MonoBehaviour {
 
 	[Header("Debug")]
 	public bool debugKeyControl;
+	public bool testVoiceSetback;
 	public bool testRailControl;
 	public bool PitchSliderMovement;
 	private Vector3 sliderVector;
@@ -101,6 +102,7 @@ public class AudioMovement : MonoBehaviour {
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
 	ParticleSystem _partSys;
+	[SerializeField] ParticleSystem boostParticle;
 	private Collider col;
 
 	float lastHit;
@@ -209,6 +211,8 @@ public class AudioMovement : MonoBehaviour {
 		if (other.gameObject.tag == "Ring")
 		{
 
+			boostParticle.Play();
+
 				if (numRings < 5)
 				{
 					Debug.Log(numRings);
@@ -221,13 +225,16 @@ public class AudioMovement : MonoBehaviour {
 			transform.rotation = other.transform.rotation;
 			boostTimer = 0;
 		}
-		if (other.gameObject.GetComponent<NewJumpPad>())
+		if (other.gameObject.GetComponent<JumpPad>())
         {
-			NewJumpPad jumpPadRef = other.gameObject.GetComponent<NewJumpPad>();
+			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
 			//Debug.LogError("JUMPING");
 			JumpBoost(jumpPadRef);
 		}
 	}
+
+	float voiceSetbackTime = 0;
+	float maxVoiceSetback = 5;
 
     void FixedUpdate()
     {
@@ -332,16 +339,57 @@ public class AudioMovement : MonoBehaviour {
 			minimumAmp = currentAmp;
 		}
 
+		if (testVoiceSetback && Input.GetAxisRaw("Horizontal") != 0 && debugKeyControl && hasStarted ||
+			testVoiceSetback && !debugKeyControl && hasStarted && currentAmp <= minimumAmp + 20)
+		{
+			Debug.Log("Setting back Time!");
+			voiceSetbackTime = 0;
+		}
+		else if (testVoiceSetback && hasStarted && Input.GetAxisRaw("Horizontal") == 0 ||
+				 testVoiceSetback && !debugKeyControl && hasStarted && currentAmp >= minimumAmp + 20)
+		{
+			Debug.Log("TimerSET" + voiceSetbackTime);
+			voiceSetbackTime += Time.deltaTime;
 
-		if (currentAmp > minimumAmp + 20)
+			if (voiceSetbackTime >= maxVoiceSetback)
+			{
+				voiceSetbackTime = 0;
+				RemoveRing();
+			}
+		}
+
+
+		if (currentAmp > minimumAmp + 20 && !debugKeyControl)
         {
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+
+			/*
+			if (Input.GetAxisRaw("Horizontal") == 0 && debugKeyControl && hasStarted || !debugKeyControl && hasStarted)
+            {
+				Debug.Log("Setting back Time!");
+				voiceSetbackTime = 0;
+			}
+			*/
+
 		}
         else
         {
 			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
 			//Vector3 sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
+
+			/*
+			if (testVoiceSetback && hasStarted)
+			{
+				Debug.Log(voiceSetbackTime);
+				voiceSetbackTime += Time.deltaTime;
+
+                if (voiceSetbackTime >= maxVoiceSetback)
+                {
+					RemoveRing();
+				}
+			}
+			*/
 		}
 
 		if (!debugKeyControl)
@@ -359,12 +407,14 @@ public class AudioMovement : MonoBehaviour {
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
 			//Debug.Log("Ground");
 		}
-		/*
+        /*
 		if(transform.rotation.y != 90)
         {
 			transform.rotation = Quaternion.Euler(0, 90, 0);
 		}
 		*/
+
+
 
 	}
 
@@ -675,7 +725,7 @@ public class AudioMovement : MonoBehaviour {
 
 	bool jumpCoolDown = false;
 
-	public void JumpBoost(NewJumpPad jumpRef)
+	public void JumpBoost(JumpPad jumpRef)
     {
 		//cubeRb.velocity = new vector3(cubeRB.velocity.x, 0, 0);
 		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
@@ -683,16 +733,17 @@ public class AudioMovement : MonoBehaviour {
         if (!jumpCoolDown)
         {
 			jumpCoolDown = true;
-			//StartCoroutine(Jumping(jumpRef));
-			float newAngle = jumpRef.angle * Mathf.Deg2Rad;
+			StartCoroutine(Jumping(jumpRef));
+			//float newAngle = jumpRef.angle * Mathf.Deg2Rad;
 
 			float v0;
 			float time;
 			float angle;
 			//jumpRef.CalculatePath(jumpRef.targetPos.position, newAngle, out v0, out time);
-			jumpRef.CalculatePathWithHeight(jumpRef.targetPos.position, jumpRef.height, out v0, out angle, out time);
+			//jumpRef.CalculatePathWithHeight(jumpRef.targetPos.position, jumpRef.height, out v0, out angle, out time);
 
-			StartCoroutine(CourotineJump(v0, angle , time));
+			//StartCoroutine(CourotineJump(v0, angle , time));
+			//jumpRef.jumpCoroutine(transform, 1f);
 		}
 		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 		//transform.Translate(Vector3.up * jumpBoost);

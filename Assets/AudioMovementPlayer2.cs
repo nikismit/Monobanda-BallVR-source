@@ -94,6 +94,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
 	ParticleSystem _partSys;
+	[SerializeField] ParticleSystem boostParticle;
 	public AudioMovement player1;
 	public WinState winState;
 
@@ -206,11 +207,14 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring"){
-				if (numRings < 5)
-                {
-					numRings++;
-					ringcountUI.sprite = ringcountUIArray[numRings];
-				}
+			
+			boostParticle.Play();
+
+			if (numRings < 5)
+            {
+				numRings++;
+				ringcountUI.sprite = ringcountUIArray[numRings];
+			}
 
 				//carLine.AddBodyPart(1, 0);
 			transform.rotation = other.transform.rotation;

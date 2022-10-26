@@ -50,10 +50,12 @@ public class FinishCheckerSinglePlayer : MonoBehaviour
           //cam2.enabled = false;
 
           if (counter>=beforeReload){
-            //SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervyCoopMap");
-            //Now we can send the players to a winner screen!! and display their character, the loser and the time to beat the character
+                //SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervyCoopMap");
+                //Now we can send the players to a winner screen!! and display their character, the loser and the time to beat the character
 
-            SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervySinglePlayerMap - WinnerScreen");
+                //SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervySinglePlayerMap - WinnerScreen");
+
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
           }
 
         }
