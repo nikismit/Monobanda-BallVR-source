@@ -107,6 +107,9 @@ public class AudioMovement : MonoBehaviour {
 
 	float lastHit;
 
+	private float voiceSetbackTime = 0;
+	public float maxVoiceSetback = 7;
+
 	void Start()
     {
 		m_Rigidbody = GetComponent<Rigidbody>();
@@ -232,9 +235,6 @@ public class AudioMovement : MonoBehaviour {
 			JumpBoost(jumpPadRef);
 		}
 	}
-
-	float voiceSetbackTime = 0;
-	float maxVoiceSetback = 5;
 
     void FixedUpdate()
     {

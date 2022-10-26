@@ -72,7 +72,7 @@ public class DemoUI : MonoBehaviour
 
         if (startTut && scale <= 50)
         {
-            scale++;
+            scale += 60 * Time.deltaTime;
             uiTransform.sizeDelta = new Vector2(scale * 50, scale * 50);
         }
         else if (scale >= 50)

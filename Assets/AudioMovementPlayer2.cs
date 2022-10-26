@@ -100,8 +100,13 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	private float invulnerableState = 160;
 
+	private float voiceSetbackTime = 0;
+	private float maxVoiceSetback = 7;
+
 	void Start()
     {
+		maxVoiceSetback = player1.maxVoiceSetback;
+
 		carLine = gameObject.GetComponent<SnakeBehavior>();
 		_partSys = GetComponent<ParticleSystem>();
 
@@ -353,6 +358,25 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		{
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
 			//Debug.Log("Ground");
+		}
+
+		if (player1.testVoiceSetback && Input.GetAxisRaw("Horizontal") != 0 && player1.debugKeyControl && hasStarted ||
+			player1.testVoiceSetback && !player1.debugKeyControl && hasStarted && currentAmp <= minimumAmp + 20)
+		{
+			//Debug.Log("Setting back Time!");
+			voiceSetbackTime = 0;
+		}
+		else if (player1.testVoiceSetback && hasStarted && Input.GetAxisRaw("Horizontal") == 0 ||
+				 player1.testVoiceSetback && !player1.debugKeyControl && hasStarted && currentAmp >= minimumAmp + 20)
+		{
+			//Debug.Log("TimerSET" + voiceSetbackTime);
+			voiceSetbackTime += Time.deltaTime;
+
+			if (voiceSetbackTime >= maxVoiceSetback && !removeHealth)
+			{
+				voiceSetbackTime = 0;
+				RemoveRing();
+			}
 		}
 	}
 
