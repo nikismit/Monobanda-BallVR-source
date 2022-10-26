@@ -83,7 +83,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private Collider col;
 	private Transform camDist;
 	private float boostTimer = 100;
-	private float minimumAmp = 0;
+	[SerializeField] private float minimumAmp = 0;
 
 	private AudioMovement playerOne;
 
@@ -331,13 +331,16 @@ public class AudioMovementPlayer2 : MonoBehaviour {
         //else
         //sliderVector = transform.position;
 
-        if (currentAmp < minimumAmp)
+        if (currentAmp < minimumAmp || minimumAmp == -Mathf.Infinity)
         {
-			minimumAmp = currentAmp;
+            //Debug.LogWarning("minimumAmp");
+
+            minimumAmp = currentAmp;
         }
 
 		if (currentAmp > minimumAmp + 20)
 		{
+			voiceSetbackTime = 0;
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 		}
 		else
@@ -361,13 +364,13 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 
 		if (player1.testVoiceSetback && Input.GetAxisRaw("Horizontal") != 0 && player1.debugKeyControl && hasStarted ||
-			player1.testVoiceSetback && !player1.debugKeyControl && hasStarted && currentAmp <= minimumAmp + 20)
+			player1.testVoiceSetback && !player1.debugKeyControl && hasStarted && currentAmp <= minimumAmp)
 		{
 			//Debug.Log("Setting back Time!");
 			voiceSetbackTime = 0;
 		}
 		else if (player1.testVoiceSetback && hasStarted && Input.GetAxisRaw("Horizontal") == 0 ||
-				 player1.testVoiceSetback && !player1.debugKeyControl && hasStarted && currentAmp >= minimumAmp + 20)
+				 player1.testVoiceSetback && !player1.debugKeyControl && hasStarted && currentAmp >= minimumAmp)
 		{
 			//Debug.Log("TimerSET" + voiceSetbackTime);
 			voiceSetbackTime += Time.deltaTime;

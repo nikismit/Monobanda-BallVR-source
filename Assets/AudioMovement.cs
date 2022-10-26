@@ -97,7 +97,7 @@ public class AudioMovement : MonoBehaviour {
 	private int numRings = 5;
 
 	private float invulnerableState = 160;
-	private float minimumAmp = 0;
+	[SerializeField] private float minimumAmp = 0;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
@@ -329,12 +329,10 @@ public class AudioMovement : MonoBehaviour {
 		}
 
 		//if (hasStarted)
-        //{
 			sliderVector = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(sliderPitchInvLerp * roadWidth - roadHalf, -roadHalf,roadHalf));
-		//}
 		//else
 		//sliderVector = transform.position;
-		if (currentAmp < minimumAmp)
+		if (currentAmp < minimumAmp || minimumAmp == -Mathf.Infinity)
 		{
 			minimumAmp = currentAmp;
 		}
@@ -342,13 +340,13 @@ public class AudioMovement : MonoBehaviour {
 		if (testVoiceSetback && Input.GetAxisRaw("Horizontal") != 0 && debugKeyControl && hasStarted ||
 			testVoiceSetback && !debugKeyControl && hasStarted && currentAmp <= minimumAmp + 20)
 		{
-			Debug.Log("Setting back Time!");
+			//Debug.Log("Setting back Time!");
 			voiceSetbackTime = 0;
 		}
 		else if (testVoiceSetback && hasStarted && Input.GetAxisRaw("Horizontal") == 0 ||
 				 testVoiceSetback && !debugKeyControl && hasStarted && currentAmp >= minimumAmp + 20)
 		{
-			Debug.Log("TimerSET" + voiceSetbackTime);
+			//Debug.Log("TimerSET" + voiceSetbackTime);
 			voiceSetbackTime += Time.deltaTime;
 
 			if (voiceSetbackTime >= maxVoiceSetback)
@@ -361,35 +359,13 @@ public class AudioMovement : MonoBehaviour {
 
 		if (currentAmp > minimumAmp + 20 && !debugKeyControl)
         {
+			voiceSetbackTime = 0;
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
-
-			/*
-			if (Input.GetAxisRaw("Horizontal") == 0 && debugKeyControl && hasStarted || !debugKeyControl && hasStarted)
-            {
-				Debug.Log("Setting back Time!");
-				voiceSetbackTime = 0;
-			}
-			*/
-
 		}
         else
         {
 			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
-			//Vector3 sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
-
-			/*
-			if (testVoiceSetback && hasStarted)
-			{
-				Debug.Log(voiceSetbackTime);
-				voiceSetbackTime += Time.deltaTime;
-
-                if (voiceSetbackTime >= maxVoiceSetback)
-                {
-					RemoveRing();
-				}
-			}
-			*/
 		}
 
 		if (!debugKeyControl)
@@ -750,15 +726,76 @@ public class AudioMovement : MonoBehaviour {
 
 	}
 
-	IEnumerator Jumping(JumpPad jumpRef)
+	void Jump()
     {
-		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
-		jumpRef.source.Play();
-		yield return new WaitForSeconds(0.5f);
-		jumpCoolDown = false;
+		float jumpForce = 10;
+		float velocity;
+
+		//velocity += Physics.gravity.y * Time.deltaTime;
+
+		velocity = jumpForce;
+
+		transform.Translate(new Vector3(0,velocity ,0) * Time.deltaTime);
     }
 
-	IEnumerator CourotineJump(float v0, float angle, float time)
+	float curveTime = 0;
+	float curveDuration = 1f;
+
+	IEnumerator Jumping(JumpPad jumpRef)
+    {
+		/*
+		float time = 0;
+
+		while (curveTime < curveDuration)
+		{
+			curveTime += Time.deltaTime;
+			float linearT = curveTime / jumpRef.jumpLength;
+			//float heightT = jumpCurveUP.Evaluate(linearT);
+			Debug.Log("curveTime = " + curveTime);
+			//float newHeight = Mathf.Lerp(0f, height, heightT);
+
+
+			//transform.Translate(new Vector3(0, jumpRef.jumpStrength, 0) * Time.deltaTime);
+			//transform.Translate(new Vector3(0, 500, 0) * Time.deltaTime);
+
+			//target.Translate(target.transform.up * newHeight);
+			//target.position.y += jumpCurveUP.Evaluate(curveProgress());
+			//transform.Translate(transform.up + (Vector3.up * jumpRef.curve.Evaluate(linearT)));
+
+			//m_Rigidbody.velocity = new Vector3(0, transform.position.y * jumpRef.curve.Evaluate(linearT), 0);
+
+			//yield return null;
+		}
+
+		yield return new WaitForSeconds(0.5f);
+
+		curveTime = 0;
+		jumpCoolDown = false;
+		*/
+
+		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
+		//m_Rigidbody.velocity = new Vector3(0,transform.position.y * easeOutQuint(curveProgress()),0);
+		m_Rigidbody.velocity = new Vector3(0,transform.position.y * jumpRef.curve.Evaluate(curveProgress()),0);
+		jumpRef.source.Play();
+		yield return new WaitForSeconds(0.5f);
+		//m_Rigidbody.AddForce(-transform.up * 3, ForceMode.Impulse);
+		//m_Rigidbody.velocity = new Vector3(0, -transform.position.y * easeOutQuint(curveProgress()), 0);
+		curveTime = 0;
+		jumpCoolDown = false;
+	}
+
+	float curveProgress()
+	{
+		curveTime += Time.deltaTime;
+		return curveTime / curveDuration;
+	}
+
+	float easeOutQuint(float x)
+	{
+		return 1 - Mathf.Pow(1 - x, 5);
+	}
+
+IEnumerator CourotineJump(float v0, float angle, float time)
 	{
 		float t = 0;
 		while (t < time)

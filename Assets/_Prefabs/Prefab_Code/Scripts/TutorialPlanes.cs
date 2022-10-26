@@ -34,8 +34,9 @@ public class TutorialPlanes : MonoBehaviour
             Debug.Log("Has Entered" + hasEntered);
 
 
-            if (hasEntered >= playerNum - 1 && !hasActivated && audioMovement.debugKeyControl || hasEntered >= playerNum && !hasActivated && !audioMovement.debugKeyControl)
-            //if (hasEntered >= playerNum)
+            //if (hasEntered >= playerNum - 1 && !hasActivated && audioMovement.debugKeyControl || hasEntered >= playerNum && !hasActivated && !audioMovement.debugKeyControl)
+            if (hasEntered >= playerNum - 1 && !hasActivated)
+            //if (hasEntered >= playerNum && !hasActivated)
             {
                 activateParticle.Play();
                 hasActivated = true;
