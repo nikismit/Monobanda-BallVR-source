@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerFeedBack : MonoBehaviour
 {
     public GameObject playerModel;
+    private Transform transfromRef;
     private float time;
     private float hitDuration = 10;
     private float shakeStrength = 0.5f;
@@ -12,15 +13,17 @@ public class PlayerFeedBack : MonoBehaviour
      public ParticleSystem hitParticle;
 
     private Material mat;
-    private MeshRenderer meshRender;
+    [SerializeField] private MeshRenderer meshRender;
     private bool blinkFlipFlop = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        transfromRef.position = playerModel.transform.position;
+
         time = hitDuration;
         mat = playerModel.GetComponent<Renderer>().material;
-        meshRender = playerModel.GetComponent<MeshRenderer>();
+        //meshRender = playerModel.GetComponent<MeshRenderer>();
 
         /*mat.SetFloat("_Mode", 4f);
         mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
@@ -44,10 +47,18 @@ public class PlayerFeedBack : MonoBehaviour
         {
             time++;
             Vector3 shakePos = new Vector3(Random.Range(-shakeStrength, shakeStrength), Random.Range(-shakeStrength, shakeStrength), Random.Range(-shakeStrength, shakeStrength));
-            playerModel.transform.localPosition = shakePos;
+            playerModel.transform.localPosition = transfromRef.localPosition + shakePos;
         }
         else
-            playerModel.transform.localPosition = Vector3.zero;
+            playerModel.transform.localPosition = new Vector3(0, 1.5f, 0);
+        /*
+            if (transfromRef != null)
+        {
+            playerModel.transform.localPosition = transfromRef.localPosition;
+        }
+        else
+            //transfromRef.position = new Vector3(0,1.5f,0);
+        */
 
 
 
