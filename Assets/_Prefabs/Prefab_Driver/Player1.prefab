@@ -4879,6 +4879,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4767737314501644171}
+  - component: {fileID: 2850392219226427680}
   m_Layer: 0
   m_Name: Player1Model
   m_TagString: Untagged
@@ -4902,6 +4903,19 @@ Transform:
   m_Father: {fileID: 4767737315599181013}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2850392219226427680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4767737314501644168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae67fd774da33f49a516e7dd0e6ea79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerModel: {fileID: 8657991101580861797}
 --- !u!1 &4767737315599181009
 GameObject:
   m_ObjectHideFlags: 0
@@ -4962,6 +4976,7 @@ MonoBehaviour:
   crashForce: {fileID: 0}
   winState: {fileID: 0}
   ui: {fileID: 0}
+  modelEffect: {fileID: 2850392219226427680}
   ringcountUIArray:
   - {fileID: 21300000, guid: c3b15f133dc79214d9480c9460379c0c, type: 3}
   - {fileID: 21300000, guid: 9d307305641ef124ca17eb62f25ec7ac, type: 3}

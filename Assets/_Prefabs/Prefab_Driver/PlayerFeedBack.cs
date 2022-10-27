@@ -19,7 +19,8 @@ public class PlayerFeedBack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transfromRef.position = playerModel.transform.position;
+        //transfromRef.position = playerModel.transform.position;
+        transfromRef.position = new Vector3(0, 1.5f, 0);
 
         time = hitDuration;
         mat = playerModel.GetComponent<Renderer>().material;
@@ -49,8 +50,8 @@ public class PlayerFeedBack : MonoBehaviour
             Vector3 shakePos = new Vector3(Random.Range(-shakeStrength, shakeStrength), Random.Range(-shakeStrength, shakeStrength), Random.Range(-shakeStrength, shakeStrength));
             playerModel.transform.localPosition = transfromRef.localPosition + shakePos;
         }
-        else
-            playerModel.transform.localPosition = new Vector3(0, 1.5f, 0);
+        //else
+          //  playerModel.transform.localPosition = new Vector3(0, 1.5f, 0);
         /*
             if (transfromRef != null)
         {

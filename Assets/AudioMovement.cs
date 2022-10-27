@@ -11,6 +11,7 @@ public class AudioMovement : MonoBehaviour {
 	private Transform camDist;
 	//private SnakeBehavior carLine;
 	[SerializeField] GameObject ui;
+	[SerializeField] ModelEffects modelEffect;
 	//private PlayerNotifyHandler notifyHandler;
 
 	public Sprite[] ringcountUIArray;
@@ -445,11 +446,11 @@ public class AudioMovement : MonoBehaviour {
 		float ver = Input.GetAxisRaw("Vertical");
 
 		var emission = _partSys.emission;
+		modelEffect.dir = hor;
 
 		if (hor != 0 || ver > 0)
 		{
 			currentTurn = hor;
-
 
 			if (soundTriggersParticles == true)
 			{
@@ -543,6 +544,10 @@ public class AudioMovement : MonoBehaviour {
 	void CarSoundMovement()
     {
 		var emission = _partSys.emission;
+
+		Vector3 carDir = new Vector3(m_Rigidbody.velocity.x, 0,0).normalized;
+
+		modelEffect.dir = carDir.x;
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
