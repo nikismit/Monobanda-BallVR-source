@@ -13,6 +13,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public int currentPitch;
 	PlayerFeedBack feedBack;
 	[SerializeField] LayerMask layer;
+	[SerializeField] ModelEffects modelEffect;
 
 	public float currentAmp;
 	[Header("Movement Speeds")]
@@ -342,12 +343,16 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		{
 			voiceSetbackTime = 0;
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+
+			modelEffect.dir = currentTurn;
 		}
 		else
 		{
 			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
 			//Vector3 sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
+
+			modelEffect.dir = 0;
 		}
 		//sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 

@@ -72,6 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 756581992892731347}
+  - component: {fileID: 1273159145492134589}
   m_Layer: 0
   m_Name: Player2Model
   m_TagString: Untagged
@@ -95,6 +96,20 @@ Transform:
   m_Father: {fileID: 756581993228108343}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1273159145492134589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756581992892731356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae67fd774da33f49a516e7dd0e6ea79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerModel: {fileID: 8769354041180517966}
+  dir: 0
 --- !u!1 &756581993228108351
 GameObject:
   m_ObjectHideFlags: 0
@@ -5021,6 +5036,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 256
+  modelEffect: {fileID: 1273159145492134589}
   currentAmp: 0
   maximumForwardSpeed: 25
   forwardAccelaration: 9

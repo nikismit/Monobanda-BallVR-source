@@ -362,11 +362,16 @@ public class AudioMovement : MonoBehaviour {
         {
 			voiceSetbackTime = 0;
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+
+			modelEffect.dir = sliderPos.z;
+			//modelEffect.dir = currentTurn;
 		}
         else
         {
 			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
+
+			modelEffect.dir = 0;
 		}
 
 		if (!debugKeyControl)
@@ -545,9 +550,9 @@ public class AudioMovement : MonoBehaviour {
     {
 		var emission = _partSys.emission;
 
-		Vector3 carDir = new Vector3(m_Rigidbody.velocity.x, 0,0).normalized;
+		//Debug.Log("SoundScale = "+ soundScale);
 
-		modelEffect.dir = carDir.x;
+		//modelEffect.dir = carDir.x;
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
@@ -567,6 +572,7 @@ public class AudioMovement : MonoBehaviour {
 			else
 			{
 				emission.rateOverTime = 0;
+				//modelEffect.dir = 0;
 			}
 			if (hasStarted)
 			{
