@@ -65,7 +65,7 @@ public class TutorialHandler : MonoBehaviour
     {
         //Debug.Log("holding");
         tutorialSound.Play();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         activatePlane++;
         SpawnPlane();
     }

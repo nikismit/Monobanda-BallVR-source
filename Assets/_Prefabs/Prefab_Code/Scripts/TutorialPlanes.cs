@@ -46,24 +46,26 @@ public class TutorialPlanes : MonoBehaviour
                 activateParticle.Play();
                 hasActivated = true;
                 //tutHandler.StartCoroutine(tutHandler.Hold());
-                if (tutHandler.activatePlane >= 2)
+                if (tutHandler.activatePlane <= 2)
                 {
                     LastInvoke();
                 }
                 else
-                tutHandler.StartCoroutine(HoldPitchCountdown());
+                    Invoke("DisableSelf", 3);
+                //other.GetComponentInChildren<PitchCalibrateCountDown>();
+                //tutHandler.StartCoroutine(HoldPitchCountdown());
                 //Invoke("DisableSelf", 1);
             }
 
-            if (other.gameObject.GetComponent<AudioMovement>() && tutHandler.activatePlane >= 2 && audioMovement.debugKeyControl ||
-                tutHandler.activatePlane >= 2 && hasEntered  > 1 && !audioMovement.debugKeyControl)
+            if (other.gameObject.GetComponent<AudioMovement>() && tutHandler.activatePlane <= 2 && audioMovement.debugKeyControl ||
+                tutHandler.activatePlane <= 2 && hasEntered  > 1 && !audioMovement.debugKeyControl)
             {
                 //activateParticle.Play();
                 //tutHandler.StartCoroutine(tutHandler.Hold());
                 //Invoke("DisableSelf", 1);
                 readyUI[0].SetActive(true);
             }
-            if (other.gameObject.GetComponent<AudioMovementPlayer2>() && tutHandler.activatePlane >= 2)
+            if (other.gameObject.GetComponent<AudioMovementPlayer2>() && tutHandler.activatePlane <= 2)
             {
                 //activateParticle.Play();
                 //tutHandler.StartCoroutine(tutHandler.Hold());
@@ -101,7 +103,7 @@ public class TutorialPlanes : MonoBehaviour
     void LastInvoke()
     {
         tutHandler.StartCoroutine(tutHandler.Hold());
-        Invoke("DisableSelf", 0);
+        Invoke("DisableSelf", 3);
     }
 
     void DisableSelf()
