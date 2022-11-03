@@ -29,13 +29,17 @@ public class ModelEffects : MonoBehaviour
 
         Vector3 rotateVec = new Vector3(dir, 0, 0).normalized;
 
-        float rotateAmount = dir * 12;
-        //float rotateAmount = TurnDir() * 12;
-        //float rotateAmount = -lastPos.z * 12;
+        //if (IsMoving())
+        //{
+            float rotateAmount = dir * 12;
+            //float rotateAmount = TurnDir() * 12;
+            //float rotateAmount = -lastPos.z * 12;
 
-        Quaternion rotationZ = Quaternion.AngleAxis(-rotateAmount, Vector3.forward);
+            Quaternion rotationZ = Quaternion.AngleAxis(-rotateAmount, Vector3.forward);
 
-        playerModel.localRotation = Quaternion.Slerp(playerModel.localRotation, rotationZ, 10 * Time.deltaTime);
+            playerModel.localRotation = Quaternion.Slerp(playerModel.localRotation, rotationZ, 10 * Time.deltaTime);
+        //}
+
 
     }
 
@@ -54,6 +58,14 @@ public class ModelEffects : MonoBehaviour
             dir = 1;
 
         return dir;
+    }
+
+    bool IsMoving()
+    {
+        if (lastPos.z < transform.position.z - 0.5f || lastPos.z > transform.position.z + 0.5f)
+            return true;
+
+        return false;
     }
 
     public void RotateModel(float dirInput)

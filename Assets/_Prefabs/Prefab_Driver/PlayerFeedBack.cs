@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerFeedBack : MonoBehaviour
 {
     public GameObject playerModel;
-    private Transform transfromRef;
+    private Vector3 transfromRef;
     private float time;
     private float hitDuration = 10;
     private float shakeStrength = 0.5f;
@@ -20,7 +20,7 @@ public class PlayerFeedBack : MonoBehaviour
     void OnEnable()
     {
         //transfromRef.position = playerModel.transform.position;
-        transfromRef.position = new Vector3(0, 1.5f, 0);
+        transfromRef = new Vector3(0, 1.5f, 0);
 
         time = hitDuration;
         mat = playerModel.GetComponent<Renderer>().material;
@@ -48,10 +48,10 @@ public class PlayerFeedBack : MonoBehaviour
         {
             time++;
             Vector3 shakePos = new Vector3(Random.Range(-shakeStrength, shakeStrength), Random.Range(-shakeStrength, shakeStrength), Random.Range(-shakeStrength, shakeStrength));
-            playerModel.transform.localPosition = transfromRef.localPosition + shakePos;
+            playerModel.transform.localPosition = transfromRef + shakePos;
         }
-        //else
-          //  playerModel.transform.localPosition = new Vector3(0, 1.5f, 0);
+        else
+            playerModel.transform.localPosition = new Vector3(0, 1.5f, 0);
         /*
             if (transfromRef != null)
         {

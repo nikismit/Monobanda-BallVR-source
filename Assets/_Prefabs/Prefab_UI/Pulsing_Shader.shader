@@ -2,7 +2,7 @@
 {
     Properties
     {
-        _Color ("Color", Color) = (1,1,1,1)
+       // _Color ("Color", Color) = (1,1,1,1)
         _HDRColorOne("HDRColor", Color) = (1,1,1,1)
         _HDRColorTwo("HDRColor", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
@@ -30,18 +30,6 @@
             float2 uv_MainTex;
         };
 
-        double sinus(double theta)
-        {
-            double PI = 3.14159265358979323846;
-            double a = theta + PI / 2.0, b = PI * 2.0;
-            theta = ((a > 0) ? a - b * ((int)(a / b)) : (-a + b * (((int)(a / b))))) - PI / 2.0;
-            if (theta > PI / 2.0)
-                theta = PI - theta;
-            double x3 = (theta * theta * theta);
-            double x5 = (x3 * theta * theta);
-            return theta - x3 / 6.0 + x5 / 120.0;
-        }
-
         double mod(double a, double b)
         {
             return (a > 0) ? a - b * ((int)(a / b)) : -(-a + b * (((int)(a / b))));
@@ -60,29 +48,16 @@
             // put more per-instance properties here
         UNITY_INSTANCING_BUFFER_END(Props)
 
-        float4 TriangleWave(float4 In)
-        {
-            return 2.0 * abs(2 * (In - floor(0.5 + In))) - 1.0;
-        }
-
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            //float amount = _SinTime * 0.5 + 0.5; // amount will be in range [0..1]  float3 color = lerp(float3(1,0,0), originalColor, amount);
-            float4 amount = TriangleWave(_Time * 2); // amount will be in range [0..1]  float3 color = lerp(float3(1,0,0), originalColor, amount);
-            //float4 amount = float4(_SinTime.x * 4, _SinTime.y * 5, _SinTime.y * 5,0); // amount will be in range [0..1]  float3 color = lerp(float3(1,0,0), originalColor, amount);
-            //float amount = sin(_Time.x) * 0.5 + 0.5; // amount will be in range [0..1]  float3 color = lerp(float3(1,0,0), originalColor, amount);
-            //float amount = _Time.x; // amount will be in range [0..1]  float3 color = lerp(float3(1,0,0), originalColor, amount);
-
-            //_Time.x
-
-            float4 originalColor = _Color;
-            //float3 color = lerp(float3(1, 0, 0), originalColor, amount);
-            //fixed4 color = lerp(originalColor, float4(1, 0.2, 0.2, 0.2), amount * 1.5);
-            fixed4 color = lerp(_HDRColorOne, _HDRColorTwo, amount * 1.5);
+            if (sin(_Time.y * 5) >= 0)
+                _Color = _HDRColorTwo * 100;
+            else
+               _Color =  _HDRColorOne * 100;
 
             // Albedo comes from a texture tinted by color
-            //fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * color;
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            //fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * color;
             o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;

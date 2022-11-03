@@ -4916,6 +4916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel: {fileID: 8657991101580861797}
+  dir: 0
 --- !u!1 &4767737315599181009
 GameObject:
   m_ObjectHideFlags: 0
@@ -4977,6 +4978,7 @@ MonoBehaviour:
   winState: {fileID: 0}
   ui: {fileID: 0}
   modelEffect: {fileID: 2850392219226427680}
+  trailEffect: {fileID: 1602578119196778349}
   ringcountUIArray:
   - {fileID: 21300000, guid: c3b15f133dc79214d9480c9460379c0c, type: 3}
   - {fileID: 21300000, guid: 9d307305641ef124ca17eb62f25ec7ac, type: 3}
@@ -10226,6 +10228,16 @@ PrefabInstance:
       propertyPath: m_Parameters.colorGradient.m_NumColorKeys
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2183970650829428096, guid: 160f9d0716826fa43b406f81694d95df,
+        type: 3}
+      propertyPath: m_MinVertexDistance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183970650829428096, guid: 160f9d0716826fa43b406f81694d95df,
+        type: 3}
+      propertyPath: m_Time
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3274915160304811051, guid: 160f9d0716826fa43b406f81694d95df,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10288,6 +10300,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 160f9d0716826fa43b406f81694d95df, type: 3}
+--- !u!96 &1602578119196778349 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 2183970650829428096, guid: 160f9d0716826fa43b406f81694d95df,
+    type: 3}
+  m_PrefabInstance: {fileID: 608696176846867181}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2666219000641025734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3274915160304811051, guid: 160f9d0716826fa43b406f81694d95df,
