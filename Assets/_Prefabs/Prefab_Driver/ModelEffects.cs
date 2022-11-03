@@ -7,6 +7,8 @@ public class ModelEffects : MonoBehaviour
     [SerializeField] Transform playerModel;
     [HideInInspector] public float dir;
 
+    private Vector3 lastPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +30,30 @@ public class ModelEffects : MonoBehaviour
         Vector3 rotateVec = new Vector3(dir, 0, 0).normalized;
 
         float rotateAmount = dir * 12;
+        //float rotateAmount = TurnDir() * 12;
+        //float rotateAmount = -lastPos.z * 12;
 
         Quaternion rotationZ = Quaternion.AngleAxis(-rotateAmount, Vector3.forward);
 
         playerModel.localRotation = Quaternion.Slerp(playerModel.localRotation, rotationZ, 10 * Time.deltaTime);
 
+    }
+
+    private void LateUpdate()
+    {
+        lastPos = transform.position;
+    }
+
+    int TurnDir()
+    {
+        int dir = 0;
+
+        if (lastPos.z < 0)
+            dir = -1;
+        else if (lastPos.z > 0)
+            dir = 1;
+
+        return dir;
     }
 
     public void RotateModel(float dirInput)
