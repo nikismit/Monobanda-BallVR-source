@@ -8,6 +8,7 @@ public class BoosterRing : MonoBehaviour
 {
     [SerializeField] GameObject[] ringModels;
     [SerializeField] GameObject cam;
+    private Projector shadow;
 
     [SerializeField] float rotateSpeed = 1;
     float easeOutlength = 2;
@@ -17,8 +18,11 @@ public class BoosterRing : MonoBehaviour
 
     private Vector3 sizeRef;
 
+    public AnimationCurve curve;
+
     void Start()
     {
+        shadow = GetComponentInChildren<Projector>();
         sizeRef = transform.localScale;
         //timer = easeOutlenght;
         timer = easeOutlength + 1;
@@ -31,15 +35,19 @@ public class BoosterRing : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            float ease = Mathf.Lerp(0, easeOutlength / 2, timer * 1.2f);
+            //float ease = Mathf.Lerp(0, easeOutlength / 2, timer * 1.2f);
+            float ease = Mathf.Lerp(0, 1, timer);
 
             ringModels[0].transform.Rotate(new Vector3(0, 0, rotateSpeed * (1 + easeOutQuint(ease))));
-            transform.localScale = sizeRef * (1 + (0.1f * easeOutElastic(ease)));
+            //transform.localScale = sizeRef * (1 + (0.1f * easeOutElastic(ease)));
+            transform.localScale = sizeRef * (1 + (0.1f * curve.Evaluate(ease)));
+            shadow.orthographicSize = 2 * (1 + (0.1f * curve.Evaluate(ease)));
         }
         else
         {
             ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
             transform.localScale = sizeRef;
+            shadow.orthographicSize = 2;
         }
     }
     private void OnTriggerEnter(Collider other)

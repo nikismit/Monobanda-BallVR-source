@@ -5030,6 +5030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crashForce: {fileID: 0}
   pitch: {fileID: 0}
+  trailEffect: {fileID: 5957689553885772633}
   sfx: {fileID: 0}
   ringCount: {fileID: 0}
   currentPitch: 0
@@ -10272,15 +10273,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01fa74dcec217154699e3fcfc80fb341, type: 3}
---- !u!4 &8769354041180517966 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6989081256319501471, guid: 01fa74dcec217154699e3fcfc80fb341,
-    type: 3}
-  m_PrefabInstance: {fileID: 1823172070380450513}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &7635903563107700001 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8121424457599041520, guid: 01fa74dcec217154699e3fcfc80fb341,
+    type: 3}
+  m_PrefabInstance: {fileID: 1823172070380450513}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8769354041180517966 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6989081256319501471, guid: 01fa74dcec217154699e3fcfc80fb341,
     type: 3}
   m_PrefabInstance: {fileID: 1823172070380450513}
   m_PrefabAsset: {fileID: 0}
@@ -10364,15 +10365,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b900fe198c89e034cbcbfdc68a6003d3, type: 3}
---- !u!198 &7438329915156250377 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6292661532187256628, guid: b900fe198c89e034cbcbfdc68a6003d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 3489805887689054269}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8293302830710194116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4862195496845649913, guid: b900fe198c89e034cbcbfdc68a6003d3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3489805887689054269}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7438329915156250377 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6292661532187256628, guid: b900fe198c89e034cbcbfdc68a6003d3,
     type: 3}
   m_PrefabInstance: {fileID: 3489805887689054269}
   m_PrefabAsset: {fileID: 0}
@@ -10618,6 +10619,12 @@ PrefabInstance:
 --- !u!4 &7030162266238079730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3274915160304811051, guid: 160f9d0716826fa43b406f81694d95df,
+    type: 3}
+  m_PrefabInstance: {fileID: 5540257303040339673}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &5957689553885772633 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 2183970650829428096, guid: 160f9d0716826fa43b406f81694d95df,
     type: 3}
   m_PrefabInstance: {fileID: 5540257303040339673}
   m_PrefabAsset: {fileID: 0}

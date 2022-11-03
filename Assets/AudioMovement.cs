@@ -12,12 +12,14 @@ public class AudioMovement : MonoBehaviour {
 	//private SnakeBehavior carLine;
 	[SerializeField] GameObject ui;
 	[SerializeField] ModelEffects modelEffect;
+	[SerializeField] TrailRenderer trailEffect;
 	//private PlayerNotifyHandler notifyHandler;
 
 	public Sprite[] ringcountUIArray;
 	public Image ringcountUI;
 
 	[Header("Sound References")]
+	//public AudioPitch_Player1 pitch;
 	public AudioPitch_Player1 pitch;
 	public SFXManager sfx;
 	public Text ringCount;
@@ -137,10 +139,12 @@ public class AudioMovement : MonoBehaviour {
 		SavedFOV = FOV;
 
 		//SetMinAndMaxPitch
+		/*
 		if (comingFromMainMenu == true){
 			minimumPitch = PlayerPrefs.GetFloat("Player1Lowest");
 			maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 		}
+		*/
 
 		railSteerRef = railSteerSpeed;
 		//railSteerSpeed = 0;
@@ -243,12 +247,17 @@ public class AudioMovement : MonoBehaviour {
 
 		float colDist = Vector3.Distance(transform.position, player2.transform.position);
 
-		if (colDist < 1)
+		if (colDist < 2 && transform.position.z >= -29 && transform.position.z <= 29)
 		{
 			Vector3 currentDirection = (transform.position - player2.transform.position).normalized;
 
 			float PushAmount = Mathf.InverseLerp(0, 1, colDist);
-			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 80);			
+			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 60);			
+		}
+		else if (transform.position.z <= -29 && transform.position.z >= 29)
+		{
+			m_Rigidbody.velocity = Vector3.zero;
+			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 		}
 
 
@@ -313,6 +322,10 @@ public class AudioMovement : MonoBehaviour {
 		currentAmp = pitch._currentPublicAmplitude;
 		Volume = pitch._currentPublicAmplitude;
 
+		//currentPitch = pitch._currentPublicPitches[0];
+		//currentAmp = pitch._currentPublicAmplitudes[0];
+		//Volume = pitch._currentPublicAmplitudes[0];
+
 		objectHeight = this.transform.position.y;
 		if (objectHeight > 0.6f){
 			this.transform.Translate(0,-0.1f,0);
@@ -363,15 +376,16 @@ public class AudioMovement : MonoBehaviour {
 			voiceSetbackTime = 0;
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
-			modelEffect.dir = sliderPos.z;
-			//modelEffect.dir = currentTurn;
+			//modelEffect.dir = sliderPos.z;
+			modelEffect.dir = currentTurn;
+			//modelEffect.dir = Mathf.Ceil(currentTurn);
 		}
         else
         {
 			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
 			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
 
-			modelEffect.dir = 0;
+			//modelEffect.dir = 0;
 		}
 
 		if (!debugKeyControl)
@@ -389,14 +403,14 @@ public class AudioMovement : MonoBehaviour {
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
 			//Debug.Log("Ground");
 		}
-        /*
+		/*
 		if(transform.rotation.y != 90)
         {
 			transform.rotation = Quaternion.Euler(0, 90, 0);
 		}
 		*/
 
-
+		trailEffect.time = trailTime;
 
 	}
 
@@ -445,6 +459,8 @@ public class AudioMovement : MonoBehaviour {
 			return null;
 	}
 
+	float trailTime = 0;
+
 	void CarKeyMovement()
     {
 		float hor = Input.GetAxisRaw("Horizontal");
@@ -455,6 +471,11 @@ public class AudioMovement : MonoBehaviour {
 
 		if (hor != 0 || ver > 0)
 		{
+            if (trailTime <= 1)
+            {
+				trailTime += 0.05f;
+            }
+
 			currentTurn = hor;
 
 			if (soundTriggersParticles == true)
@@ -511,6 +532,13 @@ public class AudioMovement : MonoBehaviour {
 		}
 		else if (currentSpeed >= 0 && hor == 0 && ver < 1)
 		{
+
+
+			if (trailTime >= 0.1)
+			{
+				trailTime -= 0.05f;
+			}
+
 			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
 			if (currentTurn > 0)
 			{
@@ -556,6 +584,8 @@ public class AudioMovement : MonoBehaviour {
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
+			trailEffect.time = 1f;
+
 			if (currentPitch > minimumPitch)
 			{
 				currentTurn = (((currentPitch - minimumPitch) / (maximumPitch - minimumPitch)) * 2) - 1 - 0.3f;
@@ -633,6 +663,8 @@ public class AudioMovement : MonoBehaviour {
 		}
 		else if (currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB)
 		{
+			trailEffect.time = 0.1f;
+
 			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
 			if (currentTurn > 0)
 			{
@@ -833,5 +865,19 @@ IEnumerator CourotineJump(float v0, float angle, float time)
 	void SetRailMovement()
     {
 		hasStarted = true;
+	}
+
+	public void SetMaxPitchVal()
+    {
+		//minimumPitch = PlayerPrefs.GetFloat("Player1Lowest");
+		if(currentPitch > 25)
+		maximumPitch = currentPitchValue;
+	}
+
+	public void SetMinPitchVal()
+	{
+		if (currentPitch < 20)
+			minimumPitch = currentPitchValue;
+		//maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 	}
 }

@@ -8,6 +8,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public collisionAdjustmentScriptPlayer2 crashForce;
 	private SnakeBehavior carLine;
 	public AudioPitch_Player2 pitch;
+	[SerializeField] TrailRenderer trailEffect;
+	//public PlayerAudioPitch pitch;
 	public SFXManager sfx;
 	public Text ringCount;
 	public int currentPitch;
@@ -245,12 +247,17 @@ public class AudioMovementPlayer2 : MonoBehaviour {
     {
 		float colDist = Vector3.Distance(transform.position, player1.transform.position);
 
-		if (colDist < 1)
+		if (colDist < 2 && transform.position.z >= -29 && transform.position.z <=  29)
 		{
 			Vector3 currentDirection = (transform.position - player1.transform.position).normalized;
 
 			float PushAmount = Mathf.InverseLerp(0, 1, colDist);
-			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 80);
+			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 60);
+		}
+		else if (transform.position.z <= -29 && transform.position.z >= 29)
+        {
+			m_Rigidbody.velocity = Vector3.zero;
+			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 		}
 
 		if (lastHit < invulnerableState)
@@ -309,6 +316,10 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		currentPitch = pitch._currentpublicpitch;
 		currentAmp = pitch._currentPublicAmplitude;
 		Volume = pitch._currentPublicAmplitude;
+
+		//currentPitch = pitch._currentPublicPitches[1];
+		//currentAmp = pitch._currentPublicAmplitudes[1];
+		//Volume = pitch._currentPublicAmplitudes[1];
 
 		currentPitchValue = currentPitch;
 		objectHeight = this.transform.position.y;
@@ -394,6 +405,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
+			trailEffect.time = 1f;
+
 			if (currentPitch > minimumPitch)
 			{
 				currentTurn = (((currentPitch - minimumPitch) / (maximumPitch - minimumPitch)) * 2) - 1 - 0.3f;
@@ -455,6 +468,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 		else if (currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB)
 		{
+			trailEffect.time = 0.1f;
+
 			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
 			if (currentTurn > 0)
 			{
@@ -601,5 +616,17 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		hasStarted = true;
 	}
 
+	public void SetMaxPitchVal()
+	{
+		//minimumPitch = PlayerPrefs.GetFloat("Player1Lowest");
+		if (currentPitch > 25)
+			maximumPitch = currentPitchValue;
+	}
 
+	public void SetMinPitchVal()
+	{
+		if (currentPitch < 20)
+			minimumPitch = currentPitchValue;
+		//maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
+	}
 }
