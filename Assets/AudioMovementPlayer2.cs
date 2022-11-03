@@ -9,6 +9,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private SnakeBehavior carLine;
 	public AudioPitch_Player2 pitch;
 	[SerializeField] TrailRenderer trailEffect;
+	[SerializeField] FlameEffect flameEffect;
 	//public PlayerAudioPitch pitch;
 	public SFXManager sfx;
 	public Text ringCount;
@@ -217,6 +218,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		if (other.gameObject.tag == "Ring"){
 			
 			boostParticle.Play();
+			flameEffect.InitiateBoostEffect();
 
 			if (numRings < 5)
             {

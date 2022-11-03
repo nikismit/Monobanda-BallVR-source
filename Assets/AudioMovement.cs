@@ -13,6 +13,7 @@ public class AudioMovement : MonoBehaviour {
 	[SerializeField] GameObject ui;
 	[SerializeField] ModelEffects modelEffect;
 	[SerializeField] TrailRenderer trailEffect;
+	[SerializeField] FlameEffect flameEffect;
 	//private PlayerNotifyHandler notifyHandler;
 
 	public Sprite[] ringcountUIArray;
@@ -220,6 +221,7 @@ public class AudioMovement : MonoBehaviour {
 		{
 
 			boostParticle.Play();
+			flameEffect.InitiateBoostEffect();
 
 				if (numRings < 5)
 				{
