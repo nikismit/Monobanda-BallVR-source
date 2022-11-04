@@ -137,7 +137,7 @@ Shader "Mirza/Anime Speed Lines"
 				// ase common template code
 				float2 uv_MainTex = i.uv.xy * _MainTex_ST.xy + _MainTex_ST.zw;
 				float4 SceneColour7 = tex2D( _MainTex, uv_MainTex );
-				float2 CenteredUV15_g1 = ( i.uv.xy - float2( 0.5,0.5 ) );
+				float2 CenteredUV15_g1 = ( i.uv.xy - float2( 0.5, 1));//CenterPoint Speedlines
 				float2 break17_g1 = CenteredUV15_g1;
 				float2 appendResult23_g1 = (float2(( length( CenteredUV15_g1 ) * _SpeedLinesRadialScale * 2.0 ) , ( atan2( break17_g1.x , break17_g1.y ) * ( 1.0 / 6.28318548202515 ) * _SpeedLinesTiling )));
 				float2 appendResult58 = (float2(( -_SpeedLinesAnimation * _Time.y ) , 0.0));
@@ -145,14 +145,15 @@ Shader "Mirza/Anime Speed Lines"
 				simplePerlin2D10 = simplePerlin2D10*0.5 + 0.5;
 				float temp_output_1_0_g6 = _SpeedLinesRemap;
 				float SpeedLines21 = saturate( ( ( pow( simplePerlin2D10 , _SpeedLinesPower ) - temp_output_1_0_g6 ) / ( 1.0 - temp_output_1_0_g6 ) ) );
-				float2 texCoord60 = i.uv.xy * float2( 2,2 ) + float2( -1,-1 );
+				float2 texCoord60 = i.uv.xy * float2( 2,1 ) + float2( -1,-1 );
 				float temp_output_1_0_g5 = _MaskScale;
 				float lerpResult71 = lerp( 0.0 , _MaskScale , _MaskHardness);
 				float Mask24 = pow( ( 1.0 - saturate( ( ( length( texCoord60 ) - temp_output_1_0_g5 ) / ( ( lerpResult71 - 0.001 ) - temp_output_1_0_g5 ) ) ) ) , _MaskPower );
 				float MaskedSpeedLines29 = ( SpeedLines21 * Mask24 );
 				float3 ColourRGB38 = (_Colour).rgb;
 				float ColourA40 = _Colour.a;
-				float4 lerpResult2 = lerp( SceneColour7 , float4( ( MaskedSpeedLines29 * ColourRGB38 ) , 0.0 ) , ( MaskedSpeedLines29 * ColourA40 ));
+				float4 lerpResult2 = lerp( SceneColour7 , float4( ( -MaskedSpeedLines29 * ColourRGB38 ) , 0.0 ) , ( -MaskedSpeedLines29 * ColourA40 ));
+				//float4 lerpResult2 = lerp( SceneColour7 , float4( ( MaskedSpeedLines29 * ColourRGB38 ) , 0.0 ) , ( MaskedSpeedLines29 * ColourA40 ));
 				
 
 				finalColor = lerpResult2;
