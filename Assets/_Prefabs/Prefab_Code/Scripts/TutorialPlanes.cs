@@ -17,6 +17,8 @@ public class TutorialPlanes : MonoBehaviour
     private int playerNum;
     private int hasEntered = 0;
 
+    [HideInInspector] public int waitSec = 3;
+
     void OnEnable()
     {
         //audioMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioMovement>();
@@ -51,7 +53,7 @@ public class TutorialPlanes : MonoBehaviour
                     LastInvoke();
                 }
                 else
-                    Invoke("DisableSelf", 3);
+                    Invoke("DisableSelf", waitSec);
                 //other.GetComponentInChildren<PitchCalibrateCountDown>();
                 //tutHandler.StartCoroutine(HoldPitchCountdown());
                 //Invoke("DisableSelf", 1);
@@ -103,7 +105,7 @@ public class TutorialPlanes : MonoBehaviour
     void LastInvoke()
     {
         tutHandler.StartCoroutine(tutHandler.Hold());
-        Invoke("DisableSelf", 3);
+        Invoke("DisableSelf", waitSec);
     }
 
     void DisableSelf()

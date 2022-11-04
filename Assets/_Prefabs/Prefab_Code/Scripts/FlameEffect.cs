@@ -23,7 +23,6 @@ public class FlameEffect : MonoBehaviour
         if (timer < 1)
         {
             timer += Time.deltaTime;
-            Debug.Log("LOLOLOL");
             float ease = Mathf.Lerp(0, 1, timer);
             transform.localScale = sizeRef * (1 + 2.5f * (curve.Evaluate(ease)));
         }

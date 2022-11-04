@@ -219,7 +219,6 @@ public class AudioMovement : MonoBehaviour {
     {
 		if (other.gameObject.tag == "Ring")
 		{
-
 			boostParticle.Play();
 			flameEffect.InitiateBoostEffect();
 
@@ -788,39 +787,10 @@ public class AudioMovement : MonoBehaviour {
 
 	IEnumerator Jumping(JumpPad jumpRef)
     {
-		/*
-		float time = 0;
-
-		while (curveTime < curveDuration)
-		{
-			curveTime += Time.deltaTime;
-			float linearT = curveTime / jumpRef.jumpLength;
-			//float heightT = jumpCurveUP.Evaluate(linearT);
-			Debug.Log("curveTime = " + curveTime);
-			//float newHeight = Mathf.Lerp(0f, height, heightT);
-
-
-			//transform.Translate(new Vector3(0, jumpRef.jumpStrength, 0) * Time.deltaTime);
-			//transform.Translate(new Vector3(0, 500, 0) * Time.deltaTime);
-
-			//target.Translate(target.transform.up * newHeight);
-			//target.position.y += jumpCurveUP.Evaluate(curveProgress());
-			//transform.Translate(transform.up + (Vector3.up * jumpRef.curve.Evaluate(linearT)));
-
-			//m_Rigidbody.velocity = new Vector3(0, transform.position.y * jumpRef.curve.Evaluate(linearT), 0);
-
-			//yield return null;
-		}
-
-		yield return new WaitForSeconds(0.5f);
-
-		curveTime = 0;
-		jumpCoolDown = false;
-		*/
-
+		//Debug.Log(jumpCoolDown);
 		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
 		//m_Rigidbody.velocity = new Vector3(0,transform.position.y * easeOutQuint(curveProgress()),0);
-		m_Rigidbody.velocity = new Vector3(0,transform.position.y * jumpRef.curve.Evaluate(curveProgress()),0);
+		//m_Rigidbody.velocity = new Vector3(0,transform.position.y * jumpRef.curve.Evaluate(curveProgress()),0);
 		jumpRef.source.Play();
 		yield return new WaitForSeconds(0.5f);
 		//m_Rigidbody.AddForce(-transform.up * 3, ForceMode.Impulse);
