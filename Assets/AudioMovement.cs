@@ -238,6 +238,7 @@ public class AudioMovement : MonoBehaviour {
         {
 			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
 			//Debug.LogError("JUMPING");
+			//Debug.LogError("JUMPING");
 			JumpBoost(jumpPadRef);
 		}
 	}
@@ -288,19 +289,16 @@ public class AudioMovement : MonoBehaviour {
 				currentSpeed += 10;
 
 				StabilizeCarRot(1);
-
 			}
 			else if (transform.position.x >= camDist.position.x - 7.5f + (numRings * 5f))
 			{//- 7.5f
 				currentSpeed -= 5;
 				StabilizeCarRot(5);
-				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
 			}
 			else if (transform.position.x < camDist.position.x - 0.1f - 7.5f + (numRings * 5f))
 			{
 				currentSpeed += 5;
 				StabilizeCarRot(5);
-				//ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
 			}
             else
             {
@@ -585,7 +583,10 @@ public class AudioMovement : MonoBehaviour {
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
-			trailEffect.time = 1f;
+			if (trailTime <= 1)
+			{
+				trailTime += 0.05f;
+			}
 
 			if (currentPitch > minimumPitch)
 			{
@@ -603,7 +604,6 @@ public class AudioMovement : MonoBehaviour {
 			else
 			{
 				emission.rateOverTime = 0;
-				//modelEffect.dir = 0;
 			}
 			if (hasStarted)
 			{
@@ -664,6 +664,11 @@ public class AudioMovement : MonoBehaviour {
 		}
 		else if (currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB)
 		{
+			if (trailTime >= 0.1)
+			{
+				trailTime -= 0.05f;
+			}
+
 			trailEffect.time = 0.1f;
 
 			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
@@ -729,10 +734,6 @@ public class AudioMovement : MonoBehaviour {
 
 		if (numRings > 0)
 		{
-			//if (Time.time - lastHit < 2)
-				//return;
-
-			//lastHit = Time.time;
 			numRings--;
 			ringcountUI.sprite = ringcountUIArray[numRings];
 		}
@@ -747,81 +748,24 @@ public class AudioMovement : MonoBehaviour {
 
 	public void JumpBoost(JumpPad jumpRef)
     {
-		//cubeRb.velocity = new vector3(cubeRB.velocity.x, 0, 0);
 		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
 
         if (!jumpCoolDown)
         {
 			jumpCoolDown = true;
 			StartCoroutine(Jumping(jumpRef));
-			//float newAngle = jumpRef.angle * Mathf.Deg2Rad;
-
-			float v0;
-			float time;
-			float angle;
-			//jumpRef.CalculatePath(jumpRef.targetPos.position, newAngle, out v0, out time);
-			//jumpRef.CalculatePathWithHeight(jumpRef.targetPos.position, jumpRef.height, out v0, out angle, out time);
-
-			//StartCoroutine(CourotineJump(v0, angle , time));
-			//jumpRef.jumpCoroutine(transform, 1f);
 		}
-		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
-		//transform.Translate(Vector3.up * jumpBoost);
-
 	}
-
-	void Jump()
-    {
-		float jumpForce = 10;
-		float velocity;
-
-		//velocity += Physics.gravity.y * Time.deltaTime;
-
-		velocity = jumpForce;
-
-		transform.Translate(new Vector3(0,velocity ,0) * Time.deltaTime);
-    }
 
 	float curveTime = 0;
 	float curveDuration = 1f;
 
 	IEnumerator Jumping(JumpPad jumpRef)
     {
-		//Debug.Log(jumpCoolDown);
 		m_Rigidbody.AddForce(transform.up * jumpRef.jumpStrength, ForceMode.Impulse);
-		//m_Rigidbody.velocity = new Vector3(0,transform.position.y * easeOutQuint(curveProgress()),0);
-		//m_Rigidbody.velocity = new Vector3(0,transform.position.y * jumpRef.curve.Evaluate(curveProgress()),0);
 		jumpRef.source.Play();
 		yield return new WaitForSeconds(0.5f);
-		//m_Rigidbody.AddForce(-transform.up * 3, ForceMode.Impulse);
-		//m_Rigidbody.velocity = new Vector3(0, -transform.position.y * easeOutQuint(curveProgress()), 0);
-		curveTime = 0;
 		jumpCoolDown = false;
-	}
-
-	float curveProgress()
-	{
-		curveTime += Time.deltaTime;
-		return curveTime / curveDuration;
-	}
-
-	float easeOutQuint(float x)
-	{
-		return 1 - Mathf.Pow(1 - x, 5);
-	}
-
-IEnumerator CourotineJump(float v0, float angle, float time)
-	{
-		float t = 0;
-		while (t < time)
-		{
-			float x = v0 * t * Mathf.Cos(angle);
-			float y = v0 * t * Mathf.Sin(angle) - (1f / 2f) * -Physics.gravity.y * Mathf.Pow(t, 2);
-			transform.position = transform.position + new Vector3(x, y, 0);
-
-			t += Time.deltaTime;
-			yield return null;
-		}
 	}
 
 	public void SetRailConstrains()
@@ -848,7 +792,7 @@ IEnumerator CourotineJump(float v0, float angle, float time)
 
 	public void SetMinPitchVal()
 	{
-		if (currentPitch < 20)
+		if (currentPitch > 5 && currentPitch < 25)
 			minimumPitch = currentPitchValue;
 		//maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 	}

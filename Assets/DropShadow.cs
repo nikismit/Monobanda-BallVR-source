@@ -27,6 +27,7 @@ public class DropShadow : MonoBehaviour
             proj.orthographicSize = shadowSize;
         }
         */
+        if (playerTrans != null)
         transform.position = playerTrans.position;
 
     }

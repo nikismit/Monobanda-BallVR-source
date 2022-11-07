@@ -47,7 +47,7 @@ public class FinishChecker : MonoBehaviour
           player2.currentAmp=0f;
           // var cam1Component = cam1.GetComponent<>();
           cam1.enabled = false;
-          cam2.enabled = false;
+          //cam2.enabled = false;
 
           if (counter>=beforeReload){
             //SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervyCoopMap");

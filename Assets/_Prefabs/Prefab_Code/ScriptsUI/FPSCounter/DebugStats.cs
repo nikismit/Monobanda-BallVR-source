@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DebugStats : MonoBehaviour
 {
+    [SerializeField] AudioMovement audioPlayerOne;
+    [SerializeField] AudioMovementPlayer2 audioPlayerTwo;
+
     /* Assign this script to any object in the Scene to display frames per second */
     bool isActive = false;
 
@@ -61,8 +64,12 @@ public class DebugStats : MonoBehaviour
 
     void OnGUI()
     {
-        if(isActive)
+        if (isActive)
+        {
             //Display the fps and round to 2 decimals
             GUI.Label(new Rect(5, 5, 100, 25), fps.ToString("F2") + "FPS", textStyle);
+            GUI.Label(new Rect(5, 20, 100, 25), "P1 " + audioPlayerOne.minimumPitch + " MinPitch, " + audioPlayerOne.maximumPitch + " MaxPitch, " + audioPlayerOne.currentPitch + " Current", textStyle);
+            GUI.Label(new Rect(5, 35, 100, 25), "P2 " + audioPlayerTwo.minimumPitch + " MinPitch, " + audioPlayerTwo.maximumPitch + " MaxPitch, " + audioPlayerTwo.currentPitch + " Current", textStyle);
+        }
     }
 }

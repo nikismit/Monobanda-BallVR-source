@@ -8,6 +8,10 @@ public class RaceCountdown : MonoBehaviour
     public List<GameObject> rbCars;
     GameObject[] cars;
 
+    SmoothFollow cam;
+    [SerializeField] Material speedlines;
+    private Color color = Color.white;
+
     public AudioMovement Player1;
   public AudioMovementPlayer2 Player2;
 
@@ -28,6 +32,9 @@ public class RaceCountdown : MonoBehaviour
     private bool hasStarted = false;
     void Start()
     {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<SmoothFollow>();
+        color.a = 0f;
+
         cars = GameObject.FindGameObjectsWithTag("Player");
 
         for (int i = 0; i < cars.Length; i++)
@@ -56,10 +63,11 @@ public class RaceCountdown : MonoBehaviour
     {
         if (!hasStarted && startCountDown)
         {
+            speedlines.SetColor("_Colour", color);
+            cam.InitiateGameCam();
 
-
-      //Freezes cars until the countdown is over
-      if (timer > 0f){
+            //Freezes cars until the countdown is over
+            if (timer > 0f){
         timer -= 0.02f;
         Player1.currentSpeed = 0f;
         Player2.currentSpeed = 0f;
@@ -115,7 +123,10 @@ public class RaceCountdown : MonoBehaviour
                 //Debug.LogWarning(cars[i] + " / " + rb);
             }
 
-        }
+                color.a = 1f;
+                speedlines.SetColor("_Colour", color);
+
+            }
         }
 
     }

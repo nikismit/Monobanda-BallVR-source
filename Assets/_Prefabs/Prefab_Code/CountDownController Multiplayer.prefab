@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70a13be30baddb4f931e7d02a512c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rbCars: []
+  speedlines: {fileID: 2100000, guid: f6a4f606e013e9841a706f3d8cbc168c, type: 2}
   Player1: {fileID: 0}
   Player2: {fileID: 0}
   No5: {fileID: 0}
@@ -59,6 +61,7 @@ MonoBehaviour:
   GO: {fileID: 0}
   Player1Slider: {fileID: 0}
   Player2Slider: {fileID: 0}
+  startCountDown: 0
   timer: 0
 --- !u!23 &5099273271849414034
 MeshRenderer:

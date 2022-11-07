@@ -16,7 +16,7 @@ public class OutOfBoundshandler : MonoBehaviour
         transform.position = camPos.position;
         //transform.Translate(transform.forward * 30 * Time.fixedDeltaTime, Space.World);
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         other.transform.position = new Vector3(transform.position.x + 40, 0.5f, 0);

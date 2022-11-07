@@ -32,6 +32,10 @@ public class SmoothFollow : MonoBehaviour {
     float playerSpeed;
 
 
+    private Vector3 inGameVector = new Vector3(-44.2999992f, 17.5976677f, 2.99274302f);
+    private Vector3 inGameEuler = new Vector3(36.3675804f, 90, 0);//Euler
+    private Quaternion ingameQuaternion = new Quaternion(0.220664084f, 0.671794176f, -0.220664084f, 0.671794176f);
+
     void Start()
     {
         //transform.LookAt(target);
@@ -89,5 +93,15 @@ public class SmoothFollow : MonoBehaviour {
 
         // Always look at the target
         //transform.LookAt (target);
+    }
+
+    public void InitiateGameCam()
+    {
+        //transform.position = inGameVector;
+
+            //transform.localPosition = Vector3.MoveTowards(transform.localPosition, inGameVector, 1000);
+
+        //transform.rotation = ingameQuaternion;
+        transform.rotation = Quaternion.Euler(36.3675804f, 90, 0);
     }
 }

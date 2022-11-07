@@ -73,7 +73,8 @@ public class DemoUI : MonoBehaviour
         if (startTut && scale <= 50)
         {
             scale += 60 * Time.deltaTime;
-            uiTransform.sizeDelta = new Vector2(scale * 50, scale * 50);
+            uiTransform.sizeDelta = new Vector2(scale * 55, scale * 55);
+            uiTransform.Rotate(Vector3.forward, scale * 5);
         }
         else if (scale >= 50)
         {

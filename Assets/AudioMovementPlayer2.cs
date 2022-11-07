@@ -381,6 +381,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			//Debug.Log("Ground");
 		}
 
+		trailEffect.time = trailTime;
+
 		if (player1.testVoiceSetback && Input.GetAxisRaw("Horizontal") != 0 && player1.debugKeyControl && hasStarted ||
 			player1.testVoiceSetback && !player1.debugKeyControl && hasStarted && currentAmp <= minimumAmp)
 		{
@@ -401,13 +403,20 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 	}
 
-    void CarSoundMovement()
+	float trailTime = 0;
+
+	void CarSoundMovement()
     {
 		var emission = _partSys.emission;
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
-			trailEffect.time = 1f;
+			//trailEffect.time = 1f;
+
+			if (trailTime <= 1)
+			{
+				trailTime += 0.05f;
+			}
 
 			if (currentPitch > minimumPitch)
 			{
@@ -470,6 +479,11 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 		else if (currentSpeed >= 0 && currentAmp <= pitch.minVolumeDB)
 		{
+			if (trailTime >= 0.1)
+			{
+				trailTime -= 0.05f;
+			}
+
 			trailEffect.time = 0.1f;
 
 			currentSpeed -= forwardDeceleration * speedBoostDecelerator * Time.fixedDeltaTime;
@@ -584,14 +598,13 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	public void JumpBoost(JumpPad jumpRef)
 	{
-		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
-		//m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
+		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
+
 		if (!jumpCoolDown)
 		{
 			jumpCoolDown = true;
 			StartCoroutine(Jumping(jumpRef));
 		}
-		//m_Rigidbody.AddForce(transform.up * jumpBoost, ForceMode.Impulse);
 	}
 
 	IEnumerator Jumping(JumpPad jumpRef)
@@ -627,7 +640,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	public void SetMinPitchVal()
 	{
-		if (currentPitch < 20)
+		if (currentPitch > 10 && currentPitch < 25)
 			minimumPitch = currentPitchValue;
 		//maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 	}

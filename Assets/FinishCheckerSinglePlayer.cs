@@ -55,8 +55,9 @@ public class FinishCheckerSinglePlayer : MonoBehaviour
 
                 //SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervySinglePlayerMap - WinnerScreen");
 
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-          }
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene("CityDriver - 2nd Prototype - SwervyCoopMap - WinnerScreen");
+            }
 
         }
     }
