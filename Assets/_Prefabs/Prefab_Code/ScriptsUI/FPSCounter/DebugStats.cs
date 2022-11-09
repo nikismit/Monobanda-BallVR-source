@@ -44,6 +44,18 @@ public class DebugStats : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (Screen.fullScreen)
+            {
+                Fullscreen(false);
+            }
+            else
+            {
+                Fullscreen(true);
+            }
+        }
+
         if (isActive)
         {
             timeleft -= Time.deltaTime;
@@ -60,6 +72,11 @@ public class DebugStats : MonoBehaviour
                 frames = 0;
             }
         }
+    }
+
+    public void Fullscreen(bool fullScreen)
+    {
+        Screen.fullScreen = fullScreen;
     }
 
     void OnGUI()

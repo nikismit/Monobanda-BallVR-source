@@ -245,6 +245,9 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			canAddCar = true;
 	}
 
+	float calMinPitch = 20;
+	float calMaxPitch;
+
 	void FixedUpdate()
     {
 		float colDist = Vector3.Distance(transform.position, player1.transform.position);
@@ -338,6 +341,11 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		{
 			sliderPitchInvLerp = Mathf.InverseLerp(maximumPitch, minimumPitch, currentPitch);// set value from 0 to 1 (Min pitch value = 7, max pitch value = 30)
 			lastValidPitch = sliderPitchInvLerp;
+
+			if (currentPitch < calMinPitch)
+				calMinPitch = currentPitch;
+			if (currentPitch > calMaxPitch)
+				calMaxPitch = currentPitch;
 		}
 
 		//if (hasStarted)
@@ -634,14 +642,14 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public void SetMaxPitchVal()
 	{
 		//minimumPitch = PlayerPrefs.GetFloat("Player1Lowest");
-		if (currentPitch > 25)
-			maximumPitch = currentPitchValue;
+		//if (currentPitch > 25)
+			maximumPitch = calMaxPitch;
 	}
 
 	public void SetMinPitchVal()
 	{
-		if (currentPitch > 10 && currentPitch < 25)
-			minimumPitch = currentPitchValue;
+		//if (currentPitch > 10 && currentPitch < 25)
+			minimumPitch = calMinPitch;
 		//maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 	}
 }

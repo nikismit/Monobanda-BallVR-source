@@ -339,6 +339,11 @@ public class AudioMovement : MonoBehaviour {
         {
 			sliderPitchInvLerp = Mathf.InverseLerp(maximumPitch, minimumPitch, currentPitch);// set value from 0 to 1 (Min pitch value = 7, max pitch value = 30)
 			lastValidPitch = sliderPitchInvLerp;
+
+			if (currentPitch < calMinPitch)
+				calMinPitch = currentPitch;
+			if (currentPitch > calMaxPitch)
+				calMaxPitch = currentPitch;
 		}
 
 		//if (hasStarted)
@@ -573,9 +578,14 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
+	float calMinPitch = 20;
+	float calMaxPitch;
+
 	void CarSoundMovement()
     {
 		var emission = _partSys.emission;
+
+
 
 		//Debug.Log("SoundScale = "+ soundScale);
 
@@ -583,6 +593,8 @@ public class AudioMovement : MonoBehaviour {
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
+
+
 			if (trailTime <= 1)
 			{
 				trailTime += 0.05f;
@@ -786,14 +798,15 @@ public class AudioMovement : MonoBehaviour {
 	public void SetMaxPitchVal()
     {
 		//minimumPitch = PlayerPrefs.GetFloat("Player1Lowest");
-		if(currentPitch > 25)
-		maximumPitch = currentPitchValue;
+		//if (currentPitch > 25)
+			maximumPitch = calMaxPitch;
+		//maximumPitch = currentPitchValue;
 	}
 
 	public void SetMinPitchVal()
 	{
-		if (currentPitch > 5 && currentPitch < 25)
-			minimumPitch = currentPitchValue;
+		//if (currentPitch > 5 && currentPitch < 25)
+			minimumPitch = calMinPitch;
 		//maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 	}
 }
