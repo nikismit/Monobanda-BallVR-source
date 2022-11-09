@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 4165818167461617704}
   - component: {fileID: 1035878594915872653}
   - component: {fileID: 2991754998329957191}
+  - component: {fileID: 5554992477266355652}
+  - component: {fileID: 6977212633089799153}
   m_Layer: 0
   m_Name: BEGIN_long_ass_track_side_rEVERSED_R_1
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,3 +83,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5554992477266355652
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3640075226191723154}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.031335, y: 0.79999995, z: 14.477381}
+  m_Center: {x: -11.484333, y: 0.39999998, z: 4.7374277}
+--- !u!65 &6977212633089799153
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3640075226191723154}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.051006, y: 0.79999995, z: 10.10685}
+  m_Center: {x: -3.525503, y: 0.39999998, z: 2.5521622}
