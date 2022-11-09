@@ -5014,7 +5014,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d1759b5153d340d42b9d2a3724540d63, type: 3}
   - {fileID: 21300000, guid: ab41179ee8f5f4b489b976422a61470b, type: 3}
   ringcountUI: {fileID: 0}
-  boostParticle: {fileID: 2054584457651352616}
+  boostParticle: {fileID: 1373538069234066744}
   player1: {fileID: 0}
   winState: {fileID: 0}
 --- !u!114 &565031033109145745
@@ -10634,6 +10634,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 308242668449725609}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &1373538069234066744 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1677820153858644369, guid: abd75260ae0498c4cb4797883020346f,
+    type: 3}
+  m_PrefabInstance: {fileID: 308242668449725609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &984194758913989437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10803,6 +10809,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01fa74dcec217154699e3fcfc80fb341, type: 3}
+--- !u!1 &9173936130705868371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7761361269196824101, guid: 01fa74dcec217154699e3fcfc80fb341,
+    type: 3}
+  m_PrefabInstance: {fileID: 1505814974711978102}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &7228455789377611654 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8121424457599041520, guid: 01fa74dcec217154699e3fcfc80fb341,
@@ -10812,12 +10824,6 @@ MeshRenderer:
 --- !u!4 &8366437837245521129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6989081256319501471, guid: 01fa74dcec217154699e3fcfc80fb341,
-    type: 3}
-  m_PrefabInstance: {fileID: 1505814974711978102}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &9173936130705868371 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7761361269196824101, guid: 01fa74dcec217154699e3fcfc80fb341,
     type: 3}
   m_PrefabInstance: {fileID: 1505814974711978102}
   m_PrefabAsset: {fileID: 0}

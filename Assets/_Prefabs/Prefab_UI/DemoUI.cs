@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DemoUI : MonoBehaviour
 {
     //[SerializeField] CanvasGroup canvasGroup;
+    WinState winState;
     [SerializeField] RaceCountdown countDown;
     [SerializeField] TutorialHandler tutHandler;
     [SerializeField] GameObject transitionUI;
@@ -24,6 +25,8 @@ public class DemoUI : MonoBehaviour
     private bool startTut = false;
     void Start()
     {
+        winState = GetComponent<WinState>();
+
         uiTransform = transitionUI.GetComponent<RectTransform>();
         uiFade = transitionUI.GetComponent<CanvasGroup>();
 
@@ -46,12 +49,13 @@ public class DemoUI : MonoBehaviour
     public void RemoveDemoUIEvent()
     {
         startTut = true;
+        transitionUI.SetActive(true);
         //SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");    
         //countDown.startCountDown = true;
         //tutHandler.InitializeTutorial();
     }
 
-    bool courotineStarted = false;
+    bool WinTransition = false;
 
     // Update is called once per frame
     void Update()
@@ -63,24 +67,39 @@ public class DemoUI : MonoBehaviour
         }
         
         */
-        /*
-        if (startTut && canvasGroup.alpha < 1)
+            /*
+            if (startTut && canvasGroup.alpha < 1)
+            {
+                canvasGroup.alpha -= Time.deltaTime / 2;
+            }
+            */
+
+        if (uiFade.alpha <= 0)
         {
-            canvasGroup.alpha -= Time.deltaTime / 2;
+            startTut = false;
+            WinTransition = true;
+            //tutHandler.RemoveRoads();
+            transitionUI.SetActive(false);
+            uiFade.alpha = 1;
+            scale = 0;
+            uiTransform.sizeDelta = new Vector2(scale, scale);
         }
-        */
 
         if (startTut && scale <= 50)
         {
-            scale += 60 * Time.deltaTime;
+            scale += 60 * Time.unscaledDeltaTime;
             uiTransform.sizeDelta = new Vector2(scale * 55, scale * 55);
             uiTransform.Rotate(Vector3.forward, scale * 5);
         }
-        else if (scale >= 50)
+        else if (scale >= 50 && startTut)
         {
             tutHandler.RemoveRoads();
-            demoCanvas.SetActive(false);
-            uiFade.alpha -= Time.deltaTime / 3;
+            if (!WinTransition)
+                demoCanvas.SetActive(false);
+            else
+                StartCoroutine(winState.ResetScene(6));
+
+            uiFade.alpha -= Time.unscaledDeltaTime / 3;
         }
         //Debug.Log("KLaarjonge");
     }
