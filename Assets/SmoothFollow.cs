@@ -50,12 +50,12 @@ public class SmoothFollow : MonoBehaviour {
      void  FixedUpdate ()
      {
          // Early out if we don't have a target
-         if (!target)
+         if (!target && player != null)
              return;
 
          // Calculate the current rotation angles
-         float wantedRotationAngle = target.eulerAngles.y;
-         float wantedHeight = target.position.y;
+         //float wantedRotationAngle = target.eulerAngles.y;
+         //float wantedHeight = target.position.y;
          //float wantedHeight = target.position.y + height;
          float currentRotationAngle = transform.eulerAngles.y;
          float currentHeight = transform.position.y;
@@ -73,6 +73,7 @@ public class SmoothFollow : MonoBehaviour {
         // distance meters behind the target
         if (multiplayer && player.isMoving)
         {
+            //Debug.Log("LOLOLOLOLOL");
             //transform.position = Vector3.forward * 1 * Time.deltaTime;
             //transform.Translate((transform.forward * playerSpeed) * Time.fixedDeltaTime, Space.World);
             transform.position += Vector3.right * (playerSpeed * 1.111f)* Time.fixedDeltaTime;

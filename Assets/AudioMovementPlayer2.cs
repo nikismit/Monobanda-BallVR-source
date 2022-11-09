@@ -250,34 +250,40 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	void FixedUpdate()
     {
-		float colDist = Vector3.Distance(transform.position, player1.transform.position);
-
-		if (colDist < 2 && transform.position.z >= -29 && transform.position.z <=  29)
-		{
-			Vector3 currentDirection = (transform.position - player1.transform.position).normalized;
-
-			float PushAmount = Mathf.InverseLerp(0, 1, colDist);
-			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 60);
-		}
-		else if (transform.position.z <= -29 && transform.position.z >= 29)
+		if (player1 != null)
         {
-			m_Rigidbody.velocity = Vector3.zero;
-			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+			Debug.Log("Player 1 is null");
+			float colDist = Vector3.Distance(transform.position, player1.transform.position);
+
+			if (colDist < 2 && transform.position.z >= -29 && transform.position.z <= 29)
+			{
+				Vector3 currentDirection = (transform.position - player1.transform.position).normalized;
+
+				float PushAmount = Mathf.InverseLerp(0, 1, colDist);
+				m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 60);
+			}
+			else if (transform.position.z <= -29 && transform.position.z >= 29)
+			{
+				m_Rigidbody.velocity = Vector3.zero;
+				GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+			}
+
+			if (lastHit < invulnerableState)
+			{
+				lastHit++;
+				feedBack.BlinkFeedBack(true);
+			}
+			else
+			{
+				lastHit = invulnerableState + 1;
+				feedBack.BlinkFeedBack(false);
+			}
+
 		}
 
-		if (lastHit < invulnerableState)
-		{
-			lastHit++;
-			feedBack.BlinkFeedBack(true);
-		}
-		else
-		{
-			lastHit = invulnerableState + 1;
-			feedBack.BlinkFeedBack(false);
-		}
 
 
-		if (playerOne.isMoving)
+		if (playerOne.isMoving || playerOne == null)
 		{
 			currentSpeed = maximumForwardSpeed;
 
