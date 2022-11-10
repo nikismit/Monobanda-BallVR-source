@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7808430959211452976}
   - component: {fileID: 6625574620352812437}
   - component: {fileID: 8941389405829587295}
-  - component: {fileID: 7847031115001587582}
   m_Layer: 0
   m_Name: mod_track_sidebumper_1
   m_TagString: Track
@@ -82,21 +81,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7847031115001587582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7428351386888585354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 0.4245283, g: 0.21510737, b: 0.13817194, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
