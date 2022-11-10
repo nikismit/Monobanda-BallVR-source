@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class AudioMovement : MonoBehaviour {
 
@@ -16,8 +17,11 @@ public class AudioMovement : MonoBehaviour {
 	[SerializeField] FlameEffect flameEffect;
 	//private PlayerNotifyHandler notifyHandler;
 
-	public Sprite[] ringcountUIArray;
-	public Image ringcountUI;
+	//public Sprite[] ringcountUIArray;
+	public Slider playerHealth;
+	public TextMeshProUGUI ringCountText;
+	[SerializeField] PlayersUIHandler uiHandler;
+	private float score = 0;
 
 	[Header("Sound References")]
 	//public AudioPitch_Player1 pitch;
@@ -114,6 +118,7 @@ public class AudioMovement : MonoBehaviour {
 	private float voiceSetbackTime = 0;
 	public float maxVoiceSetback = 7;
 
+
 	void Start()
     {
 		m_Rigidbody = GetComponent<Rigidbody>();
@@ -133,7 +138,9 @@ public class AudioMovement : MonoBehaviour {
 		}
 		else
 			Debug.LogWarning("ui is null! please add a ui ref.");
-		ringcountUI.sprite = ringcountUIArray[numRings];
+		playerHealth.maxValue = 5;
+		playerHealth.value = 5;
+		//ringcountUI.sprite = ringcountUIArray[numRings];
 
 
 		FOV = 60.0f;
@@ -222,6 +229,11 @@ public class AudioMovement : MonoBehaviour {
 			boostParticle.Play();
 			flameEffect.InitiateBoostEffect();
 
+			//score += 100;
+			//ringCountText.text = score.ToString();
+
+			uiHandler.UpdateScore(100, 0);
+
 			if (other.gameObject.GetComponent<StringerBoosterRing>())
             {
 				float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
@@ -231,14 +243,15 @@ public class AudioMovement : MonoBehaviour {
 				m_Rigidbody.AddForce(transform.forward * boost, ForceMode.Impulse);
 			}
 
-				if (numRings < 5)
-				{
-					Debug.Log(numRings);
-					numRings++;
-					ringcountUI.sprite = ringcountUIArray[numRings];
-					//ringCount.text = numRings.ToString();
-				}
-				//carLine.AddBodyPart(1, 0);
+			if (numRings < 5)
+			{
+				//Debug.Log(5 / numRings);
+				numRings++;
+				//ringcountUI.sprite = ringcountUIArray[numRings];
+				playerHealth.value = numRings;
+				//ringCount.text = numRings.ToString();
+			}
+			//carLine.AddBodyPart(1, 0);
 
 			transform.rotation = other.transform.rotation;
 			boostTimer = 0;
@@ -754,13 +767,15 @@ public class AudioMovement : MonoBehaviour {
     {
 		feedBack.HitFeedBack();
 
-		if (numRings > 0)
+		if (numRings > 1)
 		{
 			numRings--;
-			ringcountUI.sprite = ringcountUIArray[numRings];
+			//ringcountUI.sprite = ringcountUIArray[numRings];
+			playerHealth.value = numRings;
 		}
 		else
 		{
+			playerHealth.value = 0;
 			winState.PlayerTwoWins();
 			Destroy(gameObject);
 		}

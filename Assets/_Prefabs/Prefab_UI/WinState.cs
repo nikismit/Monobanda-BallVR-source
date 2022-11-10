@@ -31,7 +31,6 @@ public class WinState : MonoBehaviour
 
             if (ease == 1)
             {
-                Debug.Log("JA LEKKER!!");
                 //demoUI.RemoveDemoUIEvent();
                 StartCoroutine(StartTransition());
             }

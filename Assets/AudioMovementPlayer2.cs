@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class AudioMovementPlayer2 : MonoBehaviour {
 
@@ -93,7 +94,10 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	private int numRings = 5;
 	public Sprite[] ringcountUIArray;
-	public Image ringcountUI;
+	public Slider playerHealth;
+	public TextMeshProUGUI ringCountText;
+	private float score = 0;
+	[SerializeField] PlayersUIHandler uiHandler;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
@@ -126,7 +130,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			minimumPitch = PlayerPrefs.GetFloat("Player2Lowest");
 			maximumPitch = PlayerPrefs.GetFloat("Player2Highest");
 		}
-		ringcountUI.sprite = ringcountUIArray[numRings];
+		playerHealth.maxValue = 5;
+		playerHealth.value = 5;
 
 		if (endlessRunner)
         {
@@ -220,6 +225,10 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			boostParticle.Play();
 			flameEffect.InitiateBoostEffect();
 
+
+			uiHandler.UpdateScore(100, 1);
+
+
 			if (other.gameObject.GetComponent<StringerBoosterRing>())
 			{
 				float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
@@ -232,7 +241,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			if (numRings < 5)
             {
 				numRings++;
-				ringcountUI.sprite = ringcountUIArray[numRings];
+				playerHealth.value = numRings;
 			}
 
 				//carLine.AddBodyPart(1, 0);
@@ -261,7 +270,6 @@ public class AudioMovementPlayer2 : MonoBehaviour {
     {
 		if (player1 != null)
         {
-			Debug.Log("Player 1 is null");
 			float colDist = Vector3.Distance(transform.position, player1.transform.position);
 
 			if (colDist < 2 && transform.position.z >= -29 && transform.position.z <= 29)
@@ -608,10 +616,11 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 			//lastHit = Time.time;
 			numRings--;
-			ringcountUI.sprite = ringcountUIArray[numRings];
+			playerHealth.value = numRings;
 		}
         else
         {
+			playerHealth.value = 0;
 			winState.PlayerOneWins();
 			Destroy(gameObject);
 		}
