@@ -226,7 +226,7 @@ public class AudioMovement : MonoBehaviour {
             {
 				float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
 
-				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z);
+				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 5, m_Rigidbody.velocity.z);
 
 				m_Rigidbody.AddForce(transform.forward * boost, ForceMode.Impulse);
 			}
@@ -302,6 +302,7 @@ public class AudioMovement : MonoBehaviour {
 			else if (transform.position.x >= camDist.position.x - 7.5f + (numRings * 5f))
 			{//- 7.5f
 				currentSpeed -= 5;
+				//currentSpeed -= Mathf.Abs(transform.position.x - camDist.position.x) / 2;
 				StabilizeCarRot(5);
 			}
 			else if (transform.position.x < camDist.position.x - 0.1f - 7.5f + (numRings * 5f))

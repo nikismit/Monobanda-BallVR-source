@@ -220,6 +220,15 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			boostParticle.Play();
 			flameEffect.InitiateBoostEffect();
 
+			if (other.gameObject.GetComponent<StringerBoosterRing>())
+			{
+				float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
+
+				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 5, m_Rigidbody.velocity.z);
+
+				m_Rigidbody.AddForce(transform.forward * boost, ForceMode.Impulse);
+			}
+
 			if (numRings < 5)
             {
 				numRings++;
