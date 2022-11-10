@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6108031203208699135}
   - component: {fileID: 8295878236228905013}
   - component: {fileID: -7175805047365853268}
-  - component: {fileID: 2413500052224610692}
   m_Layer: 0
   m_Name: track_side_1 L
   m_TagString: Track
@@ -96,21 +95,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8.000001, y: 1, z: 6.477381}
   m_Center: {x: -3.9999995, y: 0.39999998, z: 2.862572}
---- !u!114 &2413500052224610692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7503029128589658592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 0.04705883, g: 0.40000004, b: 0.29803923, a: 1}
-  outlineWidth: 4
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
