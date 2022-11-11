@@ -25415,7 +25415,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ringcountUI
       value: 
-      objectReference: {fileID: 1904348555}
+      objectReference: {fileID: 0}
     - target: {fileID: 756581993228108350, guid: a0293d09fdac9d548ab4073abe389ba2,
         type: 3}
       propertyPath: player1
@@ -33667,18 +33667,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 862912671}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1570252012 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9148999370945437918, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1910943073734348546}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1586566597 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2185097237083981394, guid: 3876191d99ef3ad4890193fc1c475946,
@@ -43855,18 +43843,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1856950513}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1904348555 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5046643758178525356, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1910943073734348546}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1906511883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59389,6 +59365,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 0ad76f59f2002684994217268fb7252e,
         type: 3}
+    - target: {fileID: 6247685553166655601, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247685553166655601, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618257050430639972, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618257050430639972, guid: 90c6d2c7fa03a5e45a846aff266a12f9,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90c6d2c7fa03a5e45a846aff266a12f9, type: 3}
 --- !u!1001 &2049321970005947709
@@ -60348,7 +60344,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ringcountUI
       value: 
-      objectReference: {fileID: 1570252012}
+      objectReference: {fileID: 0}
     - target: {fileID: 4767737315599181015, guid: efd0ce30903c21348bb2a38c040f0f1f,
         type: 3}
       propertyPath: ringMissed
