@@ -10,9 +10,9 @@ public class TutorialPlanes : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private AudioMovement audioMovement;
     [SerializeField] private AudioMovementPlayer2 audioMovement2;
-    [SerializeField] private GameObject[] readyUI;
     [SerializeField] private int UIid;
     [SerializeField] private Text PitchCountdownText;
+    [SerializeField] private Transform circle;
 
     private int playerNum;
     private int hasEntered = 0;
@@ -39,12 +39,10 @@ public class TutorialPlanes : MonoBehaviour
             hasEntered++;
             Debug.Log("Has Entered" + hasEntered);
 
-
-            //if (hasEntered >= playerNum - 1 && !hasActivated && audioMovement.debugKeyControl || hasEntered >= playerNum && !hasActivated && !audioMovement.debugKeyControl)
             if (hasEntered >= playerNum - 1 && !hasActivated && audioMovement.debugKeyControl ||
                 hasEntered >= playerNum && !hasActivated && !audioMovement.debugKeyControl)
-            //if (hasEntered >= playerNum && !hasActivated)
             {
+                StartCoroutine(Scale(circle));
                 activateParticle.Play();
                 hasActivated = true;
                 //tutHandler.StartCoroutine(tutHandler.Hold());
@@ -58,33 +56,7 @@ public class TutorialPlanes : MonoBehaviour
                 //tutHandler.StartCoroutine(HoldPitchCountdown());
                 //Invoke("DisableSelf", 1);
             }
-
-            if (other.gameObject.GetComponent<AudioMovement>() && tutHandler.activatePlane <= 2 && audioMovement.debugKeyControl ||
-                tutHandler.activatePlane <= 2 && hasEntered  > 1 && !audioMovement.debugKeyControl)
-            {
-                //activateParticle.Play();
-                //tutHandler.StartCoroutine(tutHandler.Hold());
-                //Invoke("DisableSelf", 1);
-                readyUI[0].SetActive(true);
-            }
-            if (other.gameObject.GetComponent<AudioMovementPlayer2>() && tutHandler.activatePlane <= 2)
-            {
-                //activateParticle.Play();
-                //tutHandler.StartCoroutine(tutHandler.Hold());
-                //Invoke("DisableSelf", 1);
-                readyUI[1].SetActive(true);
-            }
-
-
-            /*
-            else if (hasEntered >= playerNum && tutHandler.activatePlane >= 2)
-            {
-                tutHandler.StartCoroutine(tutHandler.Hold());
-                Invoke("DisableSelf", 1);
-
-            }
-            */
-        }     //tutHandler.StartCoroutine(tutHandler.Hold());        
+        }
     }
 
     IEnumerator HoldPitchCountdown()
@@ -100,6 +72,23 @@ public class TutorialPlanes : MonoBehaviour
         Invoke("DisableSelf", 0);
 
         //return null;
+    }
+
+    IEnumerator Scale(Transform target)
+    {
+        Transform targetRef = target;
+        float elapsedTime = 0;
+
+
+
+        while (elapsedTime < 60)
+        {
+            elapsedTime += Time.deltaTime;
+            float lerp = Mathf.Lerp(targetRef.localScale.x, 0.01f, elapsedTime / 60);
+            target.localScale = new Vector3(lerp, lerp, lerp);
+
+            yield return null;
+        }
     }
 
     void LastInvoke()
@@ -124,23 +113,10 @@ public class TutorialPlanes : MonoBehaviour
 
         gameObject.SetActive(false);
     }
-    private void OnDisable()
-    {
-        //if(UIid == 1)
-        for (int i = 0; i < readyUI.Length; i++)
-        readyUI[i].SetActive(false);
-    }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
             hasEntered--;
-
-        if (other.gameObject.GetComponent<AudioMovement>() && tutHandler.activatePlane >= 2)
-        {
-            //tutHandler.StartCoroutine(tutHandler.Hold());
-            //Invoke("DisableSelf", 1);
-            readyUI[0].SetActive(false);
-        }
     }
 }

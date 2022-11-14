@@ -117,7 +117,7 @@ public class AudioMovement : MonoBehaviour {
 
 	private float voiceSetbackTime = 0;
 	public float maxVoiceSetback = 7;
-
+	private float boostAmount = 5;
 
 	void Start()
     {
@@ -236,12 +236,17 @@ public class AudioMovement : MonoBehaviour {
 
 			if (other.gameObject.GetComponent<StringerBoosterRing>())
             {
-				float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
+				//float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
+				boostAmount = other.GetComponent<StringerBoosterRing>().BoostAmount;
 
 				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 5, m_Rigidbody.velocity.z);
+				//m_Rigidbody.AddForce(transform.forward * boost, ForceMode.Impulse);
 
-				m_Rigidbody.AddForce(transform.forward * boost, ForceMode.Impulse);
+				//m_Rigidbody.drag = 1;
+
+				//Invoke("ResetDrag", 2);
 			}
+
 
 			if (numRings < 5)
 			{
@@ -265,24 +270,31 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
+    private void ResetDrag()
+    {
+		m_Rigidbody.drag = 0;
+	}
     void FixedUpdate()
     {
-		//notifyHandler.currentVolume = Volume;
+        //notifyHandler.currentVolume = Volume;
+        if (player2 != null)
+        {
+			float colDist = Vector3.Distance(transform.position, player2.transform.position);
 
-		float colDist = Vector3.Distance(transform.position, player2.transform.position);
+			if (colDist < 2 && transform.position.z >= -29 && transform.position.z <= 29)
+			{
+				Vector3 currentDirection = (transform.position - player2.transform.position).normalized;
 
-		if (colDist < 2 && transform.position.z >= -29 && transform.position.z <= 29)
-		{
-			Vector3 currentDirection = (transform.position - player2.transform.position).normalized;
-
-			float PushAmount = Mathf.InverseLerp(0, 1, colDist);
-			m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 60);			
+				float PushAmount = Mathf.InverseLerp(0, 1, colDist);
+				m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 60);
+			}
+			else if (transform.position.z <= -29 && transform.position.z >= 29)
+			{
+				m_Rigidbody.velocity = Vector3.zero;
+				GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+			}
 		}
-		else if (transform.position.z <= -29 && transform.position.z >= 29)
-		{
-			m_Rigidbody.velocity = Vector3.zero;
-			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-		}
+
 
 
 
@@ -308,18 +320,20 @@ public class AudioMovement : MonoBehaviour {
 				boostTimer += Time.deltaTime;
 
 				float ease = Mathf.InverseLerp(0, 2, boostTimer) * 5;
-				currentSpeed += 10;
+				currentSpeed += boostAmount;
 
 				StabilizeCarRot(1);
 			}
 			else if (transform.position.x >= camDist.position.x - 7.5f + (numRings * 5f))
 			{//- 7.5f
+				boostAmount = 10;
 				currentSpeed -= 5;
 				//currentSpeed -= Mathf.Abs(transform.position.x - camDist.position.x) / 2;
 				StabilizeCarRot(5);
 			}
 			else if (transform.position.x < camDist.position.x - 0.1f - 7.5f + (numRings * 5f))
 			{
+				//boostAmount = 10;
 				currentSpeed += 5;
 				StabilizeCarRot(5);
 			}
@@ -772,10 +786,12 @@ public class AudioMovement : MonoBehaviour {
 			numRings--;
 			//ringcountUI.sprite = ringcountUIArray[numRings];
 			playerHealth.value = numRings;
+			uiHandler.UpdateHealth(0);
 		}
 		else
 		{
 			playerHealth.value = 0;
+			uiHandler.UpdateHealth(0);
 			winState.PlayerTwoWins();
 			Destroy(gameObject);
 		}

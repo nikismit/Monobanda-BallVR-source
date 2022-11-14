@@ -44,7 +44,7 @@ public class StringerBoosterRing : MonoBehaviour
         }
         else
         {
-            ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
+            ringModels[0].transform.Rotate(new Vector3(0, 0, 2));
             transform.localScale = sizeRef;
             shadow.orthographicSize = 2;
         }

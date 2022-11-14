@@ -609,7 +609,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	{
 		feedBack.HitFeedBack();
 
-		if (numRings > 0)
+		if (numRings > 1)
         {
             //if (Time.time-lastHit < 2)
 				//return;
@@ -617,10 +617,12 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			//lastHit = Time.time;
 			numRings--;
 			playerHealth.value = numRings;
+			uiHandler.UpdateHealth(1);
 		}
         else
         {
 			playerHealth.value = 0;
+			uiHandler.UpdateHealth(1);
 			winState.PlayerOneWins();
 			Destroy(gameObject);
 		}
@@ -650,8 +652,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	public void SetRailConstrains()
 	{
 		if (lockRigidbodyRotation)
-			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
-		//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
 		railSteerSpeed = railSteerRef;
 
