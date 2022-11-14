@@ -239,9 +239,13 @@ public class AudioMovement : MonoBehaviour {
 				float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
 
 				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 5, m_Rigidbody.velocity.z);
-
 				m_Rigidbody.AddForce(transform.forward * boost, ForceMode.Impulse);
+
+				m_Rigidbody.drag = 1;
+
+				Invoke("ResetDrag", 2);
 			}
+
 
 			if (numRings < 5)
 			{
@@ -265,6 +269,10 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
+    private void ResetDrag()
+    {
+		m_Rigidbody.drag = 0;
+	}
     void FixedUpdate()
     {
 		//notifyHandler.currentVolume = Volume;
@@ -772,10 +780,12 @@ public class AudioMovement : MonoBehaviour {
 			numRings--;
 			//ringcountUI.sprite = ringcountUIArray[numRings];
 			playerHealth.value = numRings;
+			uiHandler.UpdateHealth(0);
 		}
 		else
 		{
 			playerHealth.value = 0;
+			uiHandler.UpdateHealth(0);
 			winState.PlayerTwoWins();
 			Destroy(gameObject);
 		}
