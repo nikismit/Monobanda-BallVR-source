@@ -20,6 +20,7 @@ public class FinishChecker : MonoBehaviour
 
     [SerializeField] RectTransform uiTransform;
     [SerializeField] AnimationCurve curve;
+    [SerializeField] WinState winState;
 
     void Start()
     {
@@ -95,6 +96,7 @@ public class FinishChecker : MonoBehaviour
 
     void ReloadScene()
     {
-        SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");
+        //SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");
+        winState.ScoreWinner();
     }
 }

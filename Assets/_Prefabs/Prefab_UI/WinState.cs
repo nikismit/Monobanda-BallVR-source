@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class WinState : MonoBehaviour
 {
+    private PlayersUIHandler uiHandler;
     public GameObject[] winUI;
     DemoUI demoUI;
     public AnimationCurve curve;
@@ -17,6 +18,7 @@ public class WinState : MonoBehaviour
     private void Start()
     {
         demoUI = GetComponent<DemoUI>();
+        uiHandler = GetComponent<PlayersUIHandler>();
     }
 
     private void Update()
@@ -55,6 +57,16 @@ public class WinState : MonoBehaviour
             //StartCoroutine(ResetScene(2, 0));
             //Invoke("ResetScene", 2);
         }
+    }
+
+    public void ScoreWinner()
+    {
+        if (uiHandler.score[0] > uiHandler.score[1])
+            winner = 0;
+        else
+            winner = 1;
+
+        initialized = true;
     }
 
     public void PlayerTwoWins()
