@@ -287,11 +287,15 @@ public class AudioMovement : MonoBehaviour {
 
 				float PushAmount = Mathf.InverseLerp(0, 1, colDist);
 				m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 60);
+				m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 			}
-			else if (transform.position.z <= -29 && transform.position.z >= 29)
+			else if (transform.position.z <= -29 || transform.position.z >= 29)
 			{
-				m_Rigidbody.velocity = Vector3.zero;
-				GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+				//m_Rigidbody.velocity = Vector3.zero;
+				//m_Rigidbody.angularVelocity = Vector3.zero;
+				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_Rigidbody.velocity.y, 0);
+				m_Rigidbody.angularVelocity = new Vector3(m_Rigidbody.velocity.x, m_Rigidbody.velocity.y, 0);
+				//m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionX;
 			}
 		}
 
