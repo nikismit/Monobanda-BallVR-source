@@ -6,6 +6,7 @@ public class ArrowFloat : MonoBehaviour
 {
     private bool floatUp;
     private bool lockInvoke;
+    [SerializeField] float floatAmount;
 
     void Update()
     {
@@ -17,7 +18,7 @@ public class ArrowFloat : MonoBehaviour
 
     void FloatingUp()
     {
-        transform.position += Vector3.up * 1f * Time.deltaTime;
+        transform.position += Vector3.up * floatAmount * Time.deltaTime;
         if (lockInvoke)
         {
             lockInvoke = false;
@@ -28,7 +29,7 @@ public class ArrowFloat : MonoBehaviour
 
     void FloatingDown()
     {
-        transform.position -= Vector3.up * 1f * Time.deltaTime;
+        transform.position -= Vector3.up * floatAmount * Time.deltaTime;
         if (!lockInvoke)
         {
             lockInvoke = true;

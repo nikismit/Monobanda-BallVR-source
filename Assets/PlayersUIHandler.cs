@@ -12,6 +12,7 @@ public class PlayersUIHandler : MonoBehaviour
     [HideInInspector] public float[] score = new float [2];
 
     [SerializeField] private AnimationCurve scoreCurve;
+    [SerializeField] private AnimationCurve scoreScaleCurve;
     private float timerOne, timerTwo;
     private float timerOneHp, timerTwoHp;
     private float length = 1;
@@ -25,6 +26,7 @@ public class PlayersUIHandler : MonoBehaviour
     [SerializeField] Color[] ColorRef = new Color[2];
     private bool updateHpOne, updateHpTwo;
     public Transform[] hpTrans;
+    public RectTransform[] scoreRect;
     [SerializeField] AnimationCurve shakeCurve;
 
 
@@ -77,12 +79,16 @@ public class PlayersUIHandler : MonoBehaviour
 
             ringCountText[playerNum].text = score[playerNum].ToString();
             ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
+            ringCountText[playerNum].fontSize = 32 + (scoreScaleCurve.Evaluate(ease) * 20);
+            //scoreRect[playerNum].sizeDelta = new Vector2(1 + scoreScaleCurve.Evaluate(ease) * 20, 1 + scoreScaleCurve.Evaluate(ease) * 20);
         }
         else
         {
             if (updateScoreOne)
             {
                 ringCountTrans[playerNum].localPosition = new Vector2(245, 55);
+                //scoreRect[playerNum].sizeDelta = new Vector2(1, 1);
+                ringCountText[playerNum].fontSize = 32;
                 updateScoreOne = false;
             }
         }
@@ -100,12 +106,14 @@ public class PlayersUIHandler : MonoBehaviour
 
             ringCountText[playerNum].text = score[playerNum].ToString();
             ringCountTrans[playerNum].localPosition = new Vector2(-155f , 55 + (scoreCurve.Evaluate(ease) * 20));
+            scoreRect[playerNum].sizeDelta = new Vector2(1 + scoreScaleCurve.Evaluate(ease) * 20, 1 + scoreScaleCurve.Evaluate(ease) * 20);
         }
         else
         {
             if (updateScoreTwo)
             {
                 ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55);
+                scoreRect[playerNum].sizeDelta = new Vector2(1, 1);
                 updateScoreTwo = false;
             }
         }
