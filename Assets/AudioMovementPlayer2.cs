@@ -110,6 +110,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	private float voiceSetbackTime = 0;
 	private float maxVoiceSetback = 7;
+	private float boostAmount = 5;
 
 	void Start()
     {
@@ -231,11 +232,13 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 			if (other.gameObject.GetComponent<StringerBoosterRing>())
 			{
-				float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
+				//float boost = other.GetComponent<StringerBoosterRing>().BoostAmount;
+
+				boostAmount = other.GetComponent<StringerBoosterRing>().BoostAmount;
 
 				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, 5, m_Rigidbody.velocity.z);
 
-				m_Rigidbody.AddForce(transform.forward * boost, ForceMode.Impulse);
+				//m_Rigidbody.AddForce(transform.forward * boost, ForceMode.Impulse);
 			}
 
 			if (numRings < 5)
@@ -313,12 +316,13 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 				boostTimer += Time.deltaTime;
 
 				float ease = Mathf.InverseLerp(0, 2, boostTimer) * 5;
-				currentSpeed += 10;
+				currentSpeed += boostAmount;
 
 				StabilizeCarRot(1);
 			}
 			else if (transform.position.x >= camDist.position.x - 7.5f + (numRings * 5f))
 			{
+				boostAmount = 10;
 				currentSpeed -= 5;
 				StabilizeCarRot(5);
 			}
