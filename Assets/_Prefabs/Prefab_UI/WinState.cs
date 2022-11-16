@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class WinState : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI[] score;
     private PlayersUIHandler uiHandler;
     public GameObject[] winUI;
+    public GameObject[] players;
     DemoUI demoUI;
     public AnimationCurve curve;
     private bool initialized = false;
@@ -63,8 +66,10 @@ public class WinState : MonoBehaviour
     {
         if (uiHandler.score[0] > uiHandler.score[1])
             winner = 0;
-        else
+        else if (uiHandler.score[0] < uiHandler.score[1])
             winner = 1;
+        else if (uiHandler.score[0] == uiHandler.score[1])
+            winner = 0;//Needs changed to tie
 
         initialized = true;
     }
@@ -89,7 +94,31 @@ public class WinState : MonoBehaviour
         //Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
         //yield return new WaitForSecondsRealtime(5);
+        /*
+        score[0].text = uiHandler.score[0].ToString();
+        score[1].text = uiHandler.score[1].ToString();
+        score[3].text = uiHandler.score[0].ToString();
+        score[4].text = uiHandler.score[1].ToString();
+        */
         winUI[winner].gameObject.SetActive(true);
+        if (winner == 0)
+        {
+            score[0].text = uiHandler.score[0].ToString();
+            if (players[1] != null)
+                score[1].text = uiHandler.score[1].ToString();
+        }
+        else if (winner == 1)
+        {
+            score[2].text = uiHandler.score[0].ToString();
+            if(players[0] != null)
+            score[3].text = uiHandler.score[1].ToString();
+        }
+        else if (winner == 2)//TIE!
+        {
+            score[2].text = uiHandler.score[0].ToString();
+            if (players[0] != null)
+                score[3].text = uiHandler.score[1].ToString();
+        }
         yield return new WaitForSecondsRealtime(waitTime);
         Time.timeScale = 1;
         SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");
