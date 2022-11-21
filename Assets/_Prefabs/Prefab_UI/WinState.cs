@@ -18,24 +18,38 @@ public class WinState : MonoBehaviour
 
     private int winner;
 
+    [SerializeField] CanvasGroup highScoreUI;
+    [SerializeField] TextMeshProUGUI[] highScores;
+    //private string[] highscorePref = new string(HighScore1);
+
     private void Start()
     {
+        highScoreUI.alpha = 0;
+        //highScores = gameObject.GetComponentsInChildren<TextMeshProUGUI>();
         demoUI = GetComponent<DemoUI>();
         uiHandler = GetComponent<PlayersUIHandler>();
     }
 
+    bool InvokeOnce = false;
+
     private void Update()
     {
+
+
+
         if (timer <= timeLength && initialized)
         {
+            //InvokeOnce = false;
             timer += Time.unscaledDeltaTime;
             //float ease = Mathf.Lerp(0, easeOutlength / 2, timer * 1.2f);
             //float ease = Mathf.Lerp(0, 3, timer);
             float ease = Mathf.Clamp(timer / 3, 0, 1);
             Time.timeScale = curve.Evaluate(ease);
 
-            if (ease == 1)
+            if (ease == 1 && !InvokeOnce)
             {
+                Debug.Log("INVOKEONCE");
+                InvokeOnce = true;
                 //demoUI.RemoveDemoUIEvent();
                 StartCoroutine(StartTransition());
             }
@@ -121,13 +135,119 @@ public class WinState : MonoBehaviour
         }
         yield return new WaitForSecondsRealtime(waitTime);
         Time.timeScale = 1;
-        SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");
+        StartCoroutine(ShowHighScores());
         //DO STUFF
     }
-    /*
-    void ResetScene()
+
+    bool invokeHighScores = false;
+
+    IEnumerator ShowHighScores()
+    {
+        //Debug.Log("SHOWKKR HIghSCore");
+        if (!invokeHighScores)
+        {
+            invokeHighScores = true;
+            ShowHighScore(winner);
+        }
+
+        float elapsedTime = 0;
+
+        while (elapsedTime < 1)
+        {
+            elapsedTime += Time.deltaTime;
+            highScoreUI.alpha = elapsedTime;
+
+            yield return null;
+            
+        }
+
+    }
+
+
+    void ShowHighScore(int playerWon)
+    {
+        bool stopChecking = false;
+
+        //Debug.Log("LMAO");
+        
+        for (int i = 0; i < highScores.Length; i++)
+        {
+            if (uiHandler.score[playerWon] > PlayerPrefs.GetFloat("HighScore" + i) && !stopChecking)
+            {
+                float scoreRef = 0;
+
+                //Debug.Log("PlayerWon = " + i);
+                stopChecking = true;
+                if (PlayerPrefs.GetFloat("HighScore" + i) != 0)
+                    scoreRef = PlayerPrefs.GetFloat("HighScore" + i);
+
+                PlayerPrefs.SetFloat("HighScore" + i, uiHandler.score[playerWon]);
+                //highScores[i].text = PlayerPrefs.GetFloat("HighScore" + i).ToString();
+
+                DownRankHighScores(i, playerWon, scoreRef);
+            }
+        }
+        if(!stopChecking)
+        {
+            stopChecking = true;
+            GenerateHighScores();
+        }
+
+        //Debug.Log("1 = " + PlayerPrefs.GetFloat("HighScore1") + ", 2 = " + PlayerPrefs.GetFloat("HighScore2") + ", 3 = " + PlayerPrefs.GetFloat("HighScore3")
+//+ ", 4 = " + PlayerPrefs.GetFloat("HighScore4") + ", 5 = " + PlayerPrefs.GetFloat("HighScore5") + ", 6 = " + PlayerPrefs.GetFloat("HighScore6"));
+
+        Invoke("RestartScene", 1);
+    }
+
+    void GenerateHighScores()
+    {
+        Debug.Log("0 = " + PlayerPrefs.GetFloat("HighScore0") + ", 1 = " + PlayerPrefs.GetFloat("HighScore1") + ", 2 = " + PlayerPrefs.GetFloat("HighScore2")
++ ", 3 = " + PlayerPrefs.GetFloat("HighScore3") + ", 4 = " + PlayerPrefs.GetFloat("HighScore4") + ", 5 = " + PlayerPrefs.GetFloat("HighScore5") + ", 6 = " + PlayerPrefs.GetFloat("HighScore6"));
+
+        for (int s = 0; s < highScores.Length; s++)
+        {
+            //scoreRef = PlayerPrefs.GetFloat("HighScore" + s);
+            //PlayerPrefs.GetFloat("HighScore" + s);
+            highScores[s].text = PlayerPrefs.GetFloat("HighScore" + s).ToString();
+        }
+    }
+
+    void DownRankHighScores(int i, int player, float prevScoreRef)
+    {
+        Debug.Log("NEWHIGHSCORE");
+        bool downRankCurrent = false;
+        //float scoreRef = PlayerPrefs.GetFloat("HighScore" + i);
+       // PlayerPrefs.SetFloat("HighScore" + i, uiHandler.score[player]);
+        //highScores[i].text = uiHandler.score[player].ToString();
+        //highScores[0].text = 420.ToString();
+        
+        for (int s = 1 + i; s < highScores.Length; s++)
+        {
+
+
+            if (prevScoreRef != 0 && !downRankCurrent)
+            {
+                downRankCurrent = true;
+
+                PlayerPrefs.SetFloat("HighScore" + s, prevScoreRef);
+            }
+            else
+            {
+                float scoreRef = PlayerPrefs.GetFloat("HighScore" + s);
+                PlayerPrefs.SetFloat("HighScore" + s, scoreRef);
+            }
+
+
+
+            //if (s < highScores.Length - 1)
+                //PlayerPrefs.SetFloat("HighScore" + s, PlayerPrefs.GetFloat("HighScore" + s));
+            //highScores[s + 1].text = PlayerPrefs.GetFloat("HighScore" + s);
+        }
+        GenerateHighScores();
+    }
+
+    void RestartScene()
     {
         SceneManager.LoadScene("EndlessRunnerTEST_MainMultiplayer");
     }
-    */
 }
