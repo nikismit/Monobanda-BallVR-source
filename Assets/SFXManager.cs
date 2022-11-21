@@ -18,13 +18,14 @@ public class SFXManager : MonoBehaviour
   public AudioClip engine;
   public AudioClip crashWall;
   public AudioClip Music;
+  public AudioClip MusicDemo;
 
   public bool isSingleplayer = false;
 
 
 
   void Start(){
-    AudioSourceMusic.clip = Music;
+    AudioSourceMusic.clip = MusicDemo;
     AudioSourceMusic.volume = 0.5f;
     AudioSourceMusic.Play();
 
@@ -38,7 +39,12 @@ public class SFXManager : MonoBehaviour
     AudioSourceP2.volume = P2Volume;
     AudioSourceP2.Play();
   }
-
+    public void StartGame()
+    {
+        AudioSourceMusic.Stop();
+        AudioSourceMusic.clip = Music;
+        AudioSourceMusic.Play();
+    }
 
     public void crashIntoTrack(){
       Debug.Log("Crashed");
