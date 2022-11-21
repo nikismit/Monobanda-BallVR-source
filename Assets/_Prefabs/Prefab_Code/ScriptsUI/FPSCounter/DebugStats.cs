@@ -56,6 +56,16 @@ public class DebugStats : MonoBehaviour
             }
         }
 
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.LogWarning("DELETING HIGH SCORES...");
+            for (int i = 0; i < 6; i++)
+            {
+                PlayerPrefs.DeleteKey("HighScore" + i);
+            }
+        }
+
         if (isActive)
         {
             timeleft -= Time.deltaTime;
