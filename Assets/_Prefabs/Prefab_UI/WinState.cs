@@ -190,31 +190,61 @@ public class WinState : MonoBehaviour
         if(!stopChecking)
         {
             stopChecking = true;
-            GenerateHighScores();
+            GenerateHighScores(420);
         }
 
         //Debug.Log("1 = " + PlayerPrefs.GetFloat("HighScore1") + ", 2 = " + PlayerPrefs.GetFloat("HighScore2") + ", 3 = " + PlayerPrefs.GetFloat("HighScore3")
 //+ ", 4 = " + PlayerPrefs.GetFloat("HighScore4") + ", 5 = " + PlayerPrefs.GetFloat("HighScore5") + ", 6 = " + PlayerPrefs.GetFloat("HighScore6"));
 
-        Invoke("RestartScene", 1);
+        Invoke("RestartScene", 10);
     }
 
-    void GenerateHighScores()
+    void GenerateHighScores(int newHighScore)
     {
         Debug.Log("0 = " + PlayerPrefs.GetFloat("HighScore0") + ", 1 = " + PlayerPrefs.GetFloat("HighScore1") + ", 2 = " + PlayerPrefs.GetFloat("HighScore2")
 + ", 3 = " + PlayerPrefs.GetFloat("HighScore3") + ", 4 = " + PlayerPrefs.GetFloat("HighScore4") + ", 5 = " + PlayerPrefs.GetFloat("HighScore5") + ", 6 = " + PlayerPrefs.GetFloat("HighScore6"));
 
         for (int s = 0; s < highScores.Length; s++)
         {
+
             //scoreRef = PlayerPrefs.GetFloat("HighScore" + s);
             //PlayerPrefs.GetFloat("HighScore" + s);
-            highScores[s].text = PlayerPrefs.GetFloat("HighScore" + s).ToString();
+            if(newHighScore == s)
+            {
+                highScores[s].color = new Color(255, 215, 0);
+                highScores[s].text = "NEW HIGHSCORE! " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                //return;
+            }
+            else
+            {
+                highScores[s].color = Color.white;
+                if (s == 0)
+                    highScores[s].text = "1st " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                if (s == 1)
+                    highScores[s].text = "2nd " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                if (s == 2)
+                    highScores[s].text = "3rd " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                if (s == 3)
+                    highScores[s].text = "4th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                if (s == 4)
+                    highScores[s].text = "5th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                if (s == 5)
+                    highScores[s].text = "6th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                if (s == 5)
+                    highScores[s].text = "7th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                if (s == 6)
+                    highScores[s].text = "8th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+
+
+                //highScores[s].text = PlayerPrefs.GetFloat("HighScore" + s).ToString();
+            }
+
         }
     }
 
     void DownRankHighScores(int i, int player, float prevScoreRef)
     {
-        Debug.Log("NEWHIGHSCORE");
+        //Debug.Log("NEWHIGHSCORE");
         bool downRankCurrent = false;
         //float scoreRef = PlayerPrefs.GetFloat("HighScore" + i);
        // PlayerPrefs.SetFloat("HighScore" + i, uiHandler.score[player]);
@@ -243,7 +273,7 @@ public class WinState : MonoBehaviour
                 //PlayerPrefs.SetFloat("HighScore" + s, PlayerPrefs.GetFloat("HighScore" + s));
             //highScores[s + 1].text = PlayerPrefs.GetFloat("HighScore" + s);
         }
-        GenerateHighScores();
+        GenerateHighScores(i);
     }
 
     void RestartScene()

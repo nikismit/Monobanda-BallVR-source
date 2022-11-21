@@ -86,8 +86,15 @@ public class DebugStats : MonoBehaviour
 
     public void Fullscreen(bool fullScreen)
     {
+        bool fullScreenMode;
+
+        if (fullScreen)
+            fullScreenMode = false;
+        else
+            fullScreenMode = true;
+
         Screen.fullScreen = fullScreen;
-        Cursor.visible = fullScreen;
+        Cursor.visible = fullScreenMode;
     }
 
     void OnGUI()

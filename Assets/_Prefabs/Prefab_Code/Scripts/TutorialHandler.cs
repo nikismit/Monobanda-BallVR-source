@@ -13,6 +13,7 @@ public class TutorialHandler : MonoBehaviour
     [HideInInspector] public int activatePlane = 0;
 
     [SerializeField] private GameObject[] startCanvasUIs;
+    [SerializeField] private SFXManager soundManager;
     private AudioSource tutorialSound;
 
     private void Start()
@@ -70,38 +71,17 @@ public class TutorialHandler : MonoBehaviour
         SpawnPlane();
     }
 
-    public IEnumerator HoldStart()
-    {
-        //StartCoroutine(ReadyPopUp());
-        yield return new WaitForSeconds(1);
-        //RemoveRoads();
-        countDown.startCountDown = true;
-        //SpawnPlane();
-    }
-
-    public IEnumerator ReadyPopUp()
-    {
-        for (int i = 0; i < startCanvasUIs.Length; i++)
-        {
-            startCanvasUIs[i].SetActive(true);
-        }
-        yield return new WaitForSeconds(2);
-        //RemoveRoads();
-        for (int i = 0; i < startCanvasUIs.Length; i++)
-        {
-            startCanvasUIs[i].SetActive(false);
-        }
-        countDown.startCountDown = true;
-        //SpawnPlane();
-    }
-
     public void RemoveRoads()
     {
-        countDown.startCountDown = true;
-
-        for (int i = 0; i < movingRoads.Length; i++)
+        if (!countDown.startCountDown)
         {
-            movingRoads[i].SetActive(false);
+            countDown.startCountDown = true;
+            soundManager.StartGame();
+
+            for (int i = 0; i < movingRoads.Length; i++)
+            {
+                movingRoads[i].SetActive(false);
+            }
         }
     }
 }
