@@ -43651,7 +43651,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blocking32_test
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7144100859860856521, guid: 544f426b652092b48915a2449786a6f4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Track
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3084427052738368704, guid: 544f426b652092b48915a2449786a6f4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 544f426b652092b48915a2449786a6f4, type: 3}
 --- !u!4 &948401181 stripped
 Transform:
@@ -80361,6 +80367,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673784793212472139, guid: 5cb7343d381125f4b98447ae0430d2ae,
+        type: 3}
+      propertyPath: m_TagString
+      value: Track
       objectReference: {fileID: 0}
     - target: {fileID: 2795170294875697620, guid: 5cb7343d381125f4b98447ae0430d2ae,
         type: 3}
