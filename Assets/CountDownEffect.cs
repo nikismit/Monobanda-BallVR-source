@@ -26,6 +26,7 @@ public class CountDownEffect : MonoBehaviour
 
     IEnumerator CounterAnim()
     {
+        audio.Play();
         float elapsedTime = 0;
         while (elapsedTime < 0.25f)
         {
@@ -37,7 +38,7 @@ public class CountDownEffect : MonoBehaviour
             yield return null;
 
         }
-        audio.Play();
+
         while (elapsedTime < 0.5f)
         {
             elapsedTime += Time.deltaTime;
