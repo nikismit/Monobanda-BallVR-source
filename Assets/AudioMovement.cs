@@ -160,9 +160,17 @@ public class AudioMovement : MonoBehaviour {
 		roadHalf = roadWidth / 2;
 	}
 
+	bool squashAble = false;
+
     void OnCollisionEnter(Collision collision)
-	{	
-		
+	{
+        if (collision.gameObject.layer == 8 && squashAble)
+        {
+			squashAble = false;
+			modelEffect.Squash(new Vector3(1.5f, 0.7f, 1.5f));
+		}
+
+
 		if (collision.gameObject.tag == "Player")
 		{
 			Physics.IgnoreCollision(collision.collider, col, ignorePlayerCol);
@@ -232,6 +240,8 @@ public class AudioMovement : MonoBehaviour {
 			//score += 100;
 			//ringCountText.text = score.ToString();
 
+			modelEffect.Squash(new Vector3(0.6f, 0.6f, 1.20f));
+
 			uiHandler.UpdateScore(100, 0);
 
 			if (other.gameObject.GetComponent<StringerBoosterRing>())
@@ -263,6 +273,7 @@ public class AudioMovement : MonoBehaviour {
 		}
 		if (other.gameObject.GetComponent<JumpPad>())
         {
+			modelEffect.Squash(new Vector3(0.7f, 1.2f, 0.7f));
 			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
 			//Debug.LogError("JUMPING");
 			//Debug.LogError("JUMPING");
@@ -274,11 +285,22 @@ public class AudioMovement : MonoBehaviour {
     {
 		m_Rigidbody.drag = 0;
 	}
+
+	void EnableSquash()
+    {
+		squashAble = true;
+	}
+
     void FixedUpdate()
     {
-        //notifyHandler.currentVolume = Volume;
-        if (player2 != null)
-        {
+		if (!IsGrounded())
+			Invoke("EnableSquash", 1f);
+		else if (IsGrounded() && hasStarted)
+			CancelInvoke();
+
+		//notifyHandler.currentVolume = Volume;
+		if (player2 != null)
+		{
 			float colDist = Vector3.Distance(transform.position, player2.transform.position);
 
 			if (colDist < 2 && transform.position.z >= -29 && transform.position.z <= 29)

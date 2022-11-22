@@ -5,67 +5,57 @@ using UnityEngine;
 public class ModelEffects : MonoBehaviour
 {
     [SerializeField] Transform playerModel;
+    Transform emptyTrans;
+    private Vector3 playerScaleRef;
     [HideInInspector] public float dir;
 
-    private Vector3 lastPos;
+    [SerializeField] AnimationCurve curve;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        emptyTrans = GetComponent<Transform>();
+        playerScaleRef = emptyTrans.localScale;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //playerModel.Rotate(Vector3.forward, 10 * Time.deltaTime);
-        //if(dir == 0)
-        //playerModel.localRotation = Quaternion.Slerp(transform.localRotation, new Quaternion(0,0,0,0), 20 * Time.deltaTime);
-
-
-        //Debug.Log(playerModel.rotation.eulerAngles.z);
-        //Debug.Log();
-
-
         Vector3 rotateVec = new Vector3(dir, 0, 0).normalized;
 
-        //if (IsMoving())
-        //{
-            float rotateAmount = dir * 12;
-            //float rotateAmount = TurnDir() * 12;
-            //float rotateAmount = -lastPos.z * 12;
-
-            Quaternion rotationZ = Quaternion.AngleAxis(-rotateAmount, Vector3.forward);
-
-            playerModel.localRotation = Quaternion.Slerp(playerModel.localRotation, rotationZ, 10 * Time.deltaTime);
-        //}
-
-
+        float rotateAmount = dir * 12;
+        Quaternion rotationZ = Quaternion.AngleAxis(-rotateAmount, Vector3.forward);
+        playerModel.localRotation = Quaternion.Slerp(playerModel.localRotation, rotationZ, 10 * Time.deltaTime);
     }
+
+    bool floating = false;
+    float floatAmount = 0.5f;
 
     private void LateUpdate()
     {
-        lastPos = transform.position;
-    }
+        /*
+        if (!floating)
+        {
+            emptyTrans.localPosition = new Vector3(0, Time.deltaTime * -floatAmount, 0);
 
-    int TurnDir()
-    {
-        int dir = 0;
+            if (emptyTrans.localPosition.y <= -1f)
+            {
+                Debug.Log("UP");
+                floating = true;
+            }
+        }
 
-        if (lastPos.z < 0)
-            dir = -1;
-        else if (lastPos.z > 0)
-            dir = 1;
+        if (floating)
+        {
+            emptyTrans.localPosition = new Vector3(0, Time.deltaTime * floatAmount, 0);
 
-        return dir;
-    }
-
-    bool IsMoving()
-    {
-        if (lastPos.z < transform.position.z - 0.5f || lastPos.z > transform.position.z + 0.5f)
-            return true;
-
-        return false;
+            if (emptyTrans.localPosition.y >= 1f)
+            {
+                Debug.Log("Down");
+                floating = false;
+            }
+        }
+        */
     }
 
     public void RotateModel(float dirInput)
@@ -92,5 +82,36 @@ public class ModelEffects : MonoBehaviour
 
         playerModel.localRotation = Quaternion.Slerp(transform.localRotation, rotationZ, 20 * Time.deltaTime);
 
+    }
+
+    public void Squash(Vector3 scaleMultiplier)
+    {
+        StopAllCoroutines();
+        StartCoroutine(SquashStretch(scaleMultiplier));
+    }
+
+    IEnumerator SquashStretch(Vector3 scaleMultiplier)
+    {
+        float elapsedTime = 0;
+
+        while (elapsedTime < 1)
+        {
+            elapsedTime += Time.deltaTime;
+
+            //float ease = Mathf.Clamp(elapsedTime, 0, 1);
+            float ease = Mathf.Clamp(elapsedTime, 0, 1);
+            Vector3 easeVector = Vector3.Lerp(playerScaleRef, scaleMultiplier, curve.Evaluate(elapsedTime));
+
+            //playerModel.localScale = new Vector3(curve.Evaluate(ease), curve.Evaluate(ease), curve.Evaluate(ease));
+            emptyTrans.localScale = easeVector;
+
+            //Time.timeScale = curve.Evaluate(ease);
+
+            //highScoreUI.alpha = elapsedTime;
+
+            yield return null;
+
+        }
+        emptyTrans.localScale = playerScaleRef;
     }
 }

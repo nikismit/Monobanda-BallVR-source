@@ -53,7 +53,7 @@ public class collisionAdjustmentScriptPlayer2 : MonoBehaviour
     }
     void FixedUpdate(){
       FindClosestEnemy();
-      playerPosition();
+     //playerPosition();
     }
 
     public void onCollisionCorrection(Vector3 wallCol)

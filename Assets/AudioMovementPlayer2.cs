@@ -158,8 +158,15 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
     }
 
+	bool squashAble = false;
 	void OnCollisionEnter(Collision collision)
 	{
+		if (collision.gameObject.layer == 8 && squashAble)
+		{
+			squashAble = false;
+			modelEffect.Squash(new Vector3(1.5f, 0.7f, 1.5f));
+		}
+
 		if (collision.gameObject.tag == "Player")
 		{
 			Physics.IgnoreCollision(collision.collider, col, ignorePlayerCol);
@@ -226,6 +233,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			boostParticle.Play();
 			flameEffect.InitiateBoostEffect();
 
+			modelEffect.Squash(new Vector3(0.6f, 0.6f, 1.20f));
 
 			uiHandler.UpdateScore(100, 1);
 
@@ -254,6 +262,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 		if (other.gameObject.GetComponent<JumpPad>())
 		{
+			modelEffect.Squash(new Vector3(0.7f, 1.2f, 0.7f));
 			JumpPad jumpPadRef = other.gameObject.GetComponent<JumpPad>();
 
 			JumpBoost(jumpPadRef);
@@ -269,8 +278,18 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	float calMinPitch = 20;
 	float calMaxPitch;
 
+	void EnableSquash()
+	{
+		squashAble = true;
+	}
+
 	void FixedUpdate()
     {
+		if (!IsGrounded())
+			Invoke("EnableSquash", 1f);
+		else if (IsGrounded() && hasStarted)
+			CancelInvoke();
+
 		if (player1 != null)
         {
 			float colDist = Vector3.Distance(transform.position, player1.transform.position);

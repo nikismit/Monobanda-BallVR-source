@@ -230,10 +230,8 @@ public class WinState : MonoBehaviour
                     highScores[s].text = "5th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
                 if (s == 5)
                     highScores[s].text = "6th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
-                if (s == 5)
-                    highScores[s].text = "7th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
                 if (s == 6)
-                    highScores[s].text = "8th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
+                    highScores[s].text = "7th " + PlayerPrefs.GetFloat("HighScore" + s).ToString();
 
 
                 //highScores[s].text = PlayerPrefs.GetFloat("HighScore" + s).ToString();

@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class ArrowFloat : MonoBehaviour
 {
-    private bool floatUp;
+    [SerializeField] private bool floatUp;
     private bool lockInvoke;
     [SerializeField] float floatAmount;
+
+    private void Start()
+    {
+        if (floatUp)
+            lockInvoke = true;
+    }
 
     void Update()
     {
