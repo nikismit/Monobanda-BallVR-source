@@ -201,6 +201,7 @@ MonoBehaviour:
   UIid: 1
   PitchCountdownText: {fileID: 0}
   circle: {fileID: 1129957439093017461}
+  outerStar: {fileID: 830874660450290616}
   waitSec: 3
 --- !u!65 &8558045358682037464
 BoxCollider:
@@ -482,6 +483,12 @@ PrefabInstance:
 --- !u!4 &5130635333028512917 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1234927308341605285, guid: f6153872dc95b0d4bad8fa2911537823,
+    type: 3}
+  m_PrefabInstance: {fileID: 6201732109721859888}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &830874660450290616 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6743901191322320008, guid: f6153872dc95b0d4bad8fa2911537823,
     type: 3}
   m_PrefabInstance: {fileID: 6201732109721859888}
   m_PrefabAsset: {fileID: 0}

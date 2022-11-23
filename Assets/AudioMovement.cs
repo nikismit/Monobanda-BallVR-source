@@ -110,7 +110,7 @@ public class AudioMovement : MonoBehaviour {
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
 	ParticleSystem _partSys;
-	[SerializeField] ParticleSystem boostParticle;
+	[SerializeField] ParticleSystem[] boostParticle;
 	private Collider col;
 
 	float lastHit;
@@ -236,13 +236,17 @@ public class AudioMovement : MonoBehaviour {
     {
 		if (other.gameObject.tag == "Ring")
 		{
-			boostParticle.Play();
+            for (int i = 0; i < boostParticle.Length; i++)
+            {
+				boostParticle[i].Play();
+			}
+
 			flameEffect.InitiateBoostEffect();
 
 			//score += 100;
 			//ringCountText.text = score.ToString();
 
-			modelEffect.Squash(new Vector3(0.6f, 0.6f, 1.20f));
+			modelEffect.Squash(new Vector3(0.6f, 0.7f, 1.20f));
 
 			uiHandler.UpdateScore(100, 0);
 

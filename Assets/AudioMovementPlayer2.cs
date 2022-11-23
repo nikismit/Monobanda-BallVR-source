@@ -102,7 +102,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
 	ParticleSystem _partSys;
-	[SerializeField] ParticleSystem boostParticle;
+	[SerializeField] ParticleSystem[] boostParticle;
 	public AudioMovement player1;
 	public WinState winState;
 
@@ -231,11 +231,15 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.tag == "Ring"){
-			
-			boostParticle.Play();
+
+			for (int i = 0; i < boostParticle.Length; i++)
+			{
+				boostParticle[i].Play();
+			}
+
 			flameEffect.InitiateBoostEffect();
 
-			modelEffect.Squash(new Vector3(0.6f, 0.6f, 1.20f));
+			modelEffect.Squash(new Vector3(0.6f, 0.7f, 1.20f));
 
 			uiHandler.UpdateScore(100, 1);
 

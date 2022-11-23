@@ -13,6 +13,8 @@ public class TutorialPlanes : MonoBehaviour
     [SerializeField] private int UIid;
     [SerializeField] private Text PitchCountdownText;
     [SerializeField] private Transform circle;
+    [SerializeField] private SpriteRenderer outerStar;
+    private Color goneCol = new Color(1, 1, 1, 0);
 
     private int playerNum;
     private int hasEntered = 0;
@@ -85,6 +87,8 @@ public class TutorialPlanes : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             float lerp = Mathf.Lerp(targetRef.localScale.x, 0.01f, elapsedTime / 60);
+            float lerpCol = Mathf.Lerp(0, 1, elapsedTime / 60);
+            outerStar.color = Color.Lerp(outerStar.color, goneCol, lerpCol * 2);
             target.localScale = new Vector3(lerp, lerp, lerp);
 
             yield return null;
