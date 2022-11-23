@@ -112,6 +112,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	private float maxVoiceSetback = 7;
 	private float boostAmount = 5;
 
+	[HideInInspector] public bool isInPipe;
+
 	void Start()
     {
 		maxVoiceSetback = player1.maxVoiceSetback;
@@ -427,7 +429,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 		//sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
-		CarSoundMovement();
+		if (!isInPipe)
+			CarSoundMovement();
 
 		if (IsGrounded() && GroundCtrl() != null)
 		{
@@ -703,5 +706,9 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		//if (currentPitch > 10 && currentPitch < 25)
 			minimumPitch = calMinPitch;
 		//maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
+	}
+	public void ExitPipe()
+	{
+		boostTimer = 0;
 	}
 }

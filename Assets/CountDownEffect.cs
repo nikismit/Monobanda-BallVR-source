@@ -33,7 +33,7 @@ public class CountDownEffect : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float ease = Mathf.Lerp(0, 1, elapsedTime * 1.75f);
 
-            uiTransform.sizeDelta = new Vector2(curve.Evaluate(ease) * 60, curve.Evaluate(ease) * 120);
+            uiTransform.sizeDelta = new Vector2(curve.Evaluate(ease) * 120, curve.Evaluate(ease) * 120);
 
             yield return null;
 

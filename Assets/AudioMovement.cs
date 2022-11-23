@@ -119,6 +119,8 @@ public class AudioMovement : MonoBehaviour {
 	public float maxVoiceSetback = 7;
 	private float boostAmount = 5;
 
+	[HideInInspector] public bool isInPipe;
+
 	void Start()
     {
 		m_Rigidbody = GetComponent<Rigidbody>();
@@ -455,10 +457,14 @@ public class AudioMovement : MonoBehaviour {
 			//modelEffect.dir = 0;
 		}
 
-		if (!debugKeyControl)
-			CarSoundMovement();
-		else
-			CarKeyMovement();
+        if (!isInPipe)
+        {
+			if (!debugKeyControl)
+				CarSoundMovement();
+			else
+				CarKeyMovement();
+		}
+
 
 		
 		if (IsGrounded() && GroundCtrl() != null)
@@ -876,4 +882,9 @@ public class AudioMovement : MonoBehaviour {
 			minimumPitch = calMinPitch;
 		//maximumPitch = PlayerPrefs.GetFloat("Player1Highest");
 	}
+
+	public void ExitPipe()
+    {
+		boostTimer = 0;
+    }
 }

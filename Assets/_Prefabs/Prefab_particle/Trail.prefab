@@ -4822,6 +4822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3274915160304811051}
   - component: {fileID: 2183970650829428096}
+  - component: {fileID: 3667072966149278008}
   m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
@@ -4853,8 +4854,8 @@ TrailRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7546670643787692524}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 0
@@ -4951,3 +4952,15 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &3667072966149278008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7546670643787692524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debc500e8bd0b234ca9df88d4e9cfec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
