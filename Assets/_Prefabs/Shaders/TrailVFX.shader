@@ -35,6 +35,24 @@
             };
             */
 
+            //--Noise--
+
+            struct Input {
+                float3 worldPos;
+            };
+
+            float rand(float3 value) {
+                //make value smaller to avoid artefacts
+                float3 smallValue = sin(value);
+                //get scalar value from 3d vector
+                float random = dot(smallValue, float3(12.9898, 78.233, 37.719));
+                //make value more random by making it bigger and then taking teh factional part
+                random = frac(sin(random) * 143758.5453);
+                return random;
+            };
+
+            //----
+
             void OneMinus(float4 In, out float4 Out)
             {
                 Out = 1 - In;
@@ -76,6 +94,8 @@
                 float4 colorOut = lerp(_ColorOne, _ColorTwo, i.uv.x);
 
                 float2 speed = _Time.xy * _texSpeed;
+
+                //float noise = rand(Input);
 
                 float subtractCol = i.uv.x - 0.75;
 

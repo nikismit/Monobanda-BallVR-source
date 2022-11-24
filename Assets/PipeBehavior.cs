@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PipeBehavior : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class PipeBehavior : MonoBehaviour
     [SerializeField]Transform pipeExit;
     AudioMovement playerOne;
     AudioMovementPlayer2 playerTwo;
+    public AudioSource pipeEnterSound;
+    public AudioSource pipeExitSound;
+
+    public GameObject[] flames;
 
     [SerializeField] Outline[] outlines;
 
@@ -26,6 +31,7 @@ public class PipeBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        pipeEnterSound.Play();
         if (other.gameObject.tag == "Player")
         {
             if (other.GetComponent<AudioMovement>())
@@ -46,6 +52,7 @@ public class PipeBehavior : MonoBehaviour
         Debug.Log("YOOLO");
         playerOne.isInPipe = true;
         outlines[0].OutlineWidth = 0;
+        flames[0].layer = 0;
 
         float elapsedTime = 0;
         while (elapsedTime < 1f)
@@ -60,8 +67,10 @@ public class PipeBehavior : MonoBehaviour
         yield return new WaitForSeconds(1);
         playerTrans.position = pipeExit.position;
         outlines[0].OutlineWidth = 4;
+        flames[0].layer = 9;
         playerOne.ExitPipe();
         playerOne.isInPipe = false;
+        pipeExitSound.Play();
     }
 
     IEnumerator PipeTravelTwo(Transform playerTrans)
@@ -69,6 +78,7 @@ public class PipeBehavior : MonoBehaviour
         Debug.Log("YOOLO");
         playerTwo.isInPipe = true;
         outlines[1].OutlineWidth = 0;
+        flames[1].layer = 0;
 
         float elapsedTime = 0;
         while (elapsedTime < 1f)
@@ -83,7 +93,9 @@ public class PipeBehavior : MonoBehaviour
         yield return new WaitForSeconds(1);
         playerTrans.position = pipeExit.position;
         outlines[1].OutlineWidth = 4;
+        flames[1].layer = 9;
         playerTwo.ExitPipe();
         playerTwo.isInPipe = false;
+        pipeExitSound.Play();
     }
 }
