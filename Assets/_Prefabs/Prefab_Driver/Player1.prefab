@@ -10724,6 +10724,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 369974252749502015, guid: 718ee1e1e1aa5b34eadf5df8d4e6264b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27312365
+      objectReference: {fileID: 0}
+    - target: {fileID: 369974252749502015, guid: 718ee1e1e1aa5b34eadf5df8d4e6264b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.27312365
+      objectReference: {fileID: 0}
+    - target: {fileID: 369974252749502015, guid: 718ee1e1e1aa5b34eadf5df8d4e6264b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.27312365
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 718ee1e1e1aa5b34eadf5df8d4e6264b, type: 3}
 --- !u!198 &3889954529079085660 stripped
@@ -10745,6 +10760,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2666219000641025734}
     m_Modifications:
+    - target: {fileID: 144342437744789713, guid: 57251aac35ec31c4584a5aeb5941a986,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 144342437744789713, guid: 57251aac35ec31c4584a5aeb5941a986,
+        type: 3}
+      propertyPath: ClampVelocityModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 144342437744789713, guid: 57251aac35ec31c4584a5aeb5941a986,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 144342437744789713, guid: 57251aac35ec31c4584a5aeb5941a986,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3383796157815324845, guid: 57251aac35ec31c4584a5aeb5941a986,
         type: 3}
       propertyPath: m_Name
