@@ -553,6 +553,7 @@ public class AudioMovement : MonoBehaviour {
 				trailTime += 0.05f;
             }
 
+			if (numRings > 0)
 			currentTurn = hor;
 
 			if (soundTriggersParticles == true)
@@ -711,10 +712,10 @@ public class AudioMovement : MonoBehaviour {
 			}
 			if (testRailControl)
             {
-				if (PitchSliderMovement)
+				if (PitchSliderMovement && numRings > 0)
 					this.transform.position = sliderPos + transform.forward * currentSpeed * Time.fixedDeltaTime;
-				else if (testRailControl)
-					this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+				//else if (testRailControl)
+					//this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
 				else
 				{
 					this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
@@ -826,10 +827,11 @@ public class AudioMovement : MonoBehaviour {
 		}
 		else
 		{
+			modelEffect.OnDeath();
 			playerHealth.value = 0;
 			uiHandler.UpdateHealth(0);
 			winState.PlayerTwoWins();
-			Destroy(gameObject);
+			//Destroy(gameObject);
 		}
 	}
 

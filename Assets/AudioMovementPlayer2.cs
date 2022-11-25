@@ -519,10 +519,10 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			{
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
-			if (PitchSliderMovement)
+			if (PitchSliderMovement && numRings > 0)
 				this.transform.position = sliderPos + transform.forward * currentSpeed * Time.fixedDeltaTime;
-			else if (testRailControl)
-				this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
+			//else if (testRailControl)
+				//this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
 			else
 			{
 				this.transform.Translate(transform.forward * currentSpeed * Time.fixedDeltaTime, Space.World);
@@ -655,10 +655,11 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
         else
         {
+			modelEffect.OnDeath();
 			playerHealth.value = 0;
 			uiHandler.UpdateHealth(1);
 			winState.PlayerOneWins();
-			Destroy(gameObject);
+			//Destroy(gameObject);
 		}
 	}
 

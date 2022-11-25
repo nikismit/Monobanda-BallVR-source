@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 using UnityEngine.Audio;
 
 public class PipeBehavior : MonoBehaviour
@@ -11,9 +12,11 @@ public class PipeBehavior : MonoBehaviour
     AudioMovementPlayer2 playerTwo;
     public AudioSource pipeEnterSound;
     public AudioSource pipeExitSound;
+    [Space(5)]
+    [SerializeField] VisualEffect poofEffect;
 
+    [Space(10)]
     public GameObject[] flames;
-
     [SerializeField] Outline[] outlines;
 
     // Start is called before the first frame update
@@ -49,7 +52,7 @@ public class PipeBehavior : MonoBehaviour
 
     IEnumerator PipeTravel(Transform playerTrans)
     {
-        Debug.Log("YOOLO");
+        //Debug.Log("YOOLO");
         playerOne.isInPipe = true;
         outlines[0].OutlineWidth = 0;
         flames[0].layer = 0;
@@ -65,6 +68,7 @@ public class PipeBehavior : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1);
+        poofEffect.Play();
         playerTrans.position = pipeExit.position;
         outlines[0].OutlineWidth = 4;
         flames[0].layer = 9;
@@ -75,7 +79,7 @@ public class PipeBehavior : MonoBehaviour
 
     IEnumerator PipeTravelTwo(Transform playerTrans)
     {
-        Debug.Log("YOOLO");
+        //Debug.Log("YOOLO");
         playerTwo.isInPipe = true;
         outlines[1].OutlineWidth = 0;
         flames[1].layer = 0;
@@ -91,6 +95,7 @@ public class PipeBehavior : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1);
+        poofEffect.Play();
         playerTrans.position = pipeExit.position;
         outlines[1].OutlineWidth = 4;
         flames[1].layer = 9;
