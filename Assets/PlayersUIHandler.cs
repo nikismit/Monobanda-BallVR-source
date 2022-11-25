@@ -98,12 +98,15 @@ public class PlayersUIHandler : MonoBehaviour
         }
     }
 
-    IEnumerator Score(int playerNum)
+    IEnumerator Score(int playerNum, float value)
     {
         //Vector3 startPos = target.localPosition;
+        score[playerNum] += value;
+        //ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
+
         float elapsedTime = 0;
 
-        float currentScore = score[playerNum] - 100;
+        int currentScore = Mathf.RoundToInt(score[playerNum]) - 100;
 
         while (elapsedTime < 1)
         {
@@ -111,11 +114,21 @@ public class PlayersUIHandler : MonoBehaviour
             float ease = Mathf.Lerp(0, 1, elapsedTime);
             //float strength = shakeCurve.Evaluate(elapsedTime / 1) * 10;
             //target.localPosition = startPos + Random.insideUnitSphere * strength;
+            ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
 
-            currentScore += Mathf.RoundToInt(elapsedTime);
+            if (currentScore < score[playerNum])
+            {
+                float countEase = Mathf.Lerp(0, 1, Time.deltaTime * 1.2f);
+
+                ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
+                currentScore += Mathf.RoundToInt(countEase * 100);
+            }
+            else
+                currentScore = Mathf.RoundToInt(score[playerNum]);
+
 
             ringCountText[playerNum].text = currentScore.ToString();
-            ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
+            //ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
             ringCountText[playerNum].fontSize = 32 + (scoreScaleCurve.Evaluate(ease) * 20);
             yield return null;
         }
@@ -175,10 +188,10 @@ public class PlayersUIHandler : MonoBehaviour
         if (playerNum == 0)
         {
             //updateScoreOne = true;
-            score[playerNum] += value;
-            ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
+            //score[playerNum] += value;
+            //ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
             timerOne = 0;
-            StartCoroutine(Score(playerNum));
+            StartCoroutine(Score(playerNum, value));
         }
         if (playerNum == 1)
         {
