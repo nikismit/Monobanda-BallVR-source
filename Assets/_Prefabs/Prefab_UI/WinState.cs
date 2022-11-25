@@ -199,7 +199,7 @@ public class WinState : MonoBehaviour
         //Debug.Log("1 = " + PlayerPrefs.GetFloat("HighScore1") + ", 2 = " + PlayerPrefs.GetFloat("HighScore2") + ", 3 = " + PlayerPrefs.GetFloat("HighScore3")
 //+ ", 4 = " + PlayerPrefs.GetFloat("HighScore4") + ", 5 = " + PlayerPrefs.GetFloat("HighScore5") + ", 6 = " + PlayerPrefs.GetFloat("HighScore6"));
 
-        Invoke("RestartScene", 10);
+        Invoke("RestartScene", 15);
     }
 
     void GenerateHighScores(int newHighScore)

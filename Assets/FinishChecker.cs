@@ -88,7 +88,7 @@ public class FinishChecker : MonoBehaviour
             {
                 //demoUI.RemoveDemoUIEvent();
                 //StartCoroutine(StartTransition());
-                Invoke("ReloadScene", 4);
+                Invoke("ReloadScene", 2);
             }
 
         }

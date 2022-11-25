@@ -68,6 +68,9 @@ public class PlayersUIHandler : MonoBehaviour
         }
         */
     }
+
+    int addCount;
+
     void scoreTimerOne(int playerNum)
     {
         if (timerOne <= length)
@@ -80,6 +83,7 @@ public class PlayersUIHandler : MonoBehaviour
             ringCountText[playerNum].text = score[playerNum].ToString();
             ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
             ringCountText[playerNum].fontSize = 32 + (scoreScaleCurve.Evaluate(ease) * 20);
+
             //scoreRect[playerNum].sizeDelta = new Vector2(1 + scoreScaleCurve.Evaluate(ease) * 20, 1 + scoreScaleCurve.Evaluate(ease) * 20);
         }
         else
@@ -94,6 +98,34 @@ public class PlayersUIHandler : MonoBehaviour
         }
     }
 
+    IEnumerator Score(int playerNum)
+    {
+        //Vector3 startPos = target.localPosition;
+        float elapsedTime = 0;
+
+        float currentScore = score[playerNum] - 100;
+
+        while (elapsedTime < 1)
+        {
+            elapsedTime += Time.deltaTime;
+            float ease = Mathf.Lerp(0, 1, elapsedTime);
+            //float strength = shakeCurve.Evaluate(elapsedTime / 1) * 10;
+            //target.localPosition = startPos + Random.insideUnitSphere * strength;
+
+            currentScore += Mathf.RoundToInt(elapsedTime);
+
+            ringCountText[playerNum].text = currentScore.ToString();
+            ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
+            ringCountText[playerNum].fontSize = 32 + (scoreScaleCurve.Evaluate(ease) * 20);
+            yield return null;
+        }
+
+        ringCountTrans[playerNum].localPosition = new Vector2(245, 55);
+        //scoreRect[playerNum].sizeDelta = new Vector2(1, 1);
+        ringCountText[playerNum].fontSize = 32;
+        //updateScoreOne = false;
+        //target.localPosition = startPos;
+    }
 
     void scoreTimerTwo(int playerNum)
     {
@@ -105,6 +137,8 @@ public class PlayersUIHandler : MonoBehaviour
             float ease = Mathf.Lerp(0, 1, timerTwo);
 
             ringCountText[playerNum].text = score[playerNum].ToString();
+
+
             ringCountTrans[playerNum].localPosition = new Vector2(-155f , 55 + (scoreCurve.Evaluate(ease) * 20));
             scoreRect[playerNum].sizeDelta = new Vector2(1 + scoreScaleCurve.Evaluate(ease) * 20, 1 + scoreScaleCurve.Evaluate(ease) * 20);
         }
@@ -140,10 +174,11 @@ public class PlayersUIHandler : MonoBehaviour
     {
         if (playerNum == 0)
         {
-            updateScoreOne = true;
+            //updateScoreOne = true;
             score[playerNum] += value;
             ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
             timerOne = 0;
+            StartCoroutine(Score(playerNum));
         }
         if (playerNum == 1)
         {

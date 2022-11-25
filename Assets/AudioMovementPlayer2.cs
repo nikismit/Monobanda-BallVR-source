@@ -405,6 +405,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		}
 
 		//if (hasStarted)
+		if (numRings > 0)
 			sliderVector = new Vector3(transform.position.x, transform.position.y, sliderPitchInvLerp * roadWidth - roadHalf);
         //else
         //sliderVector = transform.position;
@@ -519,7 +520,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			{
 				forwardDeceleration = forwardDecelerationMultiplayerPlayer;
 			}
-			if (PitchSliderMovement && numRings > 0)
+			if (PitchSliderMovement)
 				this.transform.position = sliderPos + transform.forward * currentSpeed * Time.fixedDeltaTime;
 			//else if (testRailControl)
 				//this.transform.Translate((transform.forward * currentSpeed + transform.right * currentTurn * railSteerSpeed) * Time.fixedDeltaTime, Space.World);
