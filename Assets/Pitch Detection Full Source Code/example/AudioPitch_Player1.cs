@@ -19,7 +19,9 @@ public int MicInput;
 	private bool micSelected = false;					//Mic flag
     public string selectedMic;
 
-    float[] data;										//Sound samples data
+	private float[] clipData;
+
+	float[] data;										//Sound samples data
 	public int cumulativeDetections= 5; 				//Number of consecutive detections used to determine current note
 	int [] detectionsMade;								//Detections buffer
 	private int maxDetectionsAllowed=50;				//Max buffer size
@@ -121,12 +123,12 @@ public int MicInput;
 
 	private void CleanClip()
 	{
-		clipData = new float[audio.clip.samples * audio.clip.channels];
-		audio.clip.GetData( clipData, 0 );
+		clipData = new float[GetComponent<AudioSource>().clip.samples * GetComponent<AudioSource>().clip.channels];
+		GetComponent<AudioSource>().clip.GetData( clipData, 0 );
 		for(int i = 0; i < clipData.Length; ++i)
 			clipData[i] = clipData[i] * 0.0f;
 
-		audio.clip.SetData( clipData, 0 );
+		GetComponent<AudioSource>().clip.SetData( clipData, 0 );
 	}
 
 

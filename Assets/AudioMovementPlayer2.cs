@@ -8,7 +8,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	public collisionAdjustmentScriptPlayer2 crashForce;
 	private SnakeBehavior carLine;
-	public AudioPitch_Player2 pitch;
+	public AudioPitch_Player1 pitch;
 	[SerializeField] TrailRenderer trailEffect;
 	[SerializeField] FlameEffect flameEffect;
 	//public PlayerAudioPitch pitch;
