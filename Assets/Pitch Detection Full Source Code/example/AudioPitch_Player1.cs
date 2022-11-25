@@ -32,7 +32,7 @@ public int MicInput;
 	private string currentDetectedNoteName;				//Note name in modern notation (C=Do, D=Re, etc..)
 
 	private bool listening=true;						//Flag for listening
-
+	private bool doClean = false;						// Flag to reset AudioClip data (prevent delay)
 
 	private int top_down_margin=20;						//Top and down margin
 	private float ratio=0f;
@@ -56,38 +56,9 @@ public int MicInput;
         _audioSource = GetComponent<AudioSource>();
     }
 
-/*
-	//Start function for web player (also works on other platforms)
-	IEnumerator Start() {
-
-
-		yield return Application.RequestUserAuthorization(UserAuthorization.Microphone);
-		if (Application.HasUserAuthorization(UserAuthorization.Microphone)) {
-			selectedDevice = Microphone.devices[0].ToString();
-			micSelected = true;
-			GetMicCaps();
-
-			//Estimates bufer len, based on pitchTimeInterval value
-			int bufferLen = (int)Mathf.Round (AudioSettings.outputSampleRate * pitchTimeInterval / 1000f);
-			Debug.Log ("Buffer len: " + bufferLen);
-			data = new float[bufferLen];
-
-			detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
-		} else {
-		}
-	}*/
 
 
 	void Start () {
-    // if (fromMenu == true){
-    //   selectedDevice = Microphone.devices[PlayerPrefs.GetInt("Player1MicInput")].ToString();
-    // }
-    // else{
-    //   selectedDevice = Microphone.devices[MicInput].ToString();
-    // }
-    if(fromMenu == true){
-      MicInput = PlayerPrefs.GetInt("Player1MicIndex");
-    }
         selectedDevice = Microphone.devices[MicInput].ToString();
         selectedMic = selectedDevice;
         micSelected = true;
@@ -101,13 +72,12 @@ public int MicInput;
 
 		detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
         setUptMic();
-
-
     }
 
 
 	void FixedUpdate () {
-		if (listening) {
+		if (listening) 
+		{
             _audioSource.GetOutputData(data,0);
 			float sum = 0f;
 			for(int i=0; i<data.Length; i++)
@@ -115,24 +85,25 @@ public int MicInput;
 			float rmsValue = Mathf.Sqrt(sum/data.Length);
 			float dbValue = 30f*Mathf.Log10(rmsValue/refValue);
 			_currentPublicAmplitude = dbValue;
-			if(dbValue<minVolumeDB) {
-			//	noteText.text="Note: <<";
-			//	hideNotes();
+			
+			if( dbValue<minVolumeDB ) 
 				return;
-			}
-
+			
 			pitchDetector.DetectPitch (data);
 			int midiant = pitchDetector.lastMidiNote ();
 			int midi = findMode ();
             _currentPitch = midi - startMidiNote;
             _currentpublicpitch = _currentPitch;
-            //	drawNote(midi);
-            //noteText.text="Note: "+pitchDetector.midiNoteToString(midi);
             detectionsMade [detectionPointer++] = midiant;
 			detectionPointer %= cumulativeDetections;
-		}
-		else {
-			//noteText.text="Note: -";
+
+			if( _audioSource.time >= 9.0f && doClean == true )
+			{
+				CleanClip();
+				doClean = false;
+			}
+			if( _audioSource.time >= 5.0f )
+				doClean = true;
 		}
 	}
 
@@ -148,14 +119,22 @@ public int MicInput;
 		return notePositions [arrayIndex];
 	}
 
+	private void CleanClip()
+	{
+		clipData = new float[audio.clip.samples * audio.clip.channels];
+		audio.clip.GetData( clipData, 0 );
+		for(int i = 0; i < clipData.Length; ++i)
+			clipData[i] = clipData[i] * 0.0f;
 
+		audio.clip.SetData( clipData, 0 );
+	}
 
 
 	void setUptMic() {
 		GetComponent<AudioSource>().volume = 1f;
 		GetComponent<AudioSource>().clip = null;
 		GetComponent<AudioSource>().loop = true; // Set the AudioClip to loop
-		//GetComponent<AudioSource>().mute = false; // Mute the sound, we don't want the player to hear it
+		GetComponent<AudioSource>().mute = false; // Mute the sound, we don't want the player to hear it
 		StartMicrophone();
 	}
 
