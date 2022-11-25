@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class ModelEffects : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class ModelEffects : MonoBehaviour
     [HideInInspector] public float dir;
 
     [SerializeField] AnimationCurve curve;
+    [Space(50)]
+
+    [SerializeField] GameObject BoomObj;
+
+    //[SerializeField] VisualEffect boomVFX;
+    //[SerializeField] ParticleSystem boomParticle;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,31 +39,9 @@ public class ModelEffects : MonoBehaviour
     bool floating = false;
     float floatAmount = 0.5f;
 
-    private void LateUpdate()
+    public void OnDeath()
     {
-        /*
-        if (!floating)
-        {
-            emptyTrans.localPosition = new Vector3(0, Time.deltaTime * -floatAmount, 0);
-
-            if (emptyTrans.localPosition.y <= -1f)
-            {
-                Debug.Log("UP");
-                floating = true;
-            }
-        }
-
-        if (floating)
-        {
-            emptyTrans.localPosition = new Vector3(0, Time.deltaTime * floatAmount, 0);
-
-            if (emptyTrans.localPosition.y >= 1f)
-            {
-                Debug.Log("Down");
-                floating = false;
-            }
-        }
-        */
+        Instantiate(BoomObj, playerModel);
     }
 
     public void RotateModel(float dirInput)

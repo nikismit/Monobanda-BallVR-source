@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -15,6 +16,7 @@ public class WinState : MonoBehaviour
     private bool initialized = false;
     private float timer = 0;
     private float timeLength = 3;
+    [SerializeField] AudioSource finishAudio; 
 
     private int winner;
 
@@ -48,7 +50,7 @@ public class WinState : MonoBehaviour
 
             if (ease == 1 && !InvokeOnce)
             {
-                Debug.Log("INVOKEONCE");
+                //Debug.Log("INVOKEONCE");
                 InvokeOnce = true;
                 //demoUI.RemoveDemoUIEvent();
                 StartCoroutine(StartTransition());
@@ -78,6 +80,7 @@ public class WinState : MonoBehaviour
 
     public void ScoreWinner()
     {
+        finishAudio.Play();
         if (uiHandler.score[0] > uiHandler.score[1])
             winner = 0;
         else if (uiHandler.score[0] < uiHandler.score[1])
