@@ -234,7 +234,7 @@ public class AudioMovement : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-		if (other.gameObject.tag == "Ring")
+		if (other.gameObject.tag == "Ring" && numRings > 0)
 		{
             for (int i = 0; i < boostParticle.Length; i++)
             {
@@ -814,6 +814,8 @@ public class AudioMovement : MonoBehaviour {
 		transform.rotation = Quaternion.Euler(-transform.rotation.eulerAngles.z, 90, 0);
 	}
 
+	bool hasLost = false;
+
 	public void RemoveRing()
     {
 		feedBack.HitFeedBack();
@@ -825,8 +827,9 @@ public class AudioMovement : MonoBehaviour {
 			playerHealth.value = numRings;
 			uiHandler.UpdateHealth(0);
 		}
-		else
+		else if (!hasLost)
 		{
+			hasLost = true;
 			modelEffect.OnDeath();
 			playerHealth.value = 0;
 			uiHandler.UpdateHealth(0);

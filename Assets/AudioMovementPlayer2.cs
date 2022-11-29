@@ -129,10 +129,12 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 		lastHit = invulnerableState + 1;
 		FOV = 60.0f;
 		SavedFOV = FOV;
+		/*
 		if(comingFromMainMenu == true){
 			minimumPitch = PlayerPrefs.GetFloat("Player2Lowest");
 			maximumPitch = PlayerPrefs.GetFloat("Player2Highest");
 		}
+		*/
 		playerHealth.maxValue = 5;
 		playerHealth.value = 5;
 
@@ -230,7 +232,8 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
     {
-		if (other.gameObject.tag == "Ring"){
+		if (other.gameObject.tag == "Ring" && numRings > 0)
+		{
 
 			for (int i = 0; i < boostParticle.Length; i++)
 			{
@@ -639,7 +642,7 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 	}
 
 	float lastHit;
-
+	bool hasLost = false;
 	public void RemoveRing()
 	{
 		feedBack.HitFeedBack();
@@ -654,8 +657,9 @@ public class AudioMovementPlayer2 : MonoBehaviour {
 			playerHealth.value = numRings;
 			uiHandler.UpdateHealth(1);
 		}
-        else
-        {
+		else if (!hasLost)
+		{
+			hasLost = true;
 			modelEffect.OnDeath();
 			playerHealth.value = 0;
 			uiHandler.UpdateHealth(1);

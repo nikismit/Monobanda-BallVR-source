@@ -120,20 +120,29 @@ public class PlayersUIHandler : MonoBehaviour
             {
                 float countEase = Mathf.Lerp(0, 1, Time.deltaTime * 1.2f);
 
+                if(playerNum == 0)
                 ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
+                else
+                    ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55 + (scoreCurve.Evaluate(ease) * 20));
+
                 currentScore += Mathf.RoundToInt(countEase * 100);
             }
             else
                 currentScore = Mathf.RoundToInt(score[playerNum]);
 
-
             ringCountText[playerNum].text = currentScore.ToString();
+
             //ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
             ringCountText[playerNum].fontSize = 32 + (scoreScaleCurve.Evaluate(ease) * 20);
             yield return null;
         }
+        //ringCountText[playerNum].text = currentScore.ToString();
+        ringCountText[playerNum].text = score[playerNum].ToString();
 
+        if (playerNum == 0)
         ringCountTrans[playerNum].localPosition = new Vector2(245, 55);
+        else
+            ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55);
         //scoreRect[playerNum].sizeDelta = new Vector2(1, 1);
         ringCountText[playerNum].fontSize = 32;
         //updateScoreOne = false;
@@ -195,10 +204,11 @@ public class PlayersUIHandler : MonoBehaviour
         }
         if (playerNum == 1)
         {
-            updateScoreTwo = true;
-            score[playerNum] += value;
-            ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
+            //updateScoreTwo = true;
+            //score[playerNum] += value;
+            //ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
             timerTwo = 0;
+            StartCoroutine(Score(playerNum, value));
         }
     }
 

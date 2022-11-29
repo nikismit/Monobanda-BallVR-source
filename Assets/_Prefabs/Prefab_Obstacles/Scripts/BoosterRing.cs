@@ -20,6 +20,8 @@ public class BoosterRing : MonoBehaviour
 
     public AnimationCurve curve;
 
+    [SerializeField] GameObject scorePopUp;
+
     void Start()
     {
         shadow = GetComponentInChildren<Projector>();
@@ -54,6 +56,14 @@ public class BoosterRing : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            //ScorePopup score = Instantiate(scorePopUp, transform).GetComponent<ScorePopup>().score;
+
+            /*
+            if (other.GetComponent<AudioMovement>())
+                Instantiate(scorePopUp, transform).GetComponent<ScorePopup>().player = 0;
+            else
+                Instantiate(scorePopUp, transform).GetComponent<ScorePopup>().player = 1;
+            */
             timer = 0;
             boostSound.Play();
         }

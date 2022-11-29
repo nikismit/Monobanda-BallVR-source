@@ -45,7 +45,7 @@ public class WinState : MonoBehaviour
             timer += Time.unscaledDeltaTime;
             //float ease = Mathf.Lerp(0, easeOutlength / 2, timer * 1.2f);
             //float ease = Mathf.Lerp(0, 3, timer);
-            float ease = Mathf.Clamp(timer / 3, 0, 1);
+            float ease = Mathf.Clamp(timer / 3 , 0, 1);
             Time.timeScale = curve.Evaluate(ease);
 
             if (ease == 1 && !InvokeOnce)
