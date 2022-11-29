@@ -107,8 +107,8 @@ public class DebugStats : MonoBehaviour
             GUI.Label(new Rect(5, 30, 150, 25), fps.ToString("F2") + "FPS", textStyle);
             GUI.Label(new Rect(5, 55, 150, 25), "P1 " + audioPlayerOne.minimumPitch + " MinPitch, " + audioPlayerOne.maximumPitch + " MaxPitch, " + audioPlayerOne.currentPitch + " Current", textStyle);
             GUI.Label(new Rect(5, 80, 150, 25), "P2 " + audioPlayerTwo.minimumPitch + " MinPitch, " + audioPlayerTwo.maximumPitch + " MaxPitch, " + audioPlayerTwo.currentPitch + " Current", textStyle);
-            GUI.Label(new Rect(5, 105, 150, 50), "P1 CurrentAmp = " + audioPlayerTwo.currentAmp, textStyle);
-            GUI.Label(new Rect(5, 130, 150, 50), "P2 CurrentAmp = " + audioPlayerOne.currentAmp, textStyle);
+            GUI.Label(new Rect(5, 105, 150, 50), "P1 CurrentAmp = " + audioPlayerOne.currentAmp, textStyle);
+            GUI.Label(new Rect(5, 130, 150, 50), "P2 CurrentAmp = " + audioPlayerTwo.currentAmp, textStyle);
 
         }
     }
