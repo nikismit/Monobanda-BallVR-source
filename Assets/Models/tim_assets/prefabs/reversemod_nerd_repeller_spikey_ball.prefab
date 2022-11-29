@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 456365214268129583}
+  - component: {fileID: 1955496053810730514}
   m_Layer: 0
   m_Name: end_spike
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,6 +31,19 @@ Transform:
   m_Father: {fileID: 6123482296119281918}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1955496053810730514
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568951222666484230}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.13516408, y: 0.13412459, z: 0.119753405}
+  m_Center: {x: 0.008914595, y: 0.04769258, z: -0.0010866894}
 --- !u!1 &1247503741708560377
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,7 +54,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5348367068638851690}
   - component: {fileID: 7530191394164667756}
-  - component: {fileID: 5624914506704330767}
   m_Layer: 0
   m_Name: Cone.006
   m_TagString: Track
@@ -119,19 +132,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000112812966, y: 0.2944048, z: -0.0013106614}
     m_Extent: {x: 0.06443751, y: 0.058005333, z: 0.06823451}
   m_DirtyAABB: 0
---- !u!65 &5624914506704330767
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1247503741708560377}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 11.0121, y: 9.706314, z: 12.8875065}
-  m_Center: {x: -0.19368511, y: -28.493084, z: -0.011278185}
 --- !u!1 &1511737417677561486
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 6123482296119281918}
   m_Layer: 0
   m_Name: Bone.003
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,8 +312,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5291146399098907059}
   m_Layer: 0
-  m_Name: mod_nerd_repeller_spikey_ball
-  m_TagString: Untagged
+  m_Name: reversemod_nerd_repeller_spikey_ball
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
