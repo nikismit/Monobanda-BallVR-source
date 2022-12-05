@@ -6,10 +6,8 @@ using UnityEngine.Audio;
 public class JumpPad : MonoBehaviour
 {
     public float jumpStrength;
-    public float jumpLength;
-    public AudioSource source;
-
     public AnimationCurve curve;
+    [HideInInspector] public AudioSource source;
 
     private void Start()
     {

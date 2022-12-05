@@ -19,52 +19,30 @@ public class TutorialHandler : MonoBehaviour
     private void Start()
     {
         tutorialSound = GetComponent<AudioSource>();
-        //startCanvasUIs = GameObject.FindGameObjectsWithTag("StartUI");
         SpawnPlane();
     }
 
-    public void InitializeTutorial()
+    private void Update()
     {
-        //SpawnPlane();
+        if(Input.GetKeyDown(KeyCode.O))
+            demo.RemoveDemoUIEvent();
     }
 
     public void SpawnPlane()
     {
-        /*
-        for (int i = 0; i < tutorialPlane.Length; i++)
-        {
-            if (activatePlane == i)
-                tutorialPlane[i].SetActive(true);
-            else
-                tutorialPlane[i].SetActive(false);
-        }
-        */
-
         if(activatePlane == 0)
-        {
             tutorialPlane[0].SetActive(true);
-            //tutorialPlane[1].SetActive(true);
-        }
         if (activatePlane == 1)
-        {
-            //tutorialPlane[0].SetActive(true);
             tutorialPlane[1].SetActive(true);
-        }
         if (activatePlane == 2)
             tutorialPlane[2].SetActive(true);
 
-        //activatePlane++;
-
         if (activatePlane >= tutorialPlane.Length)
-        {
-            //StartCoroutine(HoldStart());
             demo.RemoveDemoUIEvent();
-        }
     }
 
     public IEnumerator Hold()
     {
-        //Debug.Log("holding");
         tutorialSound.Play();
         yield return new WaitForSeconds(3);
         activatePlane++;

@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class FlameEffect : MonoBehaviour
 {
-    float easeOutlength = 2;
-
-    private float timer;
-
     private Vector3 sizeRef;
 
     public AnimationCurve curve;
@@ -15,25 +11,25 @@ public class FlameEffect : MonoBehaviour
     void Start()
     {
         sizeRef = transform.localScale;
-        timer = easeOutlength + 1;
+        //timer = easeOutlength + 1;
     }
 
-    void Update()
+    public IEnumerator InitiateBoostEffect()
     {
-        if (timer < 1)
+        float elapsedTime = 0;
+
+        while (elapsedTime < 1)
         {
-            timer += Time.deltaTime;
-            float ease = Mathf.Lerp(0, 1, timer);
+            
+            elapsedTime += Time.deltaTime;
+           // highScoreUI.alpha = elapsedTime;
+
+            float ease = Mathf.Lerp(0, 1, elapsedTime);
             transform.localScale = sizeRef * (1 + 2.5f * (curve.Evaluate(ease)));
-        }
-        else
-        {
-            transform.localScale = sizeRef;
-        }
-    }
 
-    public void InitiateBoostEffect()
-    {
-        timer = 0;
+            yield return null;
+        }
+
+        transform.localScale = sizeRef;
     }
 }

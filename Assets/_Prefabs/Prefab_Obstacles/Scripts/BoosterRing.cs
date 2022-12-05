@@ -33,6 +33,8 @@ public class BoosterRing : MonoBehaviour
 
     void Update()
     {
+        ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
+        /*
         if (timer < easeOutlength)
         {
             timer += Time.deltaTime;
@@ -51,7 +53,30 @@ public class BoosterRing : MonoBehaviour
             transform.localScale = sizeRef;
             shadow.orthographicSize = 2;
         }
+        */
     }
+
+    IEnumerator StartBoost()
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < 1f)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float ease = Mathf.Lerp(0, 1, elapsedTime);
+
+            ringModels[0].transform.Rotate(new Vector3(0, 0, rotateSpeed * (1 + easeOutQuint(ease))));
+            transform.localScale = sizeRef * (1 + (0.1f * curve.Evaluate(ease)));
+            shadow.orthographicSize = 2 * (1 + (0.1f * curve.Evaluate(ease)));
+
+            yield return null;
+        }
+
+        ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
+        transform.localScale = sizeRef;
+        shadow.orthographicSize = 2;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -64,7 +89,8 @@ public class BoosterRing : MonoBehaviour
             else
                 Instantiate(scorePopUp, transform).GetComponent<ScorePopup>().player = 1;
             */
-            timer = 0;
+            //timer = 0;
+            StartCoroutine(StartBoost());
             boostSound.Play();
         }
     }
@@ -72,18 +98,5 @@ public class BoosterRing : MonoBehaviour
     float easeOutQuint(float x) 
     {
         return 1 - Mathf.Pow(1 - x, 5);
-    }
-
-    float easeOutElastic(float x)
-    {
-        float c4 = (2 * Mathf.PI) / 3;
-
-        return 
-            x == 0
-            ? 0
-            : x == 1
-            ? 1
-            : Mathf.Pow(2, -10 * x) * Mathf.Sin((x* 15 - 0.75f) * c4) + 1;
-            //: Mathf.Pow(2, -10 * x) * Mathf.Sin((x* 10 - 0.75f) * c4) + 1;
     }
 }
