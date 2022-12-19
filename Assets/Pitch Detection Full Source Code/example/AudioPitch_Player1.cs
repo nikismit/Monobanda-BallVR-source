@@ -74,9 +74,41 @@ public int MicInput;
 
 		detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
         setUptMic();
-    }
 
+		InvokeRepeating("ListenAudioInput", 0.01f, 0.04f);
+	}
 
+	void ListenAudioInput()
+    {
+		_audioSource.GetOutputData(data, 0);
+		float sum = 0f;
+		for (int i = 0; i < data.Length; i++)
+			sum += data[i] * data[i];
+		float rmsValue = Mathf.Sqrt(sum / data.Length);
+		float dbValue = 30f * Mathf.Log10(rmsValue / refValue);
+		_currentPublicAmplitude = dbValue;
+
+		if (dbValue < minVolumeDB)
+			return;
+
+		pitchDetector.DetectPitch(data);
+		int midiant = pitchDetector.lastMidiNote();
+		int midi = findMode();
+		_currentPitch = midi - startMidiNote;
+		_currentpublicpitch = _currentPitch;
+		detectionsMade[detectionPointer++] = midiant;
+		detectionPointer %= cumulativeDetections;
+
+		if (_audioSource.time >= 9.0f && doClean == true)
+		{
+			CleanClip();
+			doClean = false;
+		}
+		if (_audioSource.time >= 5.0f)
+			doClean = true;
+	}
+
+	/*
 	void FixedUpdate () {
 		if (listening) 
 		{
@@ -108,7 +140,7 @@ public int MicInput;
 				doClean = true;
 		}
 	}
-
+	*/
 
 
 	int notePosition(int note) {

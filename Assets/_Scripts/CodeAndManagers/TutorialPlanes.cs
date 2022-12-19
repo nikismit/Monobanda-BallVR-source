@@ -35,8 +35,8 @@ public class TutorialPlanes : MonoBehaviour
         {
             hasEntered++;
 
-            if (hasEntered >= playerNum - 1 && !hasActivated && audioMovement[0].debugKeyControl ||
-                hasEntered >= playerNum && !hasActivated && !audioMovement[0].debugKeyControl)
+            if (hasEntered >= playerNum - 1 && !hasActivated && tutHandler.androidDebug ||
+                hasEntered >= playerNum && !hasActivated && !tutHandler.androidDebug)
             {
                 StartCoroutine(Scale(circle));
                 activateParticle.Play();
