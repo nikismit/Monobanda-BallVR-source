@@ -119,7 +119,7 @@ public class DebugStats : MonoBehaviour
         {
             //Display the fps and round to 2 decimals
             GUI.Label(new Rect(5, 5, 150, 25), "debugCommands: R = remove highScores, F = FullScreen", textStyle);
-            GUI.Label(new Rect(5, 30, 150, 25), fps.ToString("F2") + "FPS", textStyle);
+            GUI.Label(new Rect(40, 210, 150, 25), fps.ToString("F2") + "FPS", textStyle);
             GUI.Label(new Rect(5, 55, 150, 25), "P1 " + players[0].minimumPitch + " MinPitch, " + players[0].maximumPitch + " MaxPitch, " + players[0].currentPitch + " Current", textStyle);
             GUI.Label(new Rect(5, 80, 150, 25), "P2 " + players[1].minimumPitch + " MinPitch, " + players[1].maximumPitch + " MaxPitch, " + players[1].currentPitch + " Current", textStyle);
             GUI.Label(new Rect(5, 105, 150, 50), "P1 CurrentAmp = " + players[0].currentAmp, textStyle);
