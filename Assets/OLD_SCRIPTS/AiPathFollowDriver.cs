@@ -37,7 +37,7 @@ public class AiPathFollowDriver : MonoBehaviour
 
     private void Start()
     {
-        ignorePlayerCol = Player1.ignorePlayerCol;
+        //ignorePlayerCol = Player1.ignorePlayerCol;
         col = gameObject.GetComponent<Collider>();
 
         layer = 8;
@@ -54,14 +54,13 @@ public class AiPathFollowDriver : MonoBehaviour
         if (collision.gameObject.tag == "Box"){
     currentSpeed = currentSpeed;
   }
-  else if(collision.gameObject.tag == "Track" || player.setCrashCol && collision.gameObject.tag == "Player" && !ignorePlayerCol)
+  else if(collision.gameObject.tag == "Track" || collision.gameObject.tag == "Player" && !ignorePlayerCol)
         {
 
             Vector3 col = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
 
 
-            if (player.testRailControl)//TODO: only works on right wall
-            {
+
                 Vector3 reflect = Vector3.zero;
 
                 if (player.currentTurn > 0)
@@ -69,8 +68,7 @@ public class AiPathFollowDriver : MonoBehaviour
                 else
                     reflect = Vector3.Reflect(transform.right, collision.contacts[0].normal);
                 transform.Translate(reflect, Space.World);
-            }
-            else
+
             onCollisionCorrection(col);
 
     sfx.crashIntoTrack();
