@@ -36,9 +36,17 @@ public class Calibrator : MonoBehaviour
     public Transform line;
 
     public RectTransform pointBegin;
+    [SerializeField] private TutorialHandler tutHandler;
 
     void Start()
     {
+        if (tutHandler && playerInt == 1)
+        {
+            gameObject.SetActive(false);
+        }
+        //if (Application.platform == RuntimePlatform.Android && playerInt == 1)
+            //Destroy(gameObject);
+
         playerObj = GameObject.FindGameObjectsWithTag("Player");
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         //rectTransform = transform.GetChild(1).GetComponent<RectTransform>();
@@ -69,6 +77,8 @@ public class Calibrator : MonoBehaviour
         {
             //StartGame
             players[playerInt].removeControl = false;
+            tutHandler.calibratorsComplete++;
+            tutHandler.SpawnPlane();
             gameObject.SetActive(false);
         }
 
@@ -108,14 +118,18 @@ public class Calibrator : MonoBehaviour
     {
         loadSliders[pitchCount[player]].value = timer;
 
-        if (players[player].pitch._currentPublicAmplitude >= -25 && timer <= 5)
+        if (minMax == 0 && players[player].pitch._currentPublicAmplitude >= -25 && timer <= 5 && players[player].currentPitch > 15
+            || minMax == 1 && players[player].pitch._currentPublicAmplitude >= -25 && timer <= 5 && players[player].pitch._currentPublicAmplitude < players[player].maximumPitch)
         {
             StopAllCoroutines();
             makeSoundObj.SetActive(false);
             noInput = false;
             pitchSlider.value = SmoothPitch(players[player].currentPitch);
 
-            if (players[player].currentPitch > minPitch && players[player].currentPitch < maxPitch)
+            if (players[player].currentPitch > minPitch 
+                && players[player].currentPitch < maxPitch
+                && players[player].currentPitch > 0
+                && players[player].currentPitch < 40)
             {
                 timer += Time.deltaTime;
             }
