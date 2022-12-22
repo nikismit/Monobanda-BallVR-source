@@ -75,7 +75,7 @@ public int MicInput;
 		detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
         setUptMic();
 
-		InvokeRepeating("ListenAudioInput", 0.01f, 0.04f);
+		InvokeRepeating("ListenAudioInput", 0.01f, 0.1f);
 	}
 
 	void ListenAudioInput()

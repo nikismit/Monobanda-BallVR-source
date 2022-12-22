@@ -44,14 +44,9 @@ public class Calibrator : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        //if (Application.platform == RuntimePlatform.Android && playerInt == 1)
-            //Destroy(gameObject);
 
         playerObj = GameObject.FindGameObjectsWithTag("Player");
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        //rectTransform = transform.GetChild(1).GetComponent<RectTransform>();
-
-        //playerTrans = player[playerInt].transform;
 
         loadSliders[0].maxValue = maxTime;
         loadSliders[1].maxValue = maxTime;
@@ -82,16 +77,7 @@ public class Calibrator : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-
-
-
-
-        //var lookAtPoint = point.position;
-        //lookAtPoint.x = transform.position.z;
-        //line.transform.LookAt(lookAtPoint);
-        //line.rotation = Quaternion.LookRotation(point.position, Vector3.right);
         Vector2 direction = pointEnd.position - line.position;
-        //line.right = direction;
         line.right = Vector3.SmoothDamp(line.right, direction, ref velocity, 0.5f, 1500);
 
     }

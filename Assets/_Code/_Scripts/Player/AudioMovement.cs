@@ -373,8 +373,8 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
 
-	
-	public bool IsGrounded()
+    #region Variables
+    public bool IsGrounded()
     {
 		Debug.DrawRay(transform.position, (Vector3.down + Vector3.forward) * 0.5f, Color.green);
 		Debug.DrawRay(transform.position, (Vector3.down + Vector3.back) * 0.5f, Color.green);
@@ -389,7 +389,6 @@ public class AudioMovement : MonoBehaviour {
 		else
 			return false;
 	}
-	
 
 	public Transform GroundCtrl()
 	{
@@ -401,8 +400,9 @@ public class AudioMovement : MonoBehaviour {
 		else
 			return null;
 	}
+    #endregion
 
-	float trailTime = 0;
+    float trailTime = 0;
 
     #region CarKeyControls
     void CarKeyMovement()
