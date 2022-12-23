@@ -30,10 +30,16 @@ public class BoosterRing : MonoBehaviour
         timer = easeOutlength + 1;
         boostSound = gameObject.GetComponent<AudioSource>();
     }
+    //float yRotation = 0;
 
     void Update()
     {
         ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
+
+        //yRotation += Time.deltaTime * 1;
+
+        //ringModels[0].transform.rotation = Quaternion.Euler(0, 90, yRotation);
+        //ringModels[0].transform.rotation = Quaternion.Euler(0,0,1 * Time.deltaTime);
         /*
         if (timer < easeOutlength)
         {
@@ -66,6 +72,9 @@ public class BoosterRing : MonoBehaviour
             float ease = Mathf.Lerp(0, 1, elapsedTime);
 
             ringModels[0].transform.Rotate(new Vector3(0, 0, rotateSpeed * (1 + easeOutQuint(ease))));
+            
+            
+            //ringModels[0].transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotateSpeed * (1 + easeOutQuint(ease))));
             transform.localScale = sizeRef * (1 + (0.1f * curve.Evaluate(ease)));
             shadow.orthographicSize = 2 * (1 + (0.1f * curve.Evaluate(ease)));
 

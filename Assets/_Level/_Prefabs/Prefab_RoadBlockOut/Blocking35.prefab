@@ -5170,15 +5170,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pipeExit: {fileID: 7688592804351964308}
+  travelTime: 1
+  poofEffect: {fileID: 6355508801090394590}
   pipeEnterSound: {fileID: 2372087968149346059}
   pipeExitSound: {fileID: 4889276758041225372}
-  poofEffect: {fileID: 6355508801090394590}
   flames:
   - {fileID: 0}
   - {fileID: 0}
   outlines:
   - {fileID: 2139349601956429411, guid: 542aa7cd2f273e74db7d6c4f43c0249b, type: 3}
   - {fileID: 634127356739247230, guid: 01fa74dcec217154699e3fcfc80fb341, type: 3}
+  poofPrefab: {fileID: 1564141592768732258, guid: 1dfd6407aa5439543b1fb0d1e654b9db,
+    type: 3}
 --- !u!82 &2372087968149346059
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10538,15 +10541,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pipeExit: {fileID: 7257791167347480988}
+  travelTime: 1
+  poofEffect: {fileID: 721960139065935753}
   pipeEnterSound: {fileID: 3944355064869315450}
   pipeExitSound: {fileID: 8388892994876397499}
-  poofEffect: {fileID: 721960139065935753}
   flames:
   - {fileID: 0}
   - {fileID: 0}
   outlines:
   - {fileID: 2139349601956429411, guid: 542aa7cd2f273e74db7d6c4f43c0249b, type: 3}
   - {fileID: 634127356739247230, guid: 01fa74dcec217154699e3fcfc80fb341, type: 3}
+  poofPrefab: {fileID: 1564141592768732258, guid: 1dfd6407aa5439543b1fb0d1e654b9db,
+    type: 3}
 --- !u!82 &3944355064869315450
 AudioSource:
   m_ObjectHideFlags: 0

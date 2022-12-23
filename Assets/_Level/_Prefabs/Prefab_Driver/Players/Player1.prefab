@@ -4953,7 +4953,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  BoomObj: {fileID: 3164799403129912525, guid: 1f53d807566be644882c50241ad0f170, type: 3}
+  BoomObj: {fileID: 6812218789503435072, guid: 10d32ee5087b59c46a963951d8e77107, type: 3}
 --- !u!114 &1715709478507096718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5024,19 +5024,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2688f23243e4a284898f927f2da465c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player2: {fileID: 0}
-  crashForce: {fileID: 0}
+  otherPlayer: {fileID: 0}
+  camera: {fileID: 0}
   winState: {fileID: 0}
-  ui: {fileID: 0}
   modelEffect: {fileID: 2850392219226427680}
   trailEffect: {fileID: 1602578119196778349}
   flameEffect: {fileID: 1591025048780531555}
   playerHealth: {fileID: 0}
-  ringCountText: {fileID: 0}
   uiHandler: {fileID: 0}
+  ui: {fileID: 0}
   pitch: {fileID: 0}
   sfx: {fileID: 0}
-  ringCount: {fileID: 0}
   currentPitch: 0
   currentAmp: 0
   maximumForwardSpeed: 25
@@ -5048,14 +5046,13 @@ MonoBehaviour:
   speedBoost: 1.5
   currentTurn: 0
   currentSpeed: 0
-  objectHeight: 0
   Volume: 0
-  camera: {fileID: 0}
   FOV: 0
   FovWanted: 0
   layer:
     serializedVersion: 2
     m_Bits: 256
+  player: 0
   minimumPitch: 10
   maximumPitch: 30
   currentPitchValue: 0
@@ -5064,24 +5061,15 @@ MonoBehaviour:
   isSinglePlayer: 1
   comingFromMainMenu: 1
   debugKeyControl: 1
-  testVoiceSetback: 0
-  testRailControl: 1
-  PitchSliderMovement: 0
-  railSteerSpeed: 0
+  removeHealth: 0
   railSteerRef: 0
-  ignorePlayerCol: 0
-  setCrashCol: 0
-  lockRigidbodyRotation: 0
-  roadWidth: 60
-  railSpeed: 0
   isMoving: 0
-  minimumAmp: 0
   boostParticle:
   - {fileID: 306807431751019112}
   - {fileID: 5273426976223867567}
   - {fileID: 0}
-  maxVoiceSetback: 7
   isInPipe: 0
+  removeControl: 1
 --- !u!33 &4767737315599181010
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9913,7 +9901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   P1: {fileID: 4767737315599181015}
-  P2: {fileID: 0}
   Player: {fileID: 8317178349315701727}
 --- !u!114 &469514812558085911
 MonoBehaviour:
@@ -9928,8 +9915,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDone: 0
-  player1: {fileID: 4767737315599181015}
-  player2: {fileID: 0}
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
   beforeReload: 3
   cam1: {fileID: 0}
   timer: 0

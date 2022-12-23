@@ -20,6 +20,8 @@ public class PipeBehavior : MonoBehaviour
     public GameObject[] flames;
     [SerializeField] Outline[] outlines;
 
+    [SerializeField] GameObject poofPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +59,10 @@ public class PipeBehavior : MonoBehaviour
         }
 
         yield return new WaitForSeconds(travelTime);
-        poofEffect.Play();
+
+        //poofEffect.Play();
+        Instantiate(poofPrefab, pipeExit);
+
         playerTrans.position = pipeExit.position;
         outlines[0].OutlineWidth = 4;
         flames[0].layer = 9;
