@@ -26,40 +26,13 @@ public class BoosterRing : MonoBehaviour
     {
         shadow = GetComponentInChildren<Projector>();
         sizeRef = transform.localScale;
-        //timer = easeOutlenght;
         timer = easeOutlength + 1;
         boostSound = gameObject.GetComponent<AudioSource>();
     }
-    //float yRotation = 0;
 
     void Update()
     {
         ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
-
-        //yRotation += Time.deltaTime * 1;
-
-        //ringModels[0].transform.rotation = Quaternion.Euler(0, 90, yRotation);
-        //ringModels[0].transform.rotation = Quaternion.Euler(0,0,1 * Time.deltaTime);
-        /*
-        if (timer < easeOutlength)
-        {
-            timer += Time.deltaTime;
-
-            //float ease = Mathf.Lerp(0, easeOutlength / 2, timer * 1.2f);
-            float ease = Mathf.Lerp(0, 1, timer);
-
-            ringModels[0].transform.Rotate(new Vector3(0, 0, rotateSpeed * (1 + easeOutQuint(ease))));
-            //transform.localScale = sizeRef * (1 + (0.1f * easeOutElastic(ease)));
-            transform.localScale = sizeRef * (1 + (0.1f * curve.Evaluate(ease)));
-            shadow.orthographicSize = 2 * (1 + (0.1f * curve.Evaluate(ease)));
-        }
-        else
-        {
-            ringModels[0].transform.Rotate(new Vector3(0, 0, 1));
-            transform.localScale = sizeRef;
-            shadow.orthographicSize = 2;
-        }
-        */
     }
 
     IEnumerator StartBoost()
@@ -72,9 +45,6 @@ public class BoosterRing : MonoBehaviour
             float ease = Mathf.Lerp(0, 1, elapsedTime);
 
             ringModels[0].transform.Rotate(new Vector3(0, 0, rotateSpeed * (1 + easeOutQuint(ease))));
-            
-            
-            //ringModels[0].transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotateSpeed * (1 + easeOutQuint(ease))));
             transform.localScale = sizeRef * (1 + (0.1f * curve.Evaluate(ease)));
             shadow.orthographicSize = 2 * (1 + (0.1f * curve.Evaluate(ease)));
 
@@ -90,15 +60,6 @@ public class BoosterRing : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            //ScorePopup score = Instantiate(scorePopUp, transform).GetComponent<ScorePopup>().score;
-
-            /*
-            if (other.GetComponent<AudioMovement>())
-                Instantiate(scorePopUp, transform).GetComponent<ScorePopup>().player = 0;
-            else
-                Instantiate(scorePopUp, transform).GetComponent<ScorePopup>().player = 1;
-            */
-            //timer = 0;
             StartCoroutine(StartBoost());
             boostSound.Play();
         }

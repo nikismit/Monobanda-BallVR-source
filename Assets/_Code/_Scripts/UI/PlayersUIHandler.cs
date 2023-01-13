@@ -59,15 +59,23 @@ public class PlayersUIHandler : MonoBehaviour
 
             if (currentScore < score[playerNum])
             {
-                if(playerNum == 0)
-                    ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
-                else
-                    ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55 + (scoreCurve.Evaluate(ease) * 20));
+
 
                 currentScore += elapsedTime * 100;
             }
             else
                 currentScore = Mathf.RoundToInt(score[playerNum]);
+
+
+            if (playerNum == 0)
+
+                //ringCountTrans[playerNum].localPosition = new Vector2(50.35468f, -24.87527f + (scoreCurve.Evaluate(ease) * 20));
+                //ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
+                ringCountTrans[playerNum].localPosition = new Vector2(0, 0 + (scoreCurve.Evaluate(ease) * 20));
+            else
+                //ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55 + (scoreCurve.Evaluate(ease) * 20));
+            ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
+
 
             ringCountText[playerNum].text = Mathf.RoundToInt(currentScore).ToString();
             ringCountText[playerNum].fontSize = 32 + (scoreScaleCurve.Evaluate(ease) * 20);
@@ -76,9 +84,12 @@ public class PlayersUIHandler : MonoBehaviour
         ringCountText[playerNum].text = score[playerNum].ToString();
 
         if (playerNum == 0)
-        ringCountTrans[playerNum].localPosition = new Vector2(245, 55);
+        //ringCountTrans[playerNum].localPosition = new Vector2(50.35468f, -24.87527f);
+        //ringCountTrans[playerNum].localPosition = new Vector2(245, 55);
+        ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
         else
-            ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55);
+                    ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
+            //ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55);
         ringCountText[playerNum].fontSize = 32;
     }
 

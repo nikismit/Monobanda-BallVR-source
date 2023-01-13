@@ -37,12 +37,14 @@ public class RaceCountdown : MonoBehaviour
 
         cars = GameObject.FindGameObjectsWithTag("Player");
 
+        /*
         for (int i = 0; i < cars.Length; i++)
         {
             Rigidbody rb = cars[i].gameObject.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             //Debug.LogWarning(cars[i] + " / " + rb);
         }
+        */
 
         No5.SetActive(false);
       No4.SetActive(false);

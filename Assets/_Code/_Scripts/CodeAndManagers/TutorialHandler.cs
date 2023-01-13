@@ -13,6 +13,7 @@ public class TutorialHandler : MonoBehaviour
     [HideInInspector] public int activatePlane = 0;
 
     [SerializeField] private GameObject[] startCanvasUIs;
+    [SerializeField] private GameObject[] player2UI;
     [SerializeField] private SFXManager soundManager;
     private AudioSource tutorialSound;
 
@@ -28,6 +29,14 @@ public class TutorialHandler : MonoBehaviour
         playerMic = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioMovement>().pitch.selectedDevice;
         Debug.Log("Selected device = " + playerMic);
         tutorialSound = GetComponent<AudioSource>();
+
+        if (androidDebug)
+        {
+            for (int i = 0; i < player2UI.Length; i++)
+            {
+                player2UI[i].SetActive(false);
+            }
+        }
         //SpawnPlane();
     }
 
@@ -39,6 +48,9 @@ public class TutorialHandler : MonoBehaviour
 
     public void SpawnPlane()
     {
+        //if (androidDebug)
+            demo.RemoveDemoUIEvent();
+        /*
         if (activatePlane == 0)
             tutorialPlane[0].SetActive(true);
         if (activatePlane == 1)
@@ -48,7 +60,7 @@ public class TutorialHandler : MonoBehaviour
 
         if (activatePlane >= tutorialPlane.Length)
             demo.RemoveDemoUIEvent();
-
+        */
     }
 
     public IEnumerator Hold()

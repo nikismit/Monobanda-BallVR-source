@@ -105,7 +105,7 @@ public class Calibrator : MonoBehaviour
         loadSliders[pitchCount[player]].value = timer;
 
         if (minMax == 0 && players[player].pitch._currentPublicAmplitude >= -25 && timer <= 5 && players[player].currentPitch > 15
-            || minMax == 1 && players[player].pitch._currentPublicAmplitude >= -25 && timer <= 5 && players[player].pitch._currentPublicAmplitude < players[player].maximumPitch)
+            || minMax == 1 && players[player].pitch._currentPublicAmplitude >= -25 && timer <= 5 && players[player].pitch._currentPublicAmplitude < players[player].maximumPitch - 10)
         {
             StopAllCoroutines();
             makeSoundObj.SetActive(false);
@@ -119,8 +119,9 @@ public class Calibrator : MonoBehaviour
             {
                 timer += Time.deltaTime;
             }
-            else
+            else//WERKT NIET
             {
+                Debug.Log("IHUIHIUHIUIUIUHIUHIUHUI");
                 timer = 0;
                 minPitch = players[player].currentPitch - 5;
                 maxPitch = players[player].currentPitch + 5;
@@ -133,12 +134,11 @@ public class Calibrator : MonoBehaviour
             StartCoroutine(ActivateMakeSoundObj());
         }
 
-
         if (timer >= maxTime)
         {
             Debug.Log("PitchCount = " + pitchCount[0] + "PitchSet = " + players[player].currentPitch);
 
-            stopCalPitch = true;
+                stopCalPitch = true;
             timer = 0;
             players[player].SetPitchVal(minMax);
             StartCoroutine(NextPitch(player));

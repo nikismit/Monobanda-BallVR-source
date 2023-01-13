@@ -15,6 +15,7 @@ public class AudioMovement : MonoBehaviour {
 
 	public Slider playerHealth;
 	[SerializeField] PlayersUIHandler uiHandler;
+	[SerializeField] private TutorialHandler tutHandler;
 
 	private Transform camDist;
 	[SerializeField] GameObject ui;
@@ -61,7 +62,6 @@ public class AudioMovement : MonoBehaviour {
 	public float minimumPitch;
 	public float maximumPitch;
 	public int currentPitchValue;
-	public bool highPitchIsTurnRight;
 	public bool soundTriggersParticles;
 	public bool isSinglePlayer;
 	public bool comingFromMainMenu;
@@ -88,16 +88,16 @@ public class AudioMovement : MonoBehaviour {
 
 	Vector3 sliderPos;
 	private Vector3 velocity = Vector3.zero;
-	private float lastValidPitch;
+	[HideInInspector] public float lastValidPitch;
 
-	private bool hasStarted = false;
+	[HideInInspector] public bool hasStarted = false;
 	[HideInInspector] public bool isMoving = false;
 
 	private float boostTimer = 100;
 
 	private int numRings = 5;
 
-	private float invulnerableState = 160;
+	private float invulnerableState = 4;
 	private float minimumAmp = -50;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
@@ -111,18 +111,25 @@ public class AudioMovement : MonoBehaviour {
 	float lastHit;
 
 	private float boostAmount = 5;
+	float trailTime = 0;
 
 	[HideInInspector] public bool isInPipe;
 	[HideInInspector] public bool removeControl = true;
 
 	void Start()
     {
+		if (tutHandler.androidDebug && player == 1)
+		{
+			gameObject.SetActive(false);
+		}
+
 		m_Rigidbody = GetComponent<Rigidbody>();
 		_partSys = GetComponent<ParticleSystem>();
 
 		col = gameObject.GetComponent<Collider>();
 		feedBack = gameObject.GetComponent<PlayerFeedBack>();
 		camDist = GameObject.FindGameObjectWithTag("CarDistRef").transform;
+
 
 		lastHit = invulnerableState + 1;
 		if (!ui.activeSelf && ui != null)
@@ -251,7 +258,7 @@ public class AudioMovement : MonoBehaviour {
 
 				float PushAmount = Mathf.InverseLerp(0, 1, colDist);
 				m_Rigidbody.AddForce(transform.right * -currentDirection.z * PushAmount * 60);
-				m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+				//m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 			}
 			else if (transform.position.z <= -29 || transform.position.z >= 29)
 			{
@@ -310,36 +317,49 @@ public class AudioMovement : MonoBehaviour {
 
 		Volume = pitch._currentPublicAmplitude;
 
-		if (currentPitch < 7)
-		{
-			sliderPitchInvLerp = lastValidPitch;
+        if (!freezeCarSteer)
+        {
+			if (currentPitch < minimumPitch)
+			{
+				sliderPitchInvLerp = Mathf.InverseLerp(maximumPitch, minimumPitch, minimumPitch);
+			}
+			if (currentPitch < 7)
+			{
+				sliderPitchInvLerp = lastValidPitch;
+			}
+			else
+			{
+				sliderPitchInvLerp = Mathf.InverseLerp(maximumPitch, minimumPitch, currentPitch);// set value from 0 to 1 (Min pitch value = 7, max pitch value = 30)
+				lastValidPitch = sliderPitchInvLerp;
+			}
+
+			sliderVector = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(sliderPitchInvLerp * roadWidth - roadHalf, -roadHalf, roadHalf));
+
+			if (currentAmp < minimumAmp || minimumAmp == -Mathf.Infinity)
+			{
+				minimumAmp = currentAmp;
+			}
+
+			if (currentAmp > minimumAmp + 20 && !debugKeyControl)
+			{
+				sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
+
+				modelEffect.dir = currentTurn;
+			}
+			else
+			{
+				float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
+				sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
+			}
 		}
 		else
-        {
-			sliderPitchInvLerp = Mathf.InverseLerp(maximumPitch, minimumPitch, currentPitch);// set value from 0 to 1 (Min pitch value = 7, max pitch value = 30)
-			lastValidPitch = sliderPitchInvLerp;
-		}
+			sliderPos = transform.position;
 
-			sliderVector = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(sliderPitchInvLerp * roadWidth - roadHalf, -roadHalf,roadHalf));
 
-		if (currentAmp < minimumAmp || minimumAmp == -Mathf.Infinity)
-		{
-			minimumAmp = currentAmp;
-		}
 
-		if (currentAmp > minimumAmp + 20 && !debugKeyControl)
-        {
-			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, railSpeed * Time.deltaTime);
 
-			modelEffect.dir = currentTurn;
-		}
-        else
-        {
-			float slowStop = Mathf.InverseLerp(railSpeed, 0, 10 * Time.deltaTime);
-			sliderPos = Vector3.SmoothDamp(transform.position, sliderVector, ref velocity, 1, slowStop);
-		}
 
-        if (!isInPipe)
+		if (!isInPipe)
         {
 			if (!debugKeyControl)
 				CarSoundMovement();
@@ -402,7 +422,7 @@ public class AudioMovement : MonoBehaviour {
 	}
     #endregion
 
-    float trailTime = 0;
+
 
     #region CarKeyControls
     void CarKeyMovement()
@@ -517,7 +537,6 @@ public class AudioMovement : MonoBehaviour {
 		}
 	}
     #endregion
-
     #region CarSoundControls
     void CarSoundMovement()
     {
@@ -533,10 +552,6 @@ public class AudioMovement : MonoBehaviour {
 			if (currentPitch > minimumPitch)
 			{
 				currentTurn = (((currentPitch - minimumPitch) / (maximumPitch - minimumPitch)) * 2) - 1 - 0.3f;
-			}
-			if (highPitchIsTurnRight == false)
-			{
-				currentTurn *= -1;
 			}
 			if (soundTriggersParticles == true)
 			{
@@ -660,6 +675,7 @@ public class AudioMovement : MonoBehaviour {
 	}
     #endregion
 
+
     void RampControl(Transform trans)
     {
 		Vector3 gravityUp = trans.up;
@@ -709,7 +725,7 @@ public class AudioMovement : MonoBehaviour {
 		lastHit = 0;
 		while (lastHit < invulnerableState)
         {
-			lastHit++;
+			lastHit += Time.deltaTime;
 			feedBack.BlinkFeedBack(true);
 			yield return null;
 		}
@@ -727,7 +743,7 @@ public class AudioMovement : MonoBehaviour {
 
 	public void SetRailConstrains()
 	{
-		if(lockRigidbodyRotation)
+		//if(lockRigidbodyRotation)
 		m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		railSteerSpeed = railSteerRef;
 		isMoving = true;
@@ -745,12 +761,22 @@ public class AudioMovement : MonoBehaviour {
 		hasStarted = true;
 	}
 
+	bool freezeCarSteer = false;
+
 	public void SetPitchVal(int val)
     {
 		if(val == 0)
 			maximumPitch = currentPitch;
-		else
+        else
+        {
 			minimumPitch = currentPitch;
+			Invoke("RemoveConstrains", 3);
+		}
+	}
+
+	void RemoveConstrains()
+    {
+		freezeCarSteer = false;
 	}
 
 	public void ExitPipe()
