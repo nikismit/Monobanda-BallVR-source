@@ -57,7 +57,10 @@ public class NewCalibrator : MonoBehaviour
             || playerPitchOneDone && player.pitch._currentPublicAmplitude >= -30 && pitchVal < player.maximumPitch && elapsedTime <= 4.5f && pitchVal > 0 && allowCountdown)
         {
             if (minMaxPitch == 0)
+            {
                 demo.HighHoldEvent(true);
+            }
+
             else
                 demo.LowHoldEvent(true);
 

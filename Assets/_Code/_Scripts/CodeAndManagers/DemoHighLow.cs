@@ -27,11 +27,16 @@ public class DemoHighLow : MonoBehaviour
     AudioSource blipSound;
 
     [SerializeField] ParticleSystem[] holdParticle;
-    [SerializeField] private Texture2D[] holdWhite;
-    [SerializeField] Image holdImage;
+    [SerializeField] Image[] holdImage;
+    [SerializeField] private Sprite[] holdWhite;
+    private Sprite[] holdRef = new Sprite[2];
+
 
     void Start()
     {
+        holdRef[0] = holdImage[0].sprite;
+        holdRef[1] = holdImage[1].sprite;
+
         blipSound = GetComponent<AudioSource>();
 
         highLowObj[0].SetActive(true);
@@ -97,36 +102,64 @@ public class DemoHighLow : MonoBehaviour
         }
     }
 
+    bool revertHold = false;
+
     public void HighHoldEvent(bool changeUI)
     {
         if (changeUI)
         {
-            holdParticle[0].Play();
+            if (!revertHold)
+            {
+                Debug.Log("LNJWVBEWBVEBVEBVEBJKVEWBKJVVBEKJW");
+                revertHold = true;
+                holdImage[0].sprite = holdWhite[0];
+                Invoke("RevertHigh", 0.1f);
+            }
+
+            //holdParticle[0].Play();
             highLowObj[0].SetActive(false);
             highLowObj[2].SetActive(true);
         }
         else if (!changeUI)
         {
-            holdParticle[0].Stop();
+            revertHold = false;
+            //holdParticle[0].Stop();
             highLowObj[0].SetActive(true);
             highLowObj[2].SetActive(false);
         }
+    }
+
+    void RevertHigh()
+    {
+        holdImage[0].sprite = holdRef[0];
     }
 
     public void LowHoldEvent(bool changeUI)
     {
         if (changeUI)
         {
-            holdParticle[1].Play();
+            if (!revertHold)
+            {
+                revertHold = true;
+                holdImage[1].sprite = holdWhite[1];
+                Invoke("RevertLow", 0.1f);
+            }
+            //holdParticle[1].Play();
             highLowObj[1].SetActive(false);
             highLowObj[3].SetActive(true);
         }
         else if (!changeUI)
         {
-            holdParticle[1].Stop();
+            revertHold = false;
+            //holdParticle[1].Stop();
             highLowObj[1].SetActive(true);
             highLowObj[3].SetActive(false);
         }
+    }
+
+    void RevertLow()
+    {
+        holdImage[1].sprite = holdRef[1];
     }
 
     public void LowEvent()
