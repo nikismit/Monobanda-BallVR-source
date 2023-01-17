@@ -25,7 +25,6 @@ public class DebugStats : MonoBehaviour
 
     [SerializeField] Slider[] playerSliders;
 
-    // Use this for initialization
     void Start()
     {
         timeleft = updateInterval;

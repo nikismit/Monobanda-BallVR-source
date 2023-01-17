@@ -17,6 +17,10 @@ public class NewCalibrator : MonoBehaviour
 
     [SerializeField] ParticleSystem ringParticle;
 
+    bool doOnce = false;
+
+    [SerializeField] int playerID;
+
     void Start()
     {
         player = GetComponentInParent<AudioMovement>();
@@ -31,16 +35,45 @@ public class NewCalibrator : MonoBehaviour
 
     void Update()
     {
+
+        if (demo.highCount == 2 && playerPitchOneDone && demo.lowCount == 0)
+            countDownImages[3].SetActive(false);
+        else if (demo.lowCount == 2)
+            countDownImages[3].SetActive(false);
+
+        if (playerPitchTwoDone && demo.lowCount == 1 && !demo.tutHandler.androidDebug)
+            countDownImages[3].SetActive(true);
+        else if (playerPitchTwoDone && demo.lowCount == 2)
+            gameObject.SetActive(false);
+
+        Debug.Log("demoLow = " + demo.lowCount);
+
         if (!playerPitchOneDone)
             PlayerPitchInput(0);
         else if (!playerPitchTwoDone && demo.highCount == 2 && !demo.tutHandler.androidDebug || !playerPitchTwoDone && demo.tutHandler.androidDebug)
+        {
             PlayerPitchInput(1);
+        }
+
+
+        if (!particlePlays && player.pitch._currentPublicAmplitude >= -80)
+        {
+            particlePlays = true;
+            ringParticle.Play();
+        }
+        else if (particlePlays && player.pitch._currentPublicAmplitude <= -80)
+        {
+            particlePlays = false;
+            ringParticle.Stop();
+        }
+
+        if (particlePlays)
+            ringParticle.startSize = player.currentPitch;
+
 
         if (player.hasStarted)
             gameObject.SetActive(false);
     }
-
-    bool invokeOnce = false;
     float velocity;
     [SerializeField] float pitchVal;
 
@@ -53,24 +86,15 @@ public class NewCalibrator : MonoBehaviour
 
         velocity = pitchVal;
 
-        if (!playerPitchOneDone && player.pitch._currentPublicAmplitude >= -30 && pitchVal > 15 && elapsedTime <= 4.5f && allowCountdown
-            || playerPitchOneDone && player.pitch._currentPublicAmplitude >= -30 && pitchVal < player.maximumPitch && elapsedTime <= 4.5f && pitchVal > 0 && allowCountdown)
+
+
+
+        if (!playerPitchOneDone && player.pitch._currentPublicAmplitude >= -30 && pitchVal > 15 && elapsedTime <= 2.5f && allowCountdown
+            || playerPitchOneDone && player.pitch._currentPublicAmplitude >= -30 && pitchVal < player.maximumPitch && elapsedTime <= 2.5f && pitchVal > 0 && allowCountdown)
         {
-            if (minMaxPitch == 0)
-            {
-                demo.HighHoldEvent(true);
-            }
 
-            else
-                demo.LowHoldEvent(true);
 
-            ringParticle.startSize = player.currentPitch;
 
-            if (!particlePlays)
-            {
-                particlePlays = true;
-                ringParticle.Play();
-            }
 
             elapsedTime += Time.deltaTime;
 
@@ -78,43 +102,39 @@ public class NewCalibrator : MonoBehaviour
             {
                 countDownImages[0].SetActive(false);
             }
-            else if (elapsedTime < 1.5f)
+            else if (elapsedTime < 1f)
                 countDownImages[0].SetActive(true);
-            else if (elapsedTime < 2.5f)
+            else if (elapsedTime < 1.5f)
             {
                 countDownImages[0].SetActive(false);
                 countDownImages[1].SetActive(true);
             }
-            else if (elapsedTime < 3.5f)
+            else if (elapsedTime < 2f)
             {
                 countDownImages[1].SetActive(false);
                 countDownImages[2].SetActive(true);
             }
-            else if (elapsedTime < 4.5f)
+            else if (elapsedTime < 2.5f)
             {
                 countDownImages[2].SetActive(false);
                 countDownImages[3].SetActive(true);
 
-                if (!invokeOnce)
+                if (minMaxPitch == 0 && !doOnce)
                 {
-                    invokeOnce = true;
-                    if (minMaxPitch == 0)
-                    {
-                        Invoke("ResetCountDownOne", 1);
-                    }
-                    else if (minMaxPitch > 0)
-                    {
-                        Invoke("ResetCountDownTwo", 1);
-                    }
+                    doOnce = true;
+                    Invoke("ResetCountDownOne", 1);
+                    ringParticle.Stop();
+                }
+                else if (minMaxPitch > 0 && !doOnce)
+                {
+                    doOnce = true;
+                    Invoke("ResetCountDownTwo", 1);
+                    ringParticle.Stop();
                 }
             }
-            else if(elapsedTime > 4.5f)
+            else if(elapsedTime > 2.5f)
             {
-                if (minMaxPitch == 0)
-                    demo.HighHoldEvent(false);
-                else
-                    demo.LowHoldEvent(false);
-
+                doOnce = false;
                 particlePlays = false;
                 ringParticle.Stop();
             }
@@ -122,23 +142,15 @@ public class NewCalibrator : MonoBehaviour
         }
         else
         {
-            if (minMaxPitch == 0)
-                demo.HighHoldEvent(false);
-            else
-                demo.LowHoldEvent(false);
 
-            if (particlePlays)
-            {
-                particlePlays = false;
-                ringParticle.Stop();
-            }
 
             //ringParticle.Stop();
             countDownImages[0].SetActive(false);
             countDownImages[1].SetActive(false);
             countDownImages[2].SetActive(false);
-            countDownImages[3].SetActive(false);
+            //countDownImages[3].SetActive(false);
             elapsedTime = 0;
+            doOnce = false;
         }
     }
 
@@ -152,11 +164,11 @@ public class NewCalibrator : MonoBehaviour
             //player.maximumPitch = player.lastValidPitch;
 
         demo.HighEvent();
-
+        ringParticle.Stop();
         elapsedTime = 0;
-        countDownImages[3].SetActive(false);
+        if(demo.tutHandler.androidDebug)
+            countDownImages[3].SetActive(false);
         allowCountdown = true;
-        invokeOnce = false;
     }
 
     void ResetCountDownTwo()
@@ -171,9 +183,9 @@ public class NewCalibrator : MonoBehaviour
         demo.LowEvent();
 
         elapsedTime = 0;
-        countDownImages[3].SetActive(false);
+        if (demo.tutHandler.androidDebug)
+            countDownImages[3].SetActive(false);
         allowCountdown = true;
-        invokeOnce = false;
 
 
         ringParticle.loop = false;
@@ -181,6 +193,6 @@ public class NewCalibrator : MonoBehaviour
 
         //demoUI.RemoveDemoUIEvent();
 
-        gameObject.SetActive(false);
+
     }
 }

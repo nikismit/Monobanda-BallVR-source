@@ -116,8 +116,12 @@ public class AudioMovement : MonoBehaviour {
 	[HideInInspector] public bool isInPipe;
 	[HideInInspector] public bool removeControl = true;
 
+	[SerializeField] ParticleSystem ringEmmitterParticle;
+
 	void Start()
     {
+		ringEmmitterParticle.Stop();
+
 		if (tutHandler.androidDebug && player == 1)
 		{
 			gameObject.SetActive(false);
@@ -355,10 +359,6 @@ public class AudioMovement : MonoBehaviour {
 		else
 			sliderPos = transform.position;
 
-
-
-
-
 		if (!isInPipe)
         {
 			if (!debugKeyControl)
@@ -544,6 +544,17 @@ public class AudioMovement : MonoBehaviour {
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
+			if(!isMoving || pitch._currentPublicAmplitude <= -80)
+            {
+				ringEmmitterParticle.maxParticles = 0;
+			}
+            else
+            {
+				ringEmmitterParticle.maxParticles = 15;
+				ringEmmitterParticle.startSize = Mathf.Clamp(currentPitch, 12, 20);
+			}
+
+
 			if (trailTime <= 1)
 			{
 				trailTime += 0.05f;
@@ -748,6 +759,7 @@ public class AudioMovement : MonoBehaviour {
 		railSteerSpeed = railSteerRef;
 		isMoving = true;
 		Invoke("SetRailMovement", 1);
+		ringEmmitterParticle.Play();
 	}
 
 	//<---EVENTS--->

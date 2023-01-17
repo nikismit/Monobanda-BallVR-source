@@ -124,6 +124,7 @@ MonoBehaviour:
   demoUI: {fileID: 0}
   pitchSmooth: 0
   ringParticle: {fileID: 5273426976223867567}
+  playerID: 0
   pitchVal: 0
 --- !u!1 &1707515253413520225
 GameObject:
@@ -160,7 +161,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 7, y: 7}
+  m_SizeDelta: {x: 18, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7707542081632914363
 CanvasRenderer:
@@ -190,7 +191,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ea38fce134689b540b62a40878dece1e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 116321483a5d5c447a292b4e062e06a6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5423,6 +5424,7 @@ MonoBehaviour:
   - {fileID: 0}
   isInPipe: 0
   removeControl: 1
+  ringEmmitterParticle: {fileID: 7516942209352377182}
 --- !u!33 &4767737315599181010
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10688,6 +10690,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4767737314501644171}
     m_Modifications:
+    - target: {fileID: 132129532676932717, guid: 160f9d0716826fa43b406f81694d95df,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 736254879066367625, guid: 160f9d0716826fa43b406f81694d95df,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -10980,15 +10987,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 160f9d0716826fa43b406f81694d95df, type: 3}
---- !u!4 &2666219000641025734 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3274915160304811051, guid: 160f9d0716826fa43b406f81694d95df,
+--- !u!198 &7516942209352377182 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6927397068475345331, guid: 160f9d0716826fa43b406f81694d95df,
     type: 3}
   m_PrefabInstance: {fileID: 608696176846867181}
   m_PrefabAsset: {fileID: 0}
 --- !u!96 &1602578119196778349 stripped
 TrailRenderer:
   m_CorrespondingSourceObject: {fileID: 2183970650829428096, guid: 160f9d0716826fa43b406f81694d95df,
+    type: 3}
+  m_PrefabInstance: {fileID: 608696176846867181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2666219000641025734 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3274915160304811051, guid: 160f9d0716826fa43b406f81694d95df,
     type: 3}
   m_PrefabInstance: {fileID: 608696176846867181}
   m_PrefabAsset: {fileID: 0}
@@ -11061,15 +11074,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abd75260ae0498c4cb4797883020346f, type: 3}
---- !u!198 &306807431751019112 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1677820153858644369, guid: abd75260ae0498c4cb4797883020346f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1371679451498443769}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &306807431751019110 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1677820153858644383, guid: abd75260ae0498c4cb4797883020346f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1371679451498443769}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &306807431751019112 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1677820153858644369, guid: abd75260ae0498c4cb4797883020346f,
     type: 3}
   m_PrefabInstance: {fileID: 1371679451498443769}
   m_PrefabAsset: {fileID: 0}

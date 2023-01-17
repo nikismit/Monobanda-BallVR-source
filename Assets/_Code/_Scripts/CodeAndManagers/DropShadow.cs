@@ -7,12 +7,16 @@ public class DropShadow : MonoBehaviour
     private Transform playerTrans;
     private Projector proj;
 
+    private GameObject playerObj;
+
     private RaycastHit hit;
 
     void Start()
     {
         proj = gameObject.GetComponent<Projector>();
         playerTrans = transform.parent;
+
+        playerObj = gameObject.GetComponentInParent<GameObject>();
         transform.parent = null;
     }
 
@@ -27,8 +31,10 @@ public class DropShadow : MonoBehaviour
             proj.orthographicSize = shadowSize;
         }
         */
-        if (playerTrans != null)
-        transform.position = playerTrans.position;
+        if (playerTrans != null || playerObj.activeSelf)
+            transform.position = playerTrans.position;
+        else
+            gameObject.SetActive(false);
 
     }
 }

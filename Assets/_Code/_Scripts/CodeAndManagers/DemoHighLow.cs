@@ -8,13 +8,12 @@ public class DemoHighLow : MonoBehaviour
 {
     [SerializeField] GameObject[] highLowObj;
     [SerializeField] public TutorialHandler tutHandler;
+    [SerializeField] private AudioMovement[] playerMic;
 
     [HideInInspector] public int lowCount = 0;
     [HideInInspector] public int highCount = 0;
 
     public RectTransform[] highLowRect;
-    float timer = 0;
-
 
     [SerializeField] private bool floatUp;
     private bool lockInvoke;
@@ -31,7 +30,7 @@ public class DemoHighLow : MonoBehaviour
     [SerializeField] private Sprite[] holdWhite;
     private Sprite[] holdRef = new Sprite[2];
 
-
+    private bool highDone = false;
     void Start()
     {
         holdRef[0] = holdImage[0].sprite;
@@ -44,12 +43,90 @@ public class DemoHighLow : MonoBehaviour
             lockInvoke = true;
     }
 
+    bool changeUI = true;
+    bool lockUI = true;
+
     void Update()
     {
         if (floatUp)
             FloatingUp();
         else
             FloatingDown();
+
+        if (changeUI)
+            MakeSoundUI();
+        else
+            HoldSoundUI();
+    }
+
+
+    void MakeSoundUI()
+    {
+        if (lockUI)
+        {
+            lockUI = false;
+            if (!highDone)
+            {
+                highLowObj[0].SetActive(true);
+                highLowObj[2].SetActive(false);
+            }
+            else
+            {
+                highLowObj[1].SetActive(true);
+                highLowObj[3].SetActive(false);
+            }
+            Invoke("SetUI", 4);
+        }
+    }
+
+    void HoldSoundUI()
+    {
+        if (!lockUI)
+        {
+            lockUI = true;
+            if (!highDone)
+                RevertHigh();
+            else
+                RevertLow();
+
+            Invoke("SetUI", 4);
+        }
+    }
+
+
+    void SetUI()
+    {
+        if (changeUI)
+            changeUI = false;
+        else
+            changeUI = true;
+    }
+
+    void RevertHigh()
+    {
+        highLowObj[0].SetActive(false);
+        highLowObj[2].SetActive(true);
+        holdImage[0].sprite = holdWhite[0];
+        Invoke("RevertHighEnd", 0.1f);
+    }
+
+    void RevertHighEnd()
+    {
+        holdImage[0].sprite = holdRef[0];
+    }
+
+    void RevertLow()
+    {
+        highLowObj[1].SetActive(false);
+        highLowObj[3].SetActive(true);
+
+        holdImage[1].sprite = holdWhite[1];
+        Invoke("RevertLowEnd", 0.1f);
+    }
+
+    void RevertLowEnd()
+    {
+        holdImage[1].sprite = holdRef[1];
     }
 
     void FloatingUp()
@@ -72,6 +149,8 @@ public class DemoHighLow : MonoBehaviour
         }
     }
 
+
+
     void SetBool()
     {
         if (floatUp)
@@ -86,6 +165,7 @@ public class DemoHighLow : MonoBehaviour
 
         if (tutHandler.androidDebug)
         {
+            highDone = true;
             highLowObj[0].SetActive(false);
             highLowObj[2].SetActive(false);
             highLowObj[1].SetActive(true);
@@ -96,70 +176,26 @@ public class DemoHighLow : MonoBehaviour
 
         if (highCount > 1)
         {
+            highDone = true;
             highLowObj[0].SetActive(false);
             highLowObj[2].SetActive(false);
             highLowObj[1].SetActive(true);
+            return;
         }
-    }
-
-    bool revertHold = false;
-
-    public void HighHoldEvent(bool changeUI)
-    {
-        if (changeUI)
-        {
-            if (!revertHold)
-            {
-                Debug.Log("LNJWVBEWBVEBVEBVEBJKVEWBKJVVBEKJW");
-                revertHold = true;
-                holdImage[0].sprite = holdWhite[0];
-                Invoke("RevertHigh", 0.1f);
-            }
-
-            //holdParticle[0].Play();
-            highLowObj[0].SetActive(false);
-            highLowObj[2].SetActive(true);
-        }
-        else if (!changeUI)
-        {
-            revertHold = false;
-            //holdParticle[0].Stop();
-            highLowObj[0].SetActive(true);
-            highLowObj[2].SetActive(false);
-        }
-    }
-
-    void RevertHigh()
-    {
-        holdImage[0].sprite = holdRef[0];
     }
 
     public void LowHoldEvent(bool changeUI)
     {
         if (changeUI)
         {
-            if (!revertHold)
-            {
-                revertHold = true;
-                holdImage[1].sprite = holdWhite[1];
-                Invoke("RevertLow", 0.1f);
-            }
-            //holdParticle[1].Play();
-            highLowObj[1].SetActive(false);
-            highLowObj[3].SetActive(true);
+            Invoke("RevertLow", 1f);
+
         }
         else if (!changeUI)
         {
-            revertHold = false;
-            //holdParticle[1].Stop();
             highLowObj[1].SetActive(true);
             highLowObj[3].SetActive(false);
         }
-    }
-
-    void RevertLow()
-    {
-        holdImage[1].sprite = holdRef[1];
     }
 
     public void LowEvent()
@@ -181,6 +217,7 @@ public class DemoHighLow : MonoBehaviour
             highLowObj[1].SetActive(false);
             highLowObj[3].SetActive(false);
             tutHandler.SpawnPlane();
+            return;
         }
     }
 
@@ -191,15 +228,11 @@ public class DemoHighLow : MonoBehaviour
         while (elapsedTime < 1)
         {
             elapsedTime += Time.deltaTime;
-
-            //float ease = Mathf.Clamp(elapsedTime, 0, 1);
             float ease = Mathf.Clamp(elapsedTime, 0, 1);
 
             if (scale)
             {
                 Vector3 easeVector = Vector3.Lerp(scaleRef, scaleMultiplier, curve.Evaluate(ease));
-
-                //playerModel.localScale = new Vector3(curve.Evaluate(ease), curve.Evaluate(ease), curve.Evaluate(ease));
                 highLowRect[0].sizeDelta = easeVector;
                 highLowRect[1].sizeDelta = easeVector;
                 highLowRect[2].sizeDelta = easeVector;
@@ -208,23 +241,13 @@ public class DemoHighLow : MonoBehaviour
             else
             {
                 Vector3 easeVector = Vector3.Lerp(scaleMultiplier, scaleRef, curve.Evaluate(ease));
-
-                //playerModel.localScale = new Vector3(curve.Evaluate(ease), curve.Evaluate(ease), curve.Evaluate(ease));
                 highLowRect[0].sizeDelta = easeVector;
                 highLowRect[1].sizeDelta = easeVector;
                 highLowRect[2].sizeDelta = easeVector;
                 highLowRect[3].sizeDelta = easeVector;
             }
 
-
-            //Time.timeScale = curve.Evaluate(ease);
-
-            //highScoreUI.alpha = elapsedTime;
-
             yield return null;
-
         }
-        //highLowRect[0].sizeDelta = scaleMultiplier;
     }
-
 }
