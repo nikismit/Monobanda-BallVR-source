@@ -18,23 +18,18 @@ public class DropShadow : MonoBehaviour
 
         playerObj = gameObject.GetComponentInParent<GameObject>();
         transform.parent = null;
+
+        Invoke("CheckPlayer", 0.1f);
+    }
+
+    void CheckPlayer()
+    {
+        if (playerTrans == null || !playerObj.activeSelf)
+            gameObject.SetActive(false);
     }
 
     void LateUpdate()
     {
-        /*
-        Ray ray = new Ray(playerTrans.position, Vector3.down);
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            float shadowSize = Mathf.Lerp(1, 0.15f, hit.distance / 10);
-            proj.orthographicSize = shadowSize;
-        }
-        */
-        if (playerTrans != null || playerObj.activeSelf)
-            transform.position = playerTrans.position;
-        else
-            gameObject.SetActive(false);
-
+        transform.position = playerTrans.position;
     }
 }

@@ -8,9 +8,11 @@ public class NewCalibrator : MonoBehaviour
     [SerializeField] DemoHighLow demo;
     [SerializeField] DemoUI demoUI;
     private AudioMovement player;
+    [SerializeField] Transform playerTrans;
 
     bool playerPitchOneDone, playerPitchTwoDone;
     private bool allowCountdown = true;
+    private bool returnToStartLoc = false;
 
     float elapsedTime = 0;
     [SerializeField] float pitchSmooth;
@@ -21,8 +23,11 @@ public class NewCalibrator : MonoBehaviour
 
     [SerializeField] int playerID;
 
+    private Vector3 refPos;
+
     void Start()
     {
+        refPos = transform.position;
         player = GetComponentInParent<AudioMovement>();
         ringParticle.loop = true;
 
@@ -35,7 +40,6 @@ public class NewCalibrator : MonoBehaviour
 
     void Update()
     {
-
         if (demo.highCount == 2 && playerPitchOneDone && demo.lowCount == 0)
             countDownImages[3].SetActive(false);
         else if (demo.lowCount == 2)
@@ -78,6 +82,7 @@ public class NewCalibrator : MonoBehaviour
     [SerializeField] float pitchVal;
 
     bool particlePlays = false;
+    bool revertToStartLoc = false;
 
     void PlayerPitchInput(int minMaxPitch)
     {
@@ -86,17 +91,20 @@ public class NewCalibrator : MonoBehaviour
 
         velocity = pitchVal;
 
-
-
-
         if (!playerPitchOneDone && player.pitch._currentPublicAmplitude >= -30 && pitchVal > 15 && elapsedTime <= 2.5f && allowCountdown
             || playerPitchOneDone && player.pitch._currentPublicAmplitude >= -30 && pitchVal < player.maximumPitch && elapsedTime <= 2.5f && pitchVal > 0 && allowCountdown)
         {
-
-
-
-
             elapsedTime += Time.deltaTime;
+
+            if (revertToStartLoc)
+            {
+                Debug.Log("Revert to location false");
+                revertToStartLoc = false;
+                returnToStartLoc = false;
+                player.isInPipe = false;
+                StopAllCoroutines();
+            }
+
 
             if (elapsedTime < 0.5f)
             {
@@ -142,7 +150,12 @@ public class NewCalibrator : MonoBehaviour
         }
         else
         {
-
+            if (!revertToStartLoc)
+            {
+                Debug.Log("Revert to start location true");
+                revertToStartLoc = true;
+                StartCoroutine(RevertToStartLoc());
+            }
 
             //ringParticle.Stop();
             countDownImages[0].SetActive(false);
@@ -152,7 +165,19 @@ public class NewCalibrator : MonoBehaviour
             elapsedTime = 0;
             doOnce = false;
         }
+
+        if (returnToStartLoc)
+        {
+            Debug.Log("ReturnTOstartLoc");
+            player.isInPipe = true;
+            //Vector3.SmoothDamp(playerTrans.position, refPos, ref refvelocity, 1, 30 * Time.deltaTime)
+            playerTrans.position = new Vector3(0, 0.5f, Mathf.SmoothDamp(playerTrans.position.z, refPos.z, ref refvelocity, 1, 200 * Time.deltaTime));
+            //playerTrans.position = Mathf.SmoothDamp(playerTrans.position.z, refPos.z, ref refvelocity, 1, 30 * Time.deltaTime);
+        }
     }
+
+    //Vector3 refvelocity = Vector3.zero;
+    float refvelocity;
 
     void ResetCountDownOne()
     {
@@ -192,7 +217,11 @@ public class NewCalibrator : MonoBehaviour
         ringParticle.Stop();
 
         //demoUI.RemoveDemoUIEvent();
+    }
 
-
+    IEnumerator RevertToStartLoc()
+    {
+        yield return new WaitForSeconds(2);
+        returnToStartLoc = true;
     }
 }

@@ -17,6 +17,7 @@ public class WinState : MonoBehaviour
     private float timer = 0;
     private float timeLength = 3;
     [SerializeField] AudioSource finishAudio; 
+    [SerializeField] TutorialHandler tutHandler; 
 
     private int winner;
 
@@ -101,7 +102,11 @@ public class WinState : MonoBehaviour
     }
     public IEnumerator ResetScene(float waitTime)
     {
-        winUI[winner].gameObject.SetActive(true);
+        if(tutHandler.androidDebug && winner == 1)
+            winUI[2].gameObject.SetActive(true);
+        else
+            winUI[winner].gameObject.SetActive(true);
+
         if (winner == 0)
         {
             score[0].text = uiHandler.score[0].ToString();
@@ -110,9 +115,16 @@ public class WinState : MonoBehaviour
         }
         else if (winner == 1)
         {
-            score[2].text = uiHandler.score[0].ToString();
-            if(players[0] != null)
-            score[3].text = uiHandler.score[1].ToString();
+            if (!tutHandler.androidDebug)
+            {
+                score[2].text = uiHandler.score[0].ToString();
+                if (players[0] != null)
+                    score[3].text = uiHandler.score[1].ToString();
+            }
+            else
+                score[4].text = uiHandler.score[0].ToString();
+
+
         }
         else if (winner == 2)//TIE!
         {

@@ -86,7 +86,7 @@ public class AudioMovement : MonoBehaviour {
 	private float railSpeed = 2400;
 	float sliderPitchInvLerp;
 
-	Vector3 sliderPos;
+	private Vector3 sliderPos;
 	private Vector3 velocity = Vector3.zero;
 	[HideInInspector] public float lastValidPitch;
 
@@ -422,8 +422,6 @@ public class AudioMovement : MonoBehaviour {
 	}
     #endregion
 
-
-
     #region CarKeyControls
     void CarKeyMovement()
     {
@@ -544,7 +542,7 @@ public class AudioMovement : MonoBehaviour {
 
 		if (currentAmp > pitch.minVolumeDB)
 		{
-			if(!isMoving || pitch._currentPublicAmplitude <= -80)
+			if(!isMoving || pitch._currentPublicAmplitude <= -60)
             {
 				ringEmmitterParticle.maxParticles = 0;
 			}

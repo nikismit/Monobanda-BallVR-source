@@ -13,6 +13,7 @@ public class racePositionCode : MonoBehaviour
     void FixedUpdate()
     {
       SliderP1.value = P1.P1Pos;
+        if(SliderP2 != null)
       SliderP2.value = P2.P2Pos;
     }
 }
