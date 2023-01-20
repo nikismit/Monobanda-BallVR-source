@@ -134,8 +134,8 @@ public class WinState : MonoBehaviour
         }
         yield return new WaitForSecondsRealtime(waitTime);
 
-
-        StartCoroutine(ShowHighScores());
+        if (!tutHandler.androidDebug && winner != 1)
+            StartCoroutine(ShowHighScores());
     }
 
     bool invokeHighScores = false;
