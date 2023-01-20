@@ -8,6 +8,8 @@ public class DebugStats : MonoBehaviour
     private AudioMovement[] players = new AudioMovement[2];
     private AudioPitch_Player1[] audioPitches = new AudioPitch_Player1[2];
     [SerializeField] GameObject[] pitchInputs;
+
+    [SerializeField] TutorialHandler tutHandler;
     //[SerializeField] AudioMovementPlayer2 audioPlayerTwo;
 
     /* Assign this script to any object in the Scene to display frames per second */
@@ -77,10 +79,16 @@ public class DebugStats : MonoBehaviour
             }
         }
 
-        playerSliders[0].value = players[0].currentPitch;
+        if (!tutHandler.androidDebug)
+        {
+            playerSliders[0].value = players[0].currentPitch;
 
-        if(players[1] != null)
-        playerSliders[1].value = players[1].currentPitch;
+            if (players[1] != null)
+                playerSliders[1].value = players[1].currentPitch;
+        }
+        else
+            playerSliders[2].value = players[0].currentPitch;
+
 
 
         if (Input.GetKeyDown(KeyCode.F))
