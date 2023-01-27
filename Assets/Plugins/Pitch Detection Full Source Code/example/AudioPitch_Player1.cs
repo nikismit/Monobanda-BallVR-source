@@ -75,7 +75,28 @@ public int MicInput;
 		detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
         setUptMic();
 
-		InvokeRepeating("ListenAudioInput", 0.01f, 0.018f);
+		//InvokeRepeating("ListenAudioInput", 0.01f, 0.018f);
+
+		StartCoroutine(RepeatUnscaledTime());
+	}
+
+
+	IEnumerator RepeatUnscaledTime()
+	{
+		float elapsedTime = 0;
+
+		while (elapsedTime <= 0.018f)
+		{
+			elapsedTime += Time.unscaledDeltaTime;
+
+
+			//Debug.Log("Time = " + elapsedTime);
+			yield return null;
+		}
+
+		ListenAudioInput();
+
+		StartCoroutine(RepeatUnscaledTime());
 	}
 
 	void ListenAudioInput()
@@ -98,6 +119,8 @@ public int MicInput;
 		_currentpublicpitch = _currentPitch;
 		detectionsMade[detectionPointer++] = midiant;
 		detectionPointer %= cumulativeDetections;
+
+		//Debug.Log("currentPitch = " + _currentPitch);
 
 		if (_audioSource.time >= 9.0f && doClean == true)
 		{

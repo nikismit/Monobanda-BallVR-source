@@ -64,7 +64,7 @@ public class Calibrator : MonoBehaviour
 
     void Update()
     {
-        if(pitchCount[0] == 0 && !stopCalPitch)
+        if (pitchCount[0] == 0 && !stopCalPitch)
             CalibratePitch(playerInt, 0);
         if (pitchCount[0] == 1 && !stopCalPitch)
             CalibratePitch(playerInt, 1);
@@ -121,7 +121,6 @@ public class Calibrator : MonoBehaviour
             }
             else//WERKT NIET
             {
-                Debug.Log("IHUIHIUHIUIUIUHIUHIUHUI");
                 timer = 0;
                 minPitch = players[player].currentPitch - 5;
                 maxPitch = players[player].currentPitch + 5;
@@ -138,7 +137,7 @@ public class Calibrator : MonoBehaviour
         {
             Debug.Log("PitchCount = " + pitchCount[0] + "PitchSet = " + players[player].currentPitch);
 
-                stopCalPitch = true;
+            stopCalPitch = true;
             timer = 0;
             players[player].SetPitchVal(minMax);
             StartCoroutine(NextPitch(player));

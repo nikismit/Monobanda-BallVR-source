@@ -10,6 +10,7 @@ public class DebugStats : MonoBehaviour
     [SerializeField] GameObject[] pitchInputs;
 
     [SerializeField] TutorialHandler tutHandler;
+    [SerializeField] AudioPitch_Player1 androidPlayerInput;
     //[SerializeField] AudioMovementPlayer2 audioPlayerTwo;
 
     /* Assign this script to any object in the Scene to display frames per second */
@@ -87,7 +88,7 @@ public class DebugStats : MonoBehaviour
                 playerSliders[1].value = players[1].currentPitch;
         }
         else
-            playerSliders[2].value = players[0].currentPitch;
+            playerSliders[2].value = androidPlayerInput._currentpublicpitch;// Works in unscaled time
 
 
 
