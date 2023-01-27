@@ -10,11 +10,9 @@ public class MinimumSound : MonoBehaviour
     [SerializeField] Slider Slider;
     AudioMovement player;
 
-    // Start is called before the first frame update
     void Start()
     {
         GameObject playerRef = GameObject.FindGameObjectWithTag("Player");
-
         player = playerRef.GetComponent<AudioMovement>();
     }
 
@@ -27,7 +25,6 @@ public class MinimumSound : MonoBehaviour
         }
 
         Slider.value = Mathf.RoundToInt(player.minimumAmp);
-
         soundText.text = "Minimum soundInput: " + Mathf.RoundToInt(player.minimumAmp).ToString();
     }
 
