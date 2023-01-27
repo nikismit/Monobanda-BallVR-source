@@ -109,9 +109,17 @@ public class WinState : MonoBehaviour
 
         if (winner == 0)
         {
-            score[0].text = uiHandler.score[0].ToString();
-            if (players[1] != null)
-                score[1].text = uiHandler.score[1].ToString();
+            if (!tutHandler.androidDebug)
+            {
+                score[0].text = uiHandler.score[0].ToString();
+                if (players[1] != null)
+                    score[1].text = uiHandler.score[1].ToString();
+            }
+            else
+            {
+                winUI[3].gameObject.SetActive(true);
+            }
+
         }
         else if (winner == 1)
         {
@@ -134,7 +142,7 @@ public class WinState : MonoBehaviour
         }
         yield return new WaitForSecondsRealtime(waitTime);
 
-        if (!tutHandler.androidDebug && winner != 1)
+        if (!tutHandler.androidDebug && winner != 1 || tutHandler.androidDebug && winner == 0)
             StartCoroutine(ShowHighScores());
     }
 
