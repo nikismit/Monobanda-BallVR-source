@@ -36,6 +36,12 @@ public class NewCalibrator : MonoBehaviour
             ringParticle.loop = false;
             demo.tutHandler.SpawnPlane();
         }
+
+        if (demo.tutHandler.androidDebug)
+        {
+            player.minimumAmp = -25f;
+        }
+
     }
 
     void Update()

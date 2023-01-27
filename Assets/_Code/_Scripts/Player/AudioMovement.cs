@@ -98,7 +98,7 @@ public class AudioMovement : MonoBehaviour {
 	private int numRings = 5;
 
 	private float invulnerableState = 4;
-	private float minimumAmp = -50;
+	[HideInInspector] public float minimumAmp = -50;
 
 	//Make sure you attach a Rigidbody in the Inspector of this GameObject
 	Rigidbody m_Rigidbody;
@@ -133,7 +133,6 @@ public class AudioMovement : MonoBehaviour {
 		col = gameObject.GetComponent<Collider>();
 		feedBack = gameObject.GetComponent<PlayerFeedBack>();
 		camDist = GameObject.FindGameObjectWithTag("CarDistRef").transform;
-
 
 		lastHit = invulnerableState + 1;
 		if (!ui.activeSelf && ui != null)
