@@ -8,4 +8,9 @@ public class DeathOptions : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void RestartScene()
+    {
+        Time.timeScale = 1;
+    }
 }
