@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 using PitchDetector;
 
 public class AudioPitch_Player1 : MonoBehaviour {
-//	public GUIText noteText;
-public bool fromMenu = true;
+	//	public GUIText noteText;
+
+	public bool fromMenu = true;
 public int MicInput;
     public static int _currentPitch;
 
@@ -61,25 +63,35 @@ public int MicInput;
 
 
 	void Start () {
-        selectedDevice = Microphone.devices[MicInput].ToString();
-        selectedMic = selectedDevice;
-        micSelected = true;
-		GetMicCaps();
-
-		//Estimates bufer len, based on pitchTimeInterval value
-		int bufferLen = (int)Mathf.Round (AudioSettings.outputSampleRate * pitchTimeInterval / 1000f);
-	//	Debug.Log ("Buffer len: " + bufferLen);
-		data = new float[bufferLen];
-
-
-		detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
-        setUptMic();
+		GetMic();
 
 		//InvokeRepeating("ListenAudioInput", 0.01f, 0.018f);
 
 		StartCoroutine(RepeatUnscaledTime());
 	}
 
+	public void GetMic()
+    {
+
+
+		//TutorialHandler tutHandler
+
+		selectedDevice = Microphone.devices[MicInput].ToString();
+		selectedMic = selectedDevice;
+		micSelected = true;
+		GetMicCaps();
+
+		//Estimates bufer len, based on pitchTimeInterval value
+		int bufferLen = (int)Mathf.Round(AudioSettings.outputSampleRate * pitchTimeInterval / 1000f);
+		//	Debug.Log ("Buffer len: " + bufferLen);
+		data = new float[bufferLen];
+
+
+		detectionsMade = new int[maxDetectionsAllowed]; //Allocates detection buffer
+		setUptMic();
+
+		StartCoroutine(RepeatUnscaledTime());
+	}
 
 	IEnumerator RepeatUnscaledTime()
 	{
@@ -94,7 +106,9 @@ public int MicInput;
 			yield return null;
 		}
 
-		ListenAudioInput();
+		//if (selectedDevice != "Android audio input" && tutHandler.androidDebug)
+		//GetMic();
+			ListenAudioInput();
 
 		StartCoroutine(RepeatUnscaledTime());
 	}

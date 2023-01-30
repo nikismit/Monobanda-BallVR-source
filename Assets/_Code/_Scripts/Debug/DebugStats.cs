@@ -11,6 +11,7 @@ public class DebugStats : MonoBehaviour
 
     [SerializeField] TutorialHandler tutHandler;
     [SerializeField] AudioPitch_Player1 androidPlayerInput;
+    [SerializeField] LevelLoader levelLoader;
     //[SerializeField] AudioMovementPlayer2 audioPlayerTwo;
 
     /* Assign this script to any object in the Scene to display frames per second */
@@ -45,12 +46,27 @@ public class DebugStats : MonoBehaviour
                 audioPitches[i] = players[i].pitch;
             }
         }
+
+        Invoke("ResetScene", 1);
+
+
+    }
+
+    void ResetScene()//For androids first start after getting audio input permission
+    {
+        if (audioPitches[0].selectedDevice != "Android audio input" && tutHandler.androidDebug)
+        {
+            //gotAudio = true;
+            //levelLoader.LoadLevel(0);
+            levelLoader.LoadLevel(0);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
         {
             if (isActive)
             {
