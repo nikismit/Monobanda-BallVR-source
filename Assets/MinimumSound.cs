@@ -24,6 +24,11 @@ public class MinimumSound : MonoBehaviour
             player = playerRef.GetComponent<AudioMovement>();
         }
 
+        if (PlayerPrefs.GetFloat("minimumSound", 0) != 0)
+        {
+            player.minimumAmp = PlayerPrefs.GetFloat("minimumSound", 0);
+        }
+
         Slider.value = Mathf.RoundToInt(player.minimumAmp);
         soundText.text = "Minimum soundInput: " + Mathf.RoundToInt(player.minimumAmp).ToString();
     }
@@ -32,5 +37,6 @@ public class MinimumSound : MonoBehaviour
     {
         soundText.text = "Minimum soundInput: " + Mathf.RoundToInt(sliderVal).ToString();
         player.minimumAmp = Mathf.RoundToInt(sliderVal);
+        PlayerPrefs.SetFloat("minimumSound", player.minimumAmp);
     }
 }
