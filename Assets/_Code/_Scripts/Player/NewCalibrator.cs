@@ -56,7 +56,7 @@ public class NewCalibrator : MonoBehaviour
         else if (playerPitchTwoDone && demo.lowCount == 2)
             gameObject.SetActive(false);
 
-        Debug.Log("demoLow = " + demo.lowCount);
+        //Debug.Log("demoLow = " + demo.lowCount);
 
         if (!playerPitchOneDone)
             PlayerPitchInput(0);
@@ -174,7 +174,7 @@ public class NewCalibrator : MonoBehaviour
 
         if (returnToStartLoc)
         {
-            Debug.Log("ReturnTOstartLoc");
+//            Debug.Log("ReturnTOstartLoc");
             player.isInPipe = true;
             //Vector3.SmoothDamp(playerTrans.position, refPos, ref refvelocity, 1, 30 * Time.deltaTime)
             playerTrans.position = new Vector3(0, 0.5f, Mathf.SmoothDamp(playerTrans.position.z, refPos.z, ref refvelocity, 1, 200 * Time.deltaTime));
