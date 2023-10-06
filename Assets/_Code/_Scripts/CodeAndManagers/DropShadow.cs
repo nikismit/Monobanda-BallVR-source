@@ -16,7 +16,7 @@ public class DropShadow : MonoBehaviour
         proj = gameObject.GetComponent<Projector>();
         playerTrans = transform.parent;
 
-        playerObj = gameObject.GetComponentInParent<GameObject>();
+        playerObj = transform.parent.gameObject;
         transform.parent = null;
 
         Invoke("CheckPlayer", 0.1f);
