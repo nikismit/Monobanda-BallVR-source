@@ -100,6 +100,7 @@ public class WinState : MonoBehaviour
             winner = 1;
         }
     }
+
     public IEnumerator ResetScene(float waitTime)
     {
         if(tutHandler.androidDebug && winner == 1)
@@ -141,9 +142,8 @@ public class WinState : MonoBehaviour
                 score[3].text = uiHandler.score[1].ToString();
         }
         yield return new WaitForSecondsRealtime(waitTime);
-
-        if (!tutHandler.androidDebug && winner != 1 || tutHandler.androidDebug && winner == 0)
-            StartCoroutine(ShowHighScores());
+        
+        StartCoroutine(ShowHighScores());
     }
 
     bool invokeHighScores = false;
