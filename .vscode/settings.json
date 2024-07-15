@@ -1,4 +1,4 @@
-﻿{
+{
     "files.exclude":
     {
         "**/.DS_Store":true,
@@ -35,14 +35,6 @@
         "**/*.ma":true,
         "**/*.MA":true,
         "**/*.obj":true,
-        "**/*.OBJ":true,
-        "**/*.asset":true,
-        "**/*.cubemap":true,
-        "**/*.flare":true,
-        "**/*.mat":true,
-        "**/*.meta":true,
-        "**/*.prefab":true,
-        "**/*.unity":true,
         "build/":true,
         "Build/":true,
         "Library/":true,
@@ -52,5 +44,7 @@
         "ProjectSettings/":true,
         "temp/":true,
         "Temp/":true
-    }
+    },
+    "dotnet.server.useOmnisharp": true,
+    "dotnet.preferCSharpExtension": true,
 }

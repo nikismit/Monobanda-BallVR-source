@@ -7,28 +7,27 @@ using TMPro;
 
 public class WinState : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI[] score;
-    private PlayersUIHandler uiHandler;
     public GameObject[] winUI;
     public GameObject[] players;
-    DemoUI demoUI;
+    
     public AnimationCurve curve;
+    
+    private PlayersUIHandler uiHandler;
+    private DemoUI demoUI;
     private bool initialized = false;
     private float timer = 0;
     private float timeLength = 3;
-    [SerializeField] AudioSource finishAudio; 
-    [SerializeField] TutorialHandler tutHandler; 
-
     private int winner;
-
-    [SerializeField] CanvasGroup highScoreUI;
-    [SerializeField] TextMeshProUGUI[] highScores;
-    //private string[] highscorePref = new string(HighScore1);
+    
+    [SerializeField] private TextMeshProUGUI[] score;
+    [SerializeField] private AudioSource finishAudio; 
+    [SerializeField] private TutorialHandler tutHandler; 
+    [SerializeField] private CanvasGroup highScoreUI;
+    [SerializeField] private TextMeshProUGUI[] highScores;
 
     private void Start()
     {
         highScoreUI.alpha = 0;
-        //highScores = gameObject.GetComponentsInChildren<TextMeshProUGUI>();
         demoUI = GetComponent<DemoUI>();
         uiHandler = GetComponent<PlayersUIHandler>();
     }
@@ -37,23 +36,15 @@ public class WinState : MonoBehaviour
 
     private void Update()
     {
-
-
-
         if (timer <= timeLength && initialized)
         {
-            //InvokeOnce = false;
             timer += Time.unscaledDeltaTime;
-            //float ease = Mathf.Lerp(0, easeOutlength / 2, timer * 1.2f);
-            //float ease = Mathf.Lerp(0, 3, timer);
             float ease = Mathf.Clamp(timer / 3 , 0, 1);
             Time.timeScale = curve.Evaluate(ease);
 
             if (ease == 1 && !InvokeOnce)
             {
-                //Debug.Log("INVOKEONCE");
                 InvokeOnce = true;
-                //demoUI.RemoveDemoUIEvent();
                 StartCoroutine(StartTransition());
             }
 
@@ -62,7 +53,6 @@ public class WinState : MonoBehaviour
 
     IEnumerator StartTransition()
     {
-        //yield return new WaitForSeconds(1.5f);
         yield return new WaitForSecondsRealtime(1.5f);
         demoUI.RemoveDemoUIEvent();
     }
@@ -73,15 +63,14 @@ public class WinState : MonoBehaviour
         {
             initialized = true;
             winner = 0;
-            //Time.timeScale = 0;
-            //StartCoroutine(ResetScene(2, 0));
-            //Invoke("ResetScene", 2);
         }
     }
 
     public void ScoreWinner()
     {
         finishAudio.Play();
+        initialized = true;
+        
         if (uiHandler.score[0] > uiHandler.score[1])
             winner = 0;
         else if (uiHandler.score[0] < uiHandler.score[1])
@@ -89,7 +78,7 @@ public class WinState : MonoBehaviour
         else if (uiHandler.score[0] == uiHandler.score[1])
             winner = 0;//Needs changed to tie
 
-        initialized = true;
+        
     }
 
     public void PlayerTwoWins()
@@ -150,7 +139,6 @@ public class WinState : MonoBehaviour
 
     IEnumerator ShowHighScores()
     {
-        //Debug.Log("SHOWKKR HIghSCore");
         if (!invokeHighScores)
         {
             invokeHighScores = true;
@@ -172,23 +160,16 @@ public class WinState : MonoBehaviour
     void ShowHighScore(int playerWon)
     {
         bool stopChecking = false;
-
-        //Debug.Log("LMAO");
-        
         for (int i = 0; i < highScores.Length; i++)
         {
             if (uiHandler.score[playerWon] > PlayerPrefs.GetFloat("HighScore" + i) && !stopChecking)
             {
                 float scoreRef = 0;
-
-                //Debug.Log("PlayerWon = " + i);
                 stopChecking = true;
                 if (PlayerPrefs.GetFloat("HighScore" + i) != 0)
                     scoreRef = PlayerPrefs.GetFloat("HighScore" + i);
 
                 PlayerPrefs.SetFloat("HighScore" + i, uiHandler.score[playerWon]);
-                //highScores[i].text = PlayerPrefs.GetFloat("HighScore" + i).ToString();
-
                 DownRankHighScores(i, playerWon, scoreRef);
             }
         }
@@ -198,11 +179,6 @@ public class WinState : MonoBehaviour
             GenerateHighScores(420);
         }
 
-        //Debug.Log("1 = " + PlayerPrefs.GetFloat("HighScore1") + ", 2 = " + PlayerPrefs.GetFloat("HighScore2") + ", 3 = " + PlayerPrefs.GetFloat("HighScore3")
-        //+ ", 4 = " + PlayerPrefs.GetFloat("HighScore4") + ", 5 = " + PlayerPrefs.GetFloat("HighScore5") + ", 6 = " + PlayerPrefs.GetFloat("HighScore6"));
-
-        //Invoke("RestartScene", 15);
-        //Time.timeScale = 1;
         StartCoroutine(RestartScene());
     }
 

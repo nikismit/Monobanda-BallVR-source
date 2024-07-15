@@ -1,27 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class DemoUI : MonoBehaviour
 {
-    //[SerializeField] CanvasGroup canvasGroup;
-    WinState winState;
-    [SerializeField] RaceCountdown countDown;
-    [SerializeField] TutorialHandler tutHandler;
-    [SerializeField] GameObject transitionUI;
-    [SerializeField] GameObject demoCanvas;
-    ///[SerializeField] TutorialHandler tutHandler;
-    [HideInInspector] RectTransform uiTransform;
-    [HideInInspector] CanvasGroup uiFade;
+    [SerializeField] private RaceCountdown countDown;
+    [SerializeField] private TutorialHandler tutHandler;
+    [SerializeField] private GameObject transitionUI;
+    [SerializeField] private GameObject demoCanvas;
+    [HideInInspector] private RectTransform uiTransform;
+    [HideInInspector] private CanvasGroup uiFade;
 
-    AudioMovement player1;
-
-
-    float scale = 0;
-
+    private WinState winState;
+    private float scale = 0;
     private bool startTut = false;
+    private bool WinTransition = false;
+
     void Start()
     {
         winState = GetComponent<WinState>();
@@ -30,24 +22,13 @@ public class DemoUI : MonoBehaviour
         uiFade = transitionUI.GetComponent<CanvasGroup>();
 
         uiTransform.sizeDelta = new Vector2(scale, scale);
-
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < players.Length; i++)
-        {
-            if (players[i].gameObject.GetComponent<AudioMovement>())
-            {
-                player1 = players[i].gameObject.GetComponent<AudioMovement>();
-            }
-        }
     }
 
     public void RemoveDemoUIEvent()
     {
         startTut = true;
         transitionUI.SetActive(true);
-    }
-
-    bool WinTransition = false;
+    }    
 
     void Update()
     {
@@ -55,7 +36,6 @@ public class DemoUI : MonoBehaviour
         {
             startTut = false;
             WinTransition = true;
-            //tutHandler.RemoveRoads();
             transitionUI.SetActive(false);
             uiFade.alpha = 1;
             scale = 0;
@@ -78,6 +58,5 @@ public class DemoUI : MonoBehaviour
 
             uiFade.alpha -= Time.unscaledDeltaTime / 3;
         }
-        //Debug.Log("KLaarjonge");
     }
 }
