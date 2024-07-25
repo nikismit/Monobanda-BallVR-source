@@ -1,34 +1,43 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NewCalibrator : MonoBehaviour
 {
-    [SerializeField] GameObject[] countDownImages;
-    [SerializeField] DemoHighLow demo;
-    [SerializeField] DemoUI demoUI;
-    private AudioMovement player;
-    [SerializeField] Transform playerTrans;
+    [SerializeField] private GameObject[] countDownImages;
+    [SerializeField] private DemoHighLow demo;
+    [SerializeField] private DemoUI demoUI;
+    
+    [SerializeField] private Transform playerTrans;
+    [SerializeField] private float pitchSmooth;
+    [SerializeField] private ParticleSystem ringParticle;
+    [SerializeField] private int playerID;
+    [SerializeField] private float pitchVal;
 
-    bool playerPitchOneDone, playerPitchTwoDone;
+    [SerializeField]
+    private bool UpdateUILocation;
+    [SerializeField]
+    private float offset;
+
+    private RectTransform transform;
+
+    private bool playerPitchOneDone, playerPitchTwoDone;
     private bool allowCountdown = true;
     private bool returnToStartLoc = false;
-
-    float elapsedTime = 0;
-    [SerializeField] float pitchSmooth;
-
-    [SerializeField] ParticleSystem ringParticle;
-
-    bool doOnce = false;
-
-    [SerializeField] int playerID;
-
+    private float elapsedTime = 0;
+    private bool doOnce = false;
+    private float velocity;
+    private bool particlePlays = false;
+    private bool revertToStartLoc = false;
+    private AudioMovement player;
     private Vector3 refPos;
+    private float refvelocity;
 
     void Start()
     {
-        refPos = transform.position;
-        player = GetComponentInParent<AudioMovement>();
+        transform = base.transform as RectTransform;
+
+        refPos = playerTrans.position;
+        player = playerTrans.GetComponentInParent<AudioMovement>();
         ringParticle.loop = true;
 
         if (player.debugKeyControl)
@@ -56,8 +65,6 @@ public class NewCalibrator : MonoBehaviour
         else if (playerPitchTwoDone && demo.lowCount == 2)
             gameObject.SetActive(false);
 
-        //Debug.Log("demoLow = " + demo.lowCount);
-
         if (!playerPitchOneDone)
             PlayerPitchInput(0);
         else if (!playerPitchTwoDone && demo.highCount == 2 && !demo.tutHandler.androidDebug || !playerPitchTwoDone && demo.tutHandler.androidDebug)
@@ -84,12 +91,20 @@ public class NewCalibrator : MonoBehaviour
         if (player.hasStarted)
             gameObject.SetActive(false);
     }
-    float velocity;
-    [SerializeField] float pitchVal;
 
-    bool particlePlays = false;
-    bool revertToStartLoc = false;
+    void LateUpdate()
+    {
+        if( ! UpdateUILocation) 
+            return;
 
+        Vector3 targetPosition = Camera.main.WorldToScreenPoint( playerTrans.position );
+        transform.position = targetPosition + Vector3.up * offset;
+
+        Vector3 position =transform.localPosition;
+        position.z = 0;
+        transform.localPosition = position;
+    }
+    
     void PlayerPitchInput(int minMaxPitch)
     {
         if(player.currentPitch >= 7)
@@ -163,36 +178,27 @@ public class NewCalibrator : MonoBehaviour
                 StartCoroutine(RevertToStartLoc());
             }
 
-            //ringParticle.Stop();
+
             countDownImages[0].SetActive(false);
             countDownImages[1].SetActive(false);
             countDownImages[2].SetActive(false);
-            //countDownImages[3].SetActive(false);
+
             elapsedTime = 0;
             doOnce = false;
         }
 
         if (returnToStartLoc)
         {
-//            Debug.Log("ReturnTOstartLoc");
             player.isInPipe = true;
-            //Vector3.SmoothDamp(playerTrans.position, refPos, ref refvelocity, 1, 30 * Time.deltaTime)
             playerTrans.position = new Vector3(0, 0.5f, Mathf.SmoothDamp(playerTrans.position.z, refPos.z, ref refvelocity, 1, 200 * Time.deltaTime));
-            //playerTrans.position = Mathf.SmoothDamp(playerTrans.position.z, refPos.z, ref refvelocity, 1, 30 * Time.deltaTime);
         }
     }
-
-    //Vector3 refvelocity = Vector3.zero;
-    float refvelocity;
 
     void ResetCountDownOne()
     {
         playerPitchOneDone = true;
 
-        //if (pitchSmooth > 7)
-            player.maximumPitch = pitchVal;
-        //else
-            //player.maximumPitch = player.lastValidPitch;
+        player.maximumPitch = pitchVal;
 
         demo.HighEvent();
         ringParticle.Stop();
@@ -205,11 +211,7 @@ public class NewCalibrator : MonoBehaviour
     void ResetCountDownTwo()
     {
         playerPitchTwoDone = true;
-
-       // if (pitchSmooth > 7)
-            player.minimumPitch = pitchVal;
-        //else
-            //player.minimumPitch = player.lastValidPitch;
+        player.minimumPitch = pitchVal;
 
         demo.LowEvent();
 
@@ -218,11 +220,8 @@ public class NewCalibrator : MonoBehaviour
             countDownImages[3].SetActive(false);
         allowCountdown = true;
 
-
         ringParticle.loop = false;
         ringParticle.Stop();
-
-        //demoUI.RemoveDemoUIEvent();
     }
 
     IEnumerator RevertToStartLoc()
