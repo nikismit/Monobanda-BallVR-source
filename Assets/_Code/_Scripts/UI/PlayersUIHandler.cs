@@ -13,36 +13,24 @@ public class PlayersUIHandler : MonoBehaviour
 
     [SerializeField] private AnimationCurve scoreCurve;
     [SerializeField] private AnimationCurve scoreScaleCurve;
-    private float timerOne, timerTwo;
-    private float timerOneHp, timerTwoHp;
-    private float length = 1;
 
     //Health
-    [SerializeField] Image[] hpFill;
-    [SerializeField] Color[] ColorRef = new Color[2];
-    private bool updateHpOne, updateHpTwo;
+    [SerializeField] private AnimationCurve shakeCurve;
+    [SerializeField] private Image[] hpFill;
+    [SerializeField] private Color[] ColorRef = new Color[2];
     public Transform[] hpTrans;
     public RectTransform[] scoreRect;
-    [SerializeField] AnimationCurve shakeCurve;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //transRef = transform;
-        timerOne = length + 1;
-        timerTwo = length + 1;
-
         for (int i = 0; i < score.Length; i++)
         {
             ColorRef[i] = hpFill[i].color;
-            //playerHealth[i].maxValue = 5;
-            //playerHealth[i].value = 5;
             score[i] = 0;
         }
     }
-
-    int addCount;
 
     IEnumerator Score(int playerNum, float value)
     {
@@ -59,8 +47,6 @@ public class PlayersUIHandler : MonoBehaviour
 
             if (currentScore < score[playerNum])
             {
-
-
                 currentScore += elapsedTime * 100;
             }
             else
@@ -68,28 +54,27 @@ public class PlayersUIHandler : MonoBehaviour
 
 
             if (playerNum == 0)
-
-                //ringCountTrans[playerNum].localPosition = new Vector2(50.35468f, -24.87527f + (scoreCurve.Evaluate(ease) * 20));
-                //ringCountTrans[playerNum].localPosition = new Vector2(245, 55 + (scoreCurve.Evaluate(ease) * 20));
+            {
                 ringCountTrans[playerNum].localPosition = new Vector2(0, 0 + (scoreCurve.Evaluate(ease) * 20));
+            }
             else
-                //ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55 + (scoreCurve.Evaluate(ease) * 20));
-            ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
+            {
+                ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
+            }
 
 
             ringCountText[playerNum].text = Mathf.RoundToInt(currentScore).ToString();
             ringCountText[playerNum].fontSize = 32 + (scoreScaleCurve.Evaluate(ease) * 20);
             yield return null;
         }
+
         ringCountText[playerNum].text = score[playerNum].ToString();
 
         if (playerNum == 0)
-        //ringCountTrans[playerNum].localPosition = new Vector2(50.35468f, -24.87527f);
-        //ringCountTrans[playerNum].localPosition = new Vector2(245, 55);
-        ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
+            ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
         else
-                    ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
-            //ringCountTrans[playerNum].localPosition = new Vector2(-155f, 55);
+            ringCountTrans[playerNum].localPosition = new Vector2(0, 0);
+        
         ringCountText[playerNum].fontSize = 32;
     }
 
@@ -102,17 +87,11 @@ public class PlayersUIHandler : MonoBehaviour
     {
         if (playerNum == 0)
         {
-            updateHpOne = true;
             StartCoroutine(Shake(hpTrans[playerNum], playerNum));
-            //ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
-            timerOneHp = 0;
         }
         if (playerNum == 1)
         {
-            updateHpTwo = true;
             StartCoroutine(Shake(hpTrans[playerNum], playerNum));
-            //ringCountText[playerNum].transform.localPosition = Vector3.up * 1.5f;
-            timerTwoHp = 0;
         }
     }
 
