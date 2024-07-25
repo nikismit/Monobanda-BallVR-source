@@ -375,6 +375,7 @@ public class AudioMovement : MonoBehaviour {
 			Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 90, 0), 50000);
 		}
 
+		trailEffect.emitting = Volume > minimumAmp;
 		trailEffect.time = trailTime;
 	}
 
