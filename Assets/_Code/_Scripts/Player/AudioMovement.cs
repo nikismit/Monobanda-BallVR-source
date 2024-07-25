@@ -711,7 +711,11 @@ public class AudioMovement : MonoBehaviour {
 			modelEffect.OnDeath();
 			playerHealth.value = 0;
 			uiHandler.UpdateHealth(0);
-			winState.PlayerTwoWins();
+
+			if( player == 0 )
+				winState.PlayerTwoWins();
+			else 
+				winState.PlayerOneWins();
 		}
 	}
 
