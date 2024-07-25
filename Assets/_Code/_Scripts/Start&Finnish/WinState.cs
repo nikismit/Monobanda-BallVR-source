@@ -39,8 +39,8 @@ public class WinState : MonoBehaviour
         if (timer <= timeLength && initialized)
         {
             timer += Time.unscaledDeltaTime;
-            float ease = Mathf.Clamp(timer / 3 , 0, 1);
-            Time.timeScale = curve.Evaluate(ease);
+            float ease = Mathf.Clamp01(timer / 3);
+            Time.timeScale = Mathf.Clamp01( curve.Evaluate(ease) );
 
             if (ease == 1 && !InvokeOnce)
             {
@@ -101,8 +101,10 @@ public class WinState : MonoBehaviour
         {
             if (!tutHandler.androidDebug)
             {
-                score[0].text = uiHandler.score[0].ToString();
-                if (players[1] != null)
+                if(players[0].GetComponent<AudioMovement>().numRings > 0 )
+                    score[0].text = uiHandler.score[0].ToString();
+
+                if (players[1] != null && players[1].GetComponent<AudioMovement>().numRings > 0)
                     score[1].text = uiHandler.score[1].ToString();
             }
             else
@@ -115,8 +117,10 @@ public class WinState : MonoBehaviour
         {
             if (!tutHandler.androidDebug)
             {
-                score[2].text = uiHandler.score[0].ToString();
-                if (players[0] != null)
+                if(players[0].GetComponent<AudioMovement>().numRings > 0 )
+                    score[2].text = uiHandler.score[0].ToString();
+                
+                if (players[0] != null && players[1].GetComponent<AudioMovement>().numRings > 0)
                     score[3].text = uiHandler.score[1].ToString();
             }
             else
@@ -126,8 +130,10 @@ public class WinState : MonoBehaviour
         }
         else if (winner == 2)//TIE!
         {
-            score[2].text = uiHandler.score[0].ToString();
-            if (players[0] != null)
+            if(players[0].GetComponent<AudioMovement>().numRings > 0 )
+                score[2].text = uiHandler.score[0].ToString();
+            
+            if (players[0] != null && players[1].GetComponent<AudioMovement>().numRings > 0)
                 score[3].text = uiHandler.score[1].ToString();
         }
         yield return new WaitForSecondsRealtime(waitTime);

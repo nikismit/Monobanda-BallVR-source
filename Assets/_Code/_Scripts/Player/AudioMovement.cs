@@ -95,7 +95,7 @@ public class AudioMovement : MonoBehaviour {
 
 	private float boostTimer = 100;
 
-	private int numRings = 5;
+	public int numRings = 5;
 
 	private float invulnerableState = 4;
 	[HideInInspector] public float minimumAmp = -50;
