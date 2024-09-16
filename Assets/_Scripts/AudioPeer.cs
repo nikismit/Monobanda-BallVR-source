@@ -43,10 +43,10 @@ public class AudioPeer : MonoBehaviour {
 
 
 
-	void Awake()
-	{
-		DontDestroyOnLoad (this.gameObject);
-	}
+	// void Awake()
+	// {
+	// 	DontDestroyOnLoad (this.gameObject);
+	// }
 
 	// Use this for initialization
 	void Start () {
@@ -71,7 +71,7 @@ public class AudioPeer : MonoBehaviour {
 			GetAmplitude ();
 
 		}
-			
+
 	}
 
 
@@ -99,7 +99,7 @@ public class AudioPeer : MonoBehaviour {
 
 	void CreateAudioBands()
 	{
-		for (int i = 0; i < 8; i++) 
+		for (int i = 0; i < 8; i++)
 		{
 			if (_freqBand [i] > _freqBandHighest [i]) {
 				_freqBandHighest [i] = _freqBand [i];
